@@ -41,6 +41,14 @@
             </ul>
         </div>
     @endif
+    @if (session()->has('Erorr'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ session()->get('Erorr') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+@endif
 
     @if (session()->has('edit'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -88,6 +96,7 @@
                                     <th class="border-bottom-0">رقم المنتج</th>
                                     <th class="border-bottom-0">الشركة</th>
                                     <th class="border-bottom-0">اسم المنتج</th>
+                                    <th class="border-bottom-0">الصنف</th>
                                     
                                     <th class="border-bottom-0">بلد المنشأ</th>
 
@@ -106,6 +115,7 @@
 
                                         <td>{{ $x->product_name }}</td>
                                       
+                                        <td>{{ $x->groups->group_name }}</td>
 
                                         <td>{{ $x->companies->country_of_manufacture }}</td>
                                         
@@ -118,6 +128,8 @@
                                                 data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
 
                                                 data-company_name="{{ $x->companies->company_name }}"
+                                                data-productG="{{ $x->groups->group_name }}"
+
 
                                                 data-toggle="modal" href="#edit_Product" title="تعديل"><i
                                                     class="las la-pen"></i></a>
@@ -172,7 +184,13 @@
                                 <input type="text" class="form-control" id="product_name" name="product_name" required>
                             </div>
 
-
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الصنف</label>
+                            <select name="productG" id="productG" class="form-control" required>
+                                <option value="" selected disabled> --حدد الصنف--</option>
+                                @foreach ($productGroups as $productGroup)
+                                    <option value="{{ $productGroup->id }}">{{ $productGroup->group_name }}</option>
+                                @endforeach
+                            </select>
 
                          
 
@@ -206,21 +224,30 @@
                         {{ method_field('patch') }}
                         {{ csrf_field() }}
                         <div class="modal-body">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
+                            <select name="company_name" id="company_name" class="form-control" required>
+                                @foreach ($productCompany as $productC)
+                                    <option >{{ $productC->company_name }}</option>
+                                @endforeach
+                            </select>
 
                             <div class="form-group">
                                 <label for="title">اسم المنتج :</label>
 
                                 <input type="hidden" class="form-control" name="id" id="id" value="">
 
-                                <input type="text" class="form-control" name="product_name" id="product_name">
+                                <input type="text" class="form-control" name="product_name" id="product_name" required>
                             </div>
-                            
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
-                            <select name="company_name" id="company_name" class="custom-select my-1 mr-sm-2" required>
-                                @foreach ($productCompany as $productC)
-                                    <option >{{ $productC->company_name }}</option>
+
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الصنف</label>
+                            <select name="productG" id="productG" class="form-control" required>
+                                
+                                @foreach ($productGroups as $productGroup)
+                                    <option >{{ $productGroup->group_name }}</option>
                                 @endforeach
                             </select>
+                            
+                            
 
                            
 
@@ -375,11 +402,12 @@
             var product_name = button.data('product_name')
             var company_name = button.data('company_name')
             var id = button.data('id')
+            var productG = button.data('productG')
            
             var modal = $(this)
             modal.find('.modal-body #product_name').val(product_name);
             modal.find('.modal-body #company_name').val(company_name);
-           
+            modal.find('.modal-body #productG').val(productG);
             modal.find('.modal-body #id').val(id);
         })
 

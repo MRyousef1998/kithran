@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductCompany;
+use App\Models\ProductGroup;
+
 
 
 class ProductDetail extends Model
@@ -17,5 +19,8 @@ class ProductDetail extends Model
     {
     return $this->belongsTo(ProductCompany::class,'company_id');
    
+    }
+    public function  groups(){
+        return $this->belongsTo(ProductGroup::class,'group_id',);
     }
 }

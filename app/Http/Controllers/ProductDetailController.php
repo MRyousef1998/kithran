@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\ProductCompany;
-
+use App\Models\ProductGroup;
 
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
@@ -18,9 +18,11 @@ class ProductDetailController extends Controller
     {
         $productDetail = ProductDetail::all();
         $productCompany = ProductCompany::all();
+        $productGroups = ProductGroup::all();
+
        
 
-        return view('my_product.all_product',compact('productDetail','productCompany'));
+        return view('my_product.all_product',compact('productDetail','productCompany','productGroups'));
     }
 
     /**
@@ -41,15 +43,24 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $validatedData = $request->validate([
-            'product_name' => 'required|unique:product_details|max:255',
-          'productC' => 'required',
+        $input =$request->all();
+        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->exists();
+        if ($p_exists){
+            session()->flash('Erorr', 'هذا المنتج موجود بالفعل ');
+          //  return $request;
+            return redirect('all_product');
+        }
+        
+         $validatedData = $request->validate([
+            'product_name' => 'required|max:255',
+          'productG' => 'required',
+          "productC"=>'required'
         ],[
 
             'product_name.required' =>'يرجي ادخال اسم المنتج',
-            'product_name.unique' =>'هذه المنتج موجودة بالفعل',
+            'productG.required' =>'يرجي ادراج الصنف ',
+
+            
             'productC.required' =>'يرجي الشركة المصنعة,'
 
         ],
@@ -63,6 +74,8 @@ class ProductDetailController extends Controller
             'product_name' => $request->product_name,
             'company_id' => $request->productC,
             'image_name' => $request->product_name,
+            'group_id' => $request->productG,
+
         ]);
         session()->flash('Add', 'تم اضافة المنتج بنجاح ');
         return redirect('/all_product');
@@ -98,16 +111,25 @@ class ProductDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ProductDetail $productDetail)
-    {
+    { 
+        
+        
+        $input =$request->all();
+        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','!=',$input['id'])->where('id','=',$input['productG'])->exists();
+        if ($p_exists){
+            session()->flash('Erorr', 'هذا المنتج موجود بالفعل ');
+          //  return $request;
+            return redirect('all_product');
+        }
 
        
         $validatedData = $request->validate([
-            'product_name' => 'required|max:255|unique:product_details,product_name,'.$request->id,
+           'product_name' => 'required|max:255',
           
         ],[
 
             'product_name.required' =>'يرجي ادخال اسم المنتج',
-            'product_name.unique' =>'هذه المنتج موجودة بالفعل',
+           
           
 
         ],

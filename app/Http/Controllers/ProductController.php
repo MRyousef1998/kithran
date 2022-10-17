@@ -133,4 +133,19 @@ class ProductController extends Controller
         $products = DB::table("product_details")->where("company_id", $id)->pluck("product_name", "id");
         return json_encode($products);
     }
+    public function getproductsGruops($id)
+    {
+
+        
+        $products = ProductDetail::find($id);
+        
+       $productName=$products->product_name;
+
+        $products =DB::table('product_details')
+            ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->where("product_details.product_name", $productName)->pluck("product_groups.group_name","product_groups.id");
+           
+           
+            return json_encode($products);
+          
+    }
 }

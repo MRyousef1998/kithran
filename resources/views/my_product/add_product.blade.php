@@ -96,16 +96,18 @@
                           
 
                             <div class="col">
-                                <label for="inputName" class="control-label">المنتج</label>
+                                <label for="inputName" class="control-label"  onclick="console.log($(this).val())"
+                                onchange="console.log('change is firing')">المنتج</label>
                                 <select id="product" name="product" class="form-control">
+                                    <option value="" selected disabled>حدد  منتج</option>
                                 </select>
                             </div>
                                <div class="col">
                             <label for="inputName" class="control-label">الفئة</label>
-                                <select name="productCategory" class="form-control SlectBox"
+                                <select id="productClass" name="productClass" class="form-control"
                                     >
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد  الفئة</option>
+                                    
                                 
                                 </select>
                                
@@ -247,9 +249,11 @@
                         dataType: "json",
                         success: function(data) {
                             $('select[name="product"]').empty();
+                            $('select[name="product"]').append('<option value="" selected disabled>حدد  منتج</option>');
+                            
                             $.each(data, function(key, value) {
                                 $('select[name="product"]').append('<option value="' +
-                                    value + '">' + value + '</option>');
+                                    key + '">' + value + '</option>');
                             });
                         },
                     });
@@ -266,20 +270,23 @@
    <script>
         $(document).ready(function() {
             $('select[name="product"]').on('change', function() {
-                var productId = $(this).val();
-                if (productId) {
+                var productid = $(this).val();
+                
+                if (productid) {
                     $.ajax({
-                        url: "{{URL::to('products')}}/" + productCompaniesId,
+                        url: "{{URL::to('productsgroup')}}/" + productid,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
-                            $('select[name="product"]').empty();
+                            $('select[name="productClass"]').empty();
                             $.each(data, function(key, value) {
-                                $('select[name="product"]').append('<option value="' +
-                                    value + '">' + value + '</option>');
+                                
+                                $('select[name="productClass"]').append('<option value="' +
+                                    key + '">' + value + '</option>');
                             });
                         },
                     });
+
 
                 } else {
                     console.log('AJAX load did not work');

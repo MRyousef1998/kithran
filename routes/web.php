@@ -61,6 +61,7 @@ Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductControll
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
+Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
 
 
 
