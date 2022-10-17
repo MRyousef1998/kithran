@@ -115,10 +115,10 @@ class ProductDetailController extends Controller
         
         
         $input =$request->all();
-        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','!=',$input['id'])->where('id','=',$input['productG'])->exists();
+        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('id','!=',$input['id'])->where('id','=',$input['productG'])->exists();
         if ($p_exists){
             session()->flash('Erorr', 'هذا المنتج موجود بالفعل ');
-          //  return $request;
+            return $request;
             return redirect('all_product');
         }
 

@@ -128,7 +128,7 @@
                                                 data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
 
                                                 data-company_name="{{ $x->companies->company_name }}"
-                                                data-productG="{{ $x->groups->group_name }}"
+                                                data-product_g="{{ $x->groups->group_name }}"
 
 
                                                 data-toggle="modal" href="#edit_Product" title="تعديل"><i
@@ -191,7 +191,13 @@
                                     <option value="{{ $productGroup->id }}">{{ $productGroup->group_name }}</option>
                                 @endforeach
                             </select>
-
+                            <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
+                            <h5 class="card-title">المرفقات</h5>
+    
+                            <div class="col-sm-12 col-md-12">
+                                <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
+                                    data-height="70" />
+                            </div><br>
                          
 
                         </div>
@@ -246,6 +252,8 @@
                                     <option >{{ $productGroup->group_name }}</option>
                                 @endforeach
                             </select>
+                           
+                            
                             
                             
 
@@ -402,8 +410,8 @@
             var product_name = button.data('product_name')
             var company_name = button.data('company_name')
             var id = button.data('id')
-            var productG = button.data('productG')
-           
+            var productG = button.data('product_g')
+            window.alert(productG);
             var modal = $(this)
             modal.find('.modal-body #product_name').val(product_name);
             modal.find('.modal-body #company_name').val(company_name);
