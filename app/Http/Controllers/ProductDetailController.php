@@ -43,6 +43,7 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request)
     {
+        return $request;
         $input =$request->all();
         $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->exists();
         if ($p_exists){
@@ -112,13 +113,13 @@ class ProductDetailController extends Controller
      */
     public function update(Request $request, ProductDetail $productDetail)
     { 
-        
+       
         
         $input =$request->all();
-        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('id','!=',$input['id'])->where('id','=',$input['productG'])->exists();
+        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->where('id','!=',$input['id'])->exists();
         if ($p_exists){
             session()->flash('Erorr', 'هذا المنتج موجود بالفعل ');
-            return $request;
+           
             return redirect('all_product');
         }
 
@@ -128,11 +129,7 @@ class ProductDetailController extends Controller
           
         ],[
 
-            'product_name.required' =>'يرجي ادخال اسم المنتج',
-           
-          
-
-        ],
+            'product_name.required' =>'يرجي ادخال اسم المنتج',       ],
        
     
     );
@@ -145,6 +142,7 @@ class ProductDetailController extends Controller
         $Products->update([
         'product_name' => $request->product_name,
         'company_id' => $id,
+        'group_id' => $request->group_id,
         ]);
  
         session()->flash('Edit', 'تم تعديل المنتج بنجاح');
