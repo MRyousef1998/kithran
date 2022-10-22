@@ -42,8 +42,7 @@ class ProductDetailController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        return $request;
+    { 
         $input =$request->all();
         $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->exists();
         if ($p_exists){
@@ -51,6 +50,7 @@ class ProductDetailController extends Controller
           //  return $request;
             return redirect('all_product');
         }
+        $this->validate($request,['pic'=>'required'],['pic.required'=>"يرجى ادراج مرفق"]);
         
          $validatedData = $request->validate([
             'product_name' => 'required|max:255',
@@ -68,18 +68,38 @@ class ProductDetailController extends Controller
        
     
     );
+   
+    if($request->pic!=null){
+            
+  
+      
+       
+       $imageName = $request->pic;
+       $fileName = $imageName->getClientOriginalName();
+       ProductDetail::create([
+        'product_name' => $request->product_name,
+        'company_id' => $request->productC,
+        'image_name' =>  $fileName,
+        'group_id' => $request->productG,
+
+    ]);
+// move pic
+$product_id = ProductDetail::latest()->first()->id;
+
+$request->pic->move(public_path('Attachments/' . $product_id ), $fileName);
+   
+
+    session()->flash('Add', 'تم اضافة المنتج بنجاح ');
+    return redirect('/all_product');
+      
+   
+}
 
 
-
-    ProductDetail::create([
-            'product_name' => $request->product_name,
-            'company_id' => $request->productC,
-            'image_name' => $request->product_name,
-            'group_id' => $request->productG,
-
-        ]);
-        session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-        return redirect('/all_product');
+session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
+//  return $request;
+  return redirect('all_product');
+ 
     }
 
     /**

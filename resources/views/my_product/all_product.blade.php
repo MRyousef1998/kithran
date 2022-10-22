@@ -99,6 +99,7 @@
                                     <th class="border-bottom-0">الصنف</th>
                                     
                                     <th class="border-bottom-0">بلد المنشأ</th>
+                                    <th class="border-bottom-0">الصورة </th>
 
 
                                     <th class="border-bottom-0">العمليات</th>
@@ -119,7 +120,9 @@
 
                                         <td>{{ $x->companies->country_of_manufacture }}</td>
                                         
-
+                                        <td><img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" />
+                                            
+                                            </td>
 
 
                                         <td>
@@ -169,8 +172,9 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div>
-                    <form action="{{ route('all_product.store') }}" method="post">
+                    </div> 
+                    
+                    <form action="{{ route('all_product.store') }}" method="post" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="modal-body">
 
@@ -181,19 +185,19 @@
                                     <option value="{{ $productC->id }}">{{ $productC->company_name }}</option>
                                 @endforeach
                             </select>
-                            <div class="form-group">
+                          
                                 <label for="exampleInputEmail1">اسم المنتج</label>
                                 <input type="text" class="form-control" id="product_name" name="product_name" required>
-                            </div>
-
+                           
+                            
                             <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الصنف</label>
                             <select name="productG" id="productG" class="form-control" required>
                                 <option value="" selected disabled> --حدد الصنف--</option>
                                 @foreach ($productGroups as $productGroup)
-                                    <option >{{ $productGroup->group_name }}</option>
+                                    <option value="{{$productGroup->id}}" >{{ $productGroup->group_name }}</option>
                                 @endforeach
                             </select>
-                            
+                        <br>
                             
                             <h5 class="card-title">المرفقات</h5>
     
