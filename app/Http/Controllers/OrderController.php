@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use App\Models\ProductCompany;
+use App\Models\ProductGroup;
 
+use App\Models\ProductDetail;
 class OrderController extends Controller
 {
     /**
@@ -14,7 +17,13 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $productDetail = ProductDetail::all();
+        $productCompany = ProductCompany::all();
+        $productGroups = ProductGroup::all();
+
+       
+
+        return view('order.import_order',compact('productDetail','productCompany','productGroups'));
     }
 
     /**

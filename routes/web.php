@@ -63,7 +63,7 @@ Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
 Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
 
-
+Route::resource('import_order', 'App\Http\Controllers\OrderController');
 
 
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
