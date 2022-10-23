@@ -1,4 +1,16 @@
 @extends('layouts.master')
+<style>
+    table,
+    table td {
+      border: 0.5px solid #cccccc;
+    }
+    td {
+      height: 80px;
+      width: 160px;
+      text-align: center;
+      vertical-align: middle;
+    }
+  </style>
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -93,16 +105,16 @@
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0">رقم المنتج</th>
-                                    <th class="border-bottom-0">الشركة</th>
-                                    <th class="border-bottom-0">اسم المنتج</th>
-                                    <th class="border-bottom-0">الصنف</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
                                     
-                                    <th class="border-bottom-0">بلد المنشأ</th>
-                                    <th class="border-bottom-0">الصورة </th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصورة </th>
 
 
-                                    <th class="border-bottom-0">العمليات</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمليات</th>
 
                                 </tr>
                             </thead>
@@ -111,21 +123,38 @@
                                 @foreach ($productDetail as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $x->companies->company_name }}</td>
+                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
 
-                                        <td>{{ $x->product_name }}</td>
-                                      
-                                        <td>{{ $x->groups->group_name }}</td>
+                                        <td style="text-align: center;vertical-align: middle;">
+                                            
+                                            <div class = "vertical"><div>
+                                                <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="180"  height="120" /></div>
+                                                <div>
+                                                    {{ $x->product_name }}</div>
+                                            </div>
 
-                                        <td>{{ $x->companies->country_of_manufacture }}</td>
-                                        
-                                        <td><img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" />
                                             
                                             </td>
+                                      
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->groups->group_name }}</td>
+
+                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
+                                        
+                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <div class="input-group quantity">
+                                                <div class="input-group-prepend decrement-btn" style="cursor: pointer">
+                                                    <span class="input-group-text">-</span>
+                                                </div>
+                                                <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
+                                                <div class="input-group-append increment-btn" style="cursor: pointer">
+                                                    <span class="input-group-text">+</span>
+                                                </div>
+                                            </div>
+                                        </td>
 
 
-                                        <td>
+                                        <td style="text-align: center;vertical-align: middle;" >
 
                                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                                 data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
@@ -134,6 +163,7 @@
                                                 data-company_id="{{ $x->company_id }}"
                                                 data-product_g="{{ $x->groups->group_name }}"
                                                 data-group_id="{{ $x->group_id }}"
+                                                data-image-name ="{{ $x->image_name}}"
 
 
                                                 data-toggle="modal" href="#edit_Product" title="تعديل"><i
@@ -233,7 +263,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action='all_product/update' method="post">
+                    <form action='all_product/update' method="post" enctype="multipart/form-data">
                         {{ method_field('patch') }}
                         {{ csrf_field() }}
                         <div class="modal-body">
@@ -263,7 +293,13 @@
                             </select>
 
                            
-                            
+                            <h5 class="card-title">المرفقات</h5>
+    
+                            <div class="col-sm-12 col-md-12">
+                                <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
+                                    data-height="70" />
+                            </div><br>
+                            <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                             
                             
 
@@ -435,5 +471,35 @@
             modal.find('.modal-body #id').val(id);
         })
 
+</script>
+<script>
+
+    
+$(document).ready(function () {
+
+$('.increment-btn').click(function (e) {
+    e.preventDefault();
+    var incre_value = $(this).parents('.quantity').find('.qty-input').val();
+    var value = parseInt(incre_value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value<100){
+        value++;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+    }
+
+});
+
+$('.decrement-btn').click(function (e) {
+    e.preventDefault();
+    var decre_value = $(this).parents('.quantity').find('.qty-input').val();
+    var value = parseInt(decre_value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value>0){
+        value--;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+    }
+});
+
+});
 </script>
 @endsection
