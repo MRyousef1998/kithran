@@ -1,16 +1,4 @@
 @extends('layouts.master')
-<style>
-    table,
-    table td {
-      border: 0.5px solid #cccccc;
-    }
-    td {
-      height: 80px;
-      width: 160px;
-      text-align: center;
-      vertical-align: middle;
-    }
-  </style>
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -20,19 +8,23 @@
     <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/prism/prism.css') }}" rel="stylesheet">
+    
 @endsection
 
 @section('title')
-     طلبيات استيراد
+   
 @stop
-
+ 
+ 
 @section('page-header')
     <!-- breadcrumb -->
+
+    
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">قائمة الطلبيات</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
-                    استيراد</span>
+                <h4 class="content-title mb-0 my-auto">طلبيات الاستيراد</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                   الطلبيات </span>
             </div>
         </div>
 
@@ -53,18 +45,10 @@
             </ul>
         </div>
     @endif
-    @if (session()->has('Erorr'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{ session()->get('Erorr') }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-@endif
 
-    @if (session()->has('Edit'))
+    @if (session()->has('edit'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{ session()->get('Edit') }}</strong>
+            <strong>{{ session()->get('edit') }}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -91,95 +75,36 @@
     <!-- row -->
     <div class="row">
 
-        <div class="col-xl-12">
-            <div class="card mg-b-20">
-                <div class="card-header pb-0">
-             <div class="d-flex justify-content-between">
+      <div class="col-xl-12">
+						<div class="card mg-b-20" >
+							<div class="card-header pb-0">
+                                     <div class="d-flex justify-content-between">
 
-                    <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
-                                data-toggle="modal" href="#exampleModal">اضافة طلبية استيراد</a>
+                    <a href="import_order/add_order/create" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                > <i
+                                class="fas fa-plus"></i>&nbsp; اضافة طلبية استيراد جديدة </a>
                     </div>
+
+								
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
+                                    <th class="border-bottom-0" >رقم المنتج</th>
+                                    <th class="border-bottom-0">الشركة</th>
+                                    <th class="border-bottom-0">اسم المنتج</th>
                                     
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصورة </th>
+                                    <th class="border-bottom-0">بلد المنشأ</th>
 
 
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمليات</th>
+                                    <th class="border-bottom-0">العمليات</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i = 0; ?>
-                                @foreach ($productDetail as $x)
-                                    <?php $i++; ?>
-                                    <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
-                                        <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
-
-                                        <td style="text-align: center;vertical-align: middle;">
-                                            
-                                            <div class = "vertical"><div>
-                                                <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="180"  height="120" /></div>
-                                                <div>
-                                                    {{ $x->product_name }}</div>
-                                            </div>
-
-                                            
-                                            </td>
-                                      
-                                        <td style="text-align: center;vertical-align: middle;">{{ $x->groups->group_name }}</td>
-
-                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
-                                        
-                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                            <div class="input-group quantity">
-                                                <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">-</span>
-                                                </div>
-                                                <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
-                                                <div class="input-group-append increment-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">+</span>
-                                                </div>
-                                            </div>
-                                        </td>
-
-
-                                        <td style="text-align: center;vertical-align: middle;" >
-
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->companies->company_name }}"
-                                                data-company_id="{{ $x->company_id }}"
-                                                data-product_g="{{ $x->groups->group_name }}"
-                                                data-group_id="{{ $x->group_id }}"
-                                                data-image-name ="{{ $x->image_name}}"
-
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
-
-
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
-
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+                                
                         </table>
                     </div>
                 </div>
@@ -191,207 +116,9 @@
     </div>
 
 
-
- <!-- add -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">اضافة منتج</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div> 
-                    
-                    <form action="{{ route('all_product.store') }}" method="post" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        <div class="modal-body">
-
-                          <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة</label>
-                            <select name="productC" id="productC" class="form-control" required>
-                                <option value="" selected disabled> --حدد الشركة--</option>
-                                @foreach ($productCompany as $productC)
-                                    <option value="{{ $productC->id }}">{{ $productC->company_name }}</option>
-                                @endforeach
-                            </select>
-                          
-                                <label for="exampleInputEmail1">اسم المنتج</label>
-                                <input type="text" class="form-control" id="product_name" name="product_name" required>
-                           
-                            
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الصنف</label>
-                            <select name="productG" id="productG" class="form-control" required>
-                                <option value="" selected disabled> --حدد الصنف--</option>
-                                @foreach ($productGroups as $productGroup)
-                                    <option value="{{$productGroup->id}}" >{{ $productGroup->group_name }}</option>
-                                @endforeach
-                            </select>
-                        <br>
-                            
-                            <h5 class="card-title">المرفقات</h5>
-    
-                            <div class="col-sm-12 col-md-12">
-                                <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                    data-height="70" />
-                            </div><br>
-                            <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">تاكيد</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-        <!--UDAETE-->
-
-        <div class="modal fade" id="edit_Product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">تعديل منتج</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action='all_product/update' method="post" enctype="multipart/form-data">
-                        {{ method_field('patch') }}
-                        {{ csrf_field() }}
-                        <div class="modal-body">
-                            <input type="hidden" class="form-control" name="company_id" id="company_id" value="">
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
-                            <select name="company_name" id="company_name" class="form-control" required>
-                                @foreach ($productCompany as $productC)
-                                    <option >{{ $productC->company_name }}</option>
-                                @endforeach
-                            </select>
-
-                            <div class="form-group">
-                                <label for="title">اسم المنتج :</label>
-
-                                <input type="hidden" class="form-control" name="id" id="id" value="">
-                                
-                                <input type="text" class="form-control" name="product_name" id="product_name" required>
-                            </div>
-                            <input type="hidden" class="form-control" name="group_id" id="group_id" value="">
-
-                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الصنف</label>
-                            <select name="productG" id="productG" class="form-control" required>
-                               
-                                @foreach ($productGroups as $productGroup)
-                                    <option   >{{ $productGroup->group_name }}</option>
-                                @endforeach
-                            </select>
-
-                           
-                            <h5 class="card-title">المرفقات</h5>
-    
-                            <div class="col-sm-12 col-md-12">
-                                <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                    data-height="70" />
-                            </div><br>
-                            <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
-                            
-                            
-
-                           
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">تعديل البيانات</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-  <!-- delete -->
-        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">حذف المنتج</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action="all_product/destroy" method="post">
-                        {{ method_field('delete') }}
-                        {{ csrf_field() }}
-                        <div class="modal-body">
-                            <p>هل انت متاكد من عملية الحذف ؟</p><br>
-                            <input type="hidden" name="id" id="id" value="">
-                            <input class="form-control" name="product_name" id="product_name" type="text" readonly>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-danger">تاكيد</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
 <!--update-->
 
- <div class="modal fade" id="edit_Product1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">تعديل منتج</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <form action='all_product/update' method="post">
-                        {{ method_field('patch') }}
-                        {{ csrf_field() }}
-                        <div class="modal-body">
-                             
-                            <div class="form-group">
-                                <label for="title">اسم المنتج :</label>
-
-                                <input type="hidden" class="form-control" name="id" id="id" value="">
-
-                                <input type="text" class="form-control" name="product_name" id="product_name">
-                            </div>
-                            <div class="form-group">
-                          <label class="my-1 mr-1" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
-                            <select name="company_name" id="company_name" class="custom-select my-1 mr-sm-1" required>
-                                @foreach ($productCompany as $productC)
-                                    <option value="{{ $productC->id }}">{{ $productC->company_name }}</option>
-                                @endforeach
-                            </select>                          
-
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">تعديل البيانات</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
-
-	
-
+           
 
 
 
@@ -405,6 +132,8 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+
+    <!-- Internal Data tables -->
     <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
@@ -421,85 +150,15 @@
     <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
     <!--Internal  Datatable js -->
-    <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
+    <!--Internal  Notify js -->
+    <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
+
+  
 
 
+	
 
-	<script>
-    $('#exampleModal2').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var company_name = button.data('company_name')
-        var country_of_manufacture = button.data('country_of_manufacture')
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #company_name').val(company_name);
-        modal.find('.modal-body #country_of_manufacture').val(country_of_manufacture);
-    })
-
-</script>
-<script>
-    $('#delete').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var product_name = button.data('product_name')
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #product_name').val(product_name);
-    })
-
-
-     $('#edit_Product').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var product_name = button.data('product_name')
-            var company_name = button.data('company_name')
-            var id = button.data('id')
-            var group_id = button.data('group_id')
-            var company_id = button.data('company_id')
-            var productG = button.data('product_g')
-            window.alert(group_id);
-            
-            var modal = $(this)
-            modal.find('.modal-body #product_name').val(product_name);
-            modal.find('.modal-body #company_name').val(company_name);
-            modal.find('.modal-body #productG').val(productG);
-            modal.find('.modal-body #group_id').val(group_id);
-            modal.find('.modal-body #company_id').val(company_id);
-
-            modal.find('.modal-body #id').val(id);
-        })
-
-</script>
-<script>
-
-    
-$(document).ready(function () {
-
-$('.increment-btn').click(function (e) {
-    e.preventDefault();
-    var incre_value = $(this).parents('.quantity').find('.qty-input').val();
-    var value = parseInt(incre_value, 10);
-    value = isNaN(value) ? 0 : value;
-    if(value<100){
-        value++;
-        $(this).parents('.quantity').find('.qty-input').val(value);
-    }
-
-});
-
-$('.decrement-btn').click(function (e) {
-    e.preventDefault();
-    var decre_value = $(this).parents('.quantity').find('.qty-input').val();
-    var value = parseInt(decre_value, 10);
-    value = isNaN(value) ? 0 : value;
-    if(value>0){
-        value--;
-        $(this).parents('.quantity').find('.qty-input').val(value);
-    }
-});
-
-});
-</script>
 @endsection

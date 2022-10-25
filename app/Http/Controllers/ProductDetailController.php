@@ -1,8 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\ProductCategory;
 use App\Models\ProductCompany;
 use App\Models\ProductGroup;
+
+
 
 use App\Models\ProductDetail;
 use Illuminate\Http\Request;
@@ -19,10 +23,13 @@ class ProductDetailController extends Controller
         $productDetail = ProductDetail::all();
         $productCompany = ProductCompany::all();
         $productGroups = ProductGroup::all();
+        $productCategoies = ProductCategory::all();
+
+
 
        
 
-        return view('my_product.all_product',compact('productDetail','productCompany','productGroups'));
+        return view('my_product.all_product',compact('productDetail','productCompany','productGroups',"productCategoies"));
     }
 
     /**
@@ -43,6 +50,7 @@ class ProductDetailController extends Controller
      */
     public function store(Request $request)
     { 
+       
         $input =$request->all();
         $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->exists();
         if ($p_exists){
@@ -55,7 +63,8 @@ class ProductDetailController extends Controller
          $validatedData = $request->validate([
             'product_name' => 'required|max:255',
           'productG' => 'required',
-          "productC"=>'required'
+          "productC"=>'required',
+
         ],[
 
             'product_name.required' =>'يرجي ادخال اسم المنتج',
@@ -81,6 +90,7 @@ class ProductDetailController extends Controller
         'company_id' => $request->productC,
         'image_name' =>  $fileName,
         'group_id' => $request->productG,
+        'category_id' => $request->productCategory,
 
     ]);
 // move pic
@@ -136,11 +146,17 @@ session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
       
         
         $input =$request->all();
+        $company_id = ProductCompany::where('company_name', $request->company_name)->first()->id;
+        $category_id = ProductCategory::where('category_name', $request->product_category_name)->first()->id;
+        $group_id = ProductGroup::where('group_name', $request->productG)->first()->id;
+
+        
         $fileName=null;
         if($request->pic!=null){
         $imageName = $request->pic;
         $fileName = $imageName->getClientOriginalName();}
-        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$input['productG'])->where('id','!=',$input['id'])->exists();
+        $p_exists=ProductDetail::where('product_name','=',$input['product_name'])->where('group_id','=',$group_id)->where('company_id','=',$company_id)
+        ->where('category_id','=',$category_id)->where('id','!=',$input['id'])->exists();
         if ($p_exists){
             session()->flash('Erorr', 'هذا المنتج موجود بالفعل ');
            
@@ -159,14 +175,17 @@ session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
     );
 
         if($fileName==null){
-        $id = ProductCompany::where('company_name', $request->company_name)->first()->id;
+        
 
         $Products = ProductDetail::findOrFail($request->id);
  
         $Products->update([
         'product_name' => $request->product_name,
-        'company_id' => $id,
-        'group_id' => $request->group_id,
+        'company_id' => $company_id,
+        'group_id' => $group_id,
+        'category_id' => $category_id,
+
+
         ]);
  
         session()->flash('Edit', 'بدون تعديل صورة تم تعديل المنتج بنجاح' );
@@ -175,15 +194,16 @@ session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
 
 
         if($fileName!=null){
-            $id = ProductCompany::where('company_name', $request->company_name)->first()->id;
+           
 
             $Products = ProductDetail::findOrFail($request->id);
            
             $Products->update([
             'product_name' => $request->product_name,
-            'company_id' => $id,
-            'group_id' => $request->group_id,
+            'company_id' => $company_id,
+            'group_id' => $group_id,
             'image_name' =>  $fileName,
+            'category_id' => $category_id,
             ]);
            
             

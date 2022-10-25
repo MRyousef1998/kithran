@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterProductDetailsTable extends Migration
+class AlterTableProductDetails extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AlterProductDetailsTable extends Migration
     public function up()
     {
         Schema::table('product_details', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('id')->on('product_categories');
         });
     }
 
@@ -26,7 +27,7 @@ class AlterProductDetailsTable extends Migration
     public function down()
     {
         Schema::table('product_details', function (Blueprint $table) {
-            //
+            $table->dropColumn('category_id');
         });
     }
 }

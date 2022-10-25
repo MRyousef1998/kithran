@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\User;
+
 use Illuminate\Http\Request;
 use App\Models\ProductCompany;
 use App\Models\ProductGroup;
+use App\Models\ProductCategory;
 
 use App\Models\ProductDetail;
 class OrderController extends Controller
@@ -33,7 +36,19 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        $importClints = User::where('role_id','=',2)->get();
+      //  $importClint = User::where('role_id','=',2)->get();
+        $clients = User::where('role_id','=',3)->get();
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+     
+        $orders= Order::all();
+
+
+       
+
+        return view('order.add_import_order',compact('importClints','clients','productDetail'));
     }
 
     /**
