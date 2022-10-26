@@ -80,7 +80,7 @@
 							<div class="card-header pb-0">
                                      <div class="d-flex justify-content-between">
 
-                    <a href="import_order/add_order/create" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                    <a href="add_order" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 > <i
                                 class="fas fa-plus"></i>&nbsp; اضافة طلبية استيراد جديدة </a>
                     </div>

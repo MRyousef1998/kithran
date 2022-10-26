@@ -106,4 +106,22 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function create1()
+    {
+        $importClints = User::where('role_id','=',2)->get();
+      //  $importClint = User::where('role_id','=',2)->get();
+        $clients = User::where('role_id','=',3)->get();
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+     
+        $orders= Order::all();
+
+
+       
+
+        return view('order.add_import_order1',compact('importClints','clients','productDetail'));
+    }
+
 }
