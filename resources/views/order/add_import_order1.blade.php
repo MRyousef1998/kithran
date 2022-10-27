@@ -20,10 +20,22 @@
     <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/prism/prism.css') }}" rel="stylesheet">
+    @section('css')
+    <!--- Internal Select2 css-->
+    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+    <!---Internal Fileupload css-->
+    <link href="{{ URL::asset('assets/plugins/fileuploads/css/fileupload.css') }}" rel="stylesheet" type="text/css" />
+    <!---Internal Fancy uploader css-->
+    <link href="{{ URL::asset('assets/plugins/fancyuploder/fancy_fileupload.css') }}" rel="stylesheet" />
+    <!--Internal Sumoselect css-->
+    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css') }}">
+    <!--Internal  TelephoneInput css-->
+    <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
+@endsection
 @endsection
 
 @section('title')
-    قائمة البضائع
+  اضافة طلبية 
 @stop
 
 @section('page-header')
@@ -31,8 +43,8 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto">البضائع</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
-                    قائمة البضائع</span>
+                <h4 class="content-title mb-0 my-auto">طلبيات الاستيراد</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/
+                    اضافة طلبية</span>
             </div>
         </div>
 
@@ -240,7 +252,7 @@
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
                                                         
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
-                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصورة </th>
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
                     
                     
                                                     
@@ -257,8 +269,8 @@
                     
                                                             <td style="text-align: center;vertical-align: middle;">
                                                                 
-                                                                <div class = "vertical"><div>
-                                                                    <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="180"  height="120" /></div>
+                                                                <div class = "vertical"   ><div>
+                                                                    <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" /></div>
                                                                     <div>
                                                                         {{ $x->product_name }}</div>
                                                                 </div>
@@ -270,14 +282,14 @@
                     
                                                             <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
                                                             
-                                                            <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                                                <div class="input-group quantity">
+                                                            <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;width:10% ;height:10%">
+                                                                <div class="input-group quantity" style=" ">
                                                                     <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                                        <span class="input-group-text">-</span>
+                                                                        <span class="input-group-text"    >-</span>
                                                                     </div>
                                                                     <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
                                                                     <div class="input-group-append increment-btn" style="cursor: pointer">
-                                                                        <span class="input-group-text">+</span>
+                                                                        <span class="input-group-text"  >+</span>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -326,6 +338,37 @@
     <!--Internal  Datatable js -->
     <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
 
+ <!-- Internal Select2 js-->
+    <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <!--Internal Fileuploads js-->
+    <script src="{{ URL::asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/fileuploads/js/file-upload.js') }}"></script>
+    <!--Internal Fancy uploader js-->
+    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.ui.widget.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.fileupload.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.iframe-transport.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/fancyuploder/jquery.fancy-fileupload.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/fancyuploder/fancy-uploader.js') }}"></script>
+    <!--Internal  Form-elements js-->
+    <script src="{{ URL::asset('assets/js/advanced-form-elements.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/select2.js') }}"></script>
+    <!--Internal Sumoselect js-->
+    <script src="{{ URL::asset('assets/plugins/sumoselect/jquery.sumoselect.js') }}"></script>
+    <!--Internal  Datepicker js -->
+    <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+    <!--Internal  jquery.maskedinput js -->
+    <script src="{{ URL::asset('assets/plugins/jquery.maskedinput/jquery.maskedinput.js') }}"></script>
+    <!--Internal  spectrum-colorpicker js -->
+    <script src="{{ URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js') }}"></script>
+    <!-- Internal form-elements js -->
+    <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
+
+    <script>
+        var date = $('.fc-datepicker').datepicker({
+            dateFormat: 'yy-mm-dd'
+        }).val();
+
+    </script>
 
 
 	<script>
