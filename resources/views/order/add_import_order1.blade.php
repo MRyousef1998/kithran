@@ -12,15 +12,6 @@
     }
   </style>
 @section('css')
-    <!-- Internal Data table css -->
-    <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ URL::asset('assets/plugins/prism/prism.css') }}" rel="stylesheet">
-    @section('css')
     <!--- Internal Select2 css-->
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <!---Internal Fileupload css-->
@@ -31,7 +22,8 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css') }}">
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
-@endsection
+    
+    
 @endsection
 
 @section('title')
@@ -129,7 +121,7 @@
 
 
                                 <label for="inputName" class="control-label">المورد</label>
-                                <select name="productCategory" class="form-control SlectBox"
+                                <select name="importer" class="form-control SlectBox"
                                     >
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد  المورد</option>
@@ -140,7 +132,7 @@
                             </div>
                               <div class="col">
                                 <label for="inputName" class="control-label">حدد العميل </label>
-                                <select name="productCompanies" class="form-control SlectBox" >
+                                <select name="clint" class="form-control SlectBox" onchange="myFunctiontoToDisableReadOnly()">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد العميل </option>
                                     @foreach ($clients as $client)
@@ -159,14 +151,14 @@
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">الحالة   </label>
-                                <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myFunction()">
+                                <select name="status" id="status" class="form-control" onchange="myFunctiontoToDisableReadOnly()">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد الحالة </option>
                                     <option value="1">لم تصل</option>
                                     <option value="2">تم الاستلام</option>
                                     <option value="3">مستلمة وغير مباعة </option>
-                                    <option value="3">قيد التغليف   </option>
-                                    <option value="3">  تم الشحن </option>
+                                    <option value="4">قيد التغليف   </option>
+                                    <option value="5">  تم الشحن </option>
 
 
 
@@ -176,15 +168,16 @@
 
                             <div class="col">
                                 <label>تاريخ الفاتورة</label>
-                                <input class="form-control fc-datepicker" name="invoice_Date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full  "type="date"  name="order_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
 
                             <div class="col">
                                 <label>تاريخ الاستحقاق</label>
-                                <input class="form-control fc-datepicker" name="Due_date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full  " type="date" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
+                          
 
                         </div>
                        
@@ -205,7 +198,7 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">قيمة ضريبة القيمة المضافة</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" readonly>
+                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0>
                             </div>
 
                             <div class="col">
@@ -253,6 +246,13 @@
                                                         
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>
+
+
+
+
                     
                     
                                                     
@@ -282,18 +282,45 @@
                     
                                                             <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
                                                             
-                                                            <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;width:10% ;height:10%">
+                                                            <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                                 <div class="input-group quantity" style=" ">
                                                                     <div class="input-group-prepend decrement-btn" style="cursor: pointer">
                                                                         <span class="input-group-text"    >-</span>
                                                                     </div>
-                                                                    <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
+                                                                    <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="1">
                                                                     <div class="input-group-append increment-btn" style="cursor: pointer">
                                                                         <span class="input-group-text"  >+</span>
                                                                     </div>
                                                                 </div>
                                                             </td>
-                    
+
+
+
+
+                                                                                 <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                                                <div class="input-group quantity" style=" ">
+                                                                    
+                                                                    <input type="text" class=" form-control " style="text-align: center;vertical-align: middle;"id="price" name ="price" onchange="myFun()" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"readonly>
+                                                                    
+                                                                </div>
+                                                            </td>
+
+                                                            <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                                                <div class="input-group quantity" style=" ">
+                                                                    
+                                                                    <input type="text" class="commission_pice form-control " style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="myFun()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                    
+                                                                </div>
+                                                            </td>
+                                                            <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                                                <div class="input-group quantity" style=" ">
+                                                                    
+                                                                    <input type="text" class="form-control total1" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
+                                                                    
+                                                                </div>
+                                                            </td>
+
+                                                             
                     
                                                             
                                                         </tr>
@@ -318,27 +345,7 @@
   
  @endsection
 @section('js')
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.dataTables.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/jszip.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/pdfmake.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/vfs_fonts.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.print.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
-    <!--Internal  Datatable js -->
-    <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
-
- <!-- Internal Select2 js-->
+     <!-- Internal Select2 js-->
     <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
     <!--Internal Fileuploads js-->
     <script src="{{ URL::asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
@@ -362,67 +369,12 @@
     <script src="{{ URL::asset('assets/plugins/spectrum-colorpicker/spectrum.js') }}"></script>
     <!-- Internal form-elements js -->
     <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
-
     <script>
         var date = $('.fc-datepicker').datepicker({
             dateFormat: 'yy-mm-dd'
         }).val();
 
     </script>
-
-
-	<script>
-    $('#exampleModal2').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var company_name = button.data('company_name')
-        var country_of_manufacture = button.data('country_of_manufacture')
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #company_name').val(company_name);
-        modal.find('.modal-body #country_of_manufacture').val(country_of_manufacture);
-    })
-
-</script>
-<script>
-    $('#delete').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var product_name = button.data('product_name')
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #product_name').val(product_name);
-    })
-
-
-     $('#edit_Product').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var product_name = button.data('product_name')
-            var company_name = button.data('company_name')
-            var id = button.data('id')
-            var group_id = button.data('group_id')
-            var company_id = button.data('company_id')
-            var productG = button.data('product_g')
-            var product_category_name = button.data('product_category_name')
-            var product_category_id = button.data('product_category_id')
-
-            window.alert(product_category_name);
-            
-            var modal = $(this)
-            modal.find('.modal-body #product_name').val(product_name);
-            modal.find('.modal-body #company_name').val(company_name);
-            modal.find('.modal-body #productG').val(productG);
-            modal.find('.modal-body #group_id').val(group_id);
-            modal.find('.modal-body #company_id').val(company_id);
-            modal.find('.modal-body #product_category_name').val("ايخسيحتيخ");
-           
-            
-
-
-            modal.find('.modal-body #id').val(id);
-        })
-
-</script>
 <script>
 
     
@@ -434,8 +386,11 @@ $('.increment-btn').click(function (e) {
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
     if(value<100){
+                 document.getElementById('price').removeAttribute('readonly');
+
         value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
+        myFun();
     }
 
 });
@@ -445,12 +400,96 @@ $('.decrement-btn').click(function (e) {
     var decre_value = $(this).parents('.quantity').find('.qty-input').val();
     var value = parseInt(decre_value, 10);
     value = isNaN(value) ? 0 : value;
+    
     if(value>0){
         value--;
         $(this).parents('.quantity').find('.qty-input').val(value);
+        myFun();
+    }
+    if(value==0){
+         document.getElementById('price').setAttribute('readonly',true);
+         document.getElementById("total_price").value = 0;
     }
 });
 
 });
 </script>
+
+<script>
+        function myFunctiontoToDisableReadOnly() {
+
+
+             
+                 document.getElementById('commission_pice').removeAttribute('readonly');
+
+                
+            
+
+        }
+
+    </script>
+     <script>
+        function myFun() {
+
+            var quntity = parseFloat(document.getElementById("quntity").value);
+             
+            var pirce = parseFloat(document.getElementById("price").value);
+            var commission_pice = parseFloat(document.getElementById("commission_pice").value);
+            var Value_VAT = parseFloat(document.getElementById("Value_VAT").value);
+
+            var total_pirce = (pirce *quntity)+(commission_pice*quntity);
+
+
+            if (typeof total_pirce === 'undefined'  ) {
+
+                alert('يرجي ادخال مبلغ العمولة ');
+
+            } 
+            
+            document.getElementById("total_price").value = total_pirce;
+            var total_order=0;
+             var total_commission=0;
+        var total_elements=document.getElementsByClassName("total1");
+        
+        var commission_pice_elements=document.getElementsByClassName("commission_pice");
+              
+
+        var l=total_elements.length;
+
+            for(var i=0;i<l;i++)
+            {
+
+           total_order=+total_elements[i].value;
+           
+           
+            total_commission=+commission_pice_elements[i].value;
+               
+            }
+           
+
+            document.getElementById("Total").value =total_order+Value_VAT;
+            document.getElementById("Amount_Commission").value =total_commission;
+
+
+
+
+            
+            {{-- else {
+                var intResults = Amount_Commission2 * Rate_VAT / 100;
+
+                var intResults2 = parseFloat(intResults + Amount_Commission2);
+
+                sumq = parseFloat(intResults).toFixed(2);
+
+                sumt = parseFloat(intResults2).toFixed(2);
+
+                
+
+                document.getElementById("Total").value = sumt;
+
+            } --}}
+
+        }
+
+    </script>
 @endsection
