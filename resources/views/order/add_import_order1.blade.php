@@ -236,9 +236,10 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
-                                            <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                                            <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
                                                 <thead>
                                                     <tr>
+                                                         <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
                                                         <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
@@ -248,22 +249,19 @@
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
-                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>
-
-
-
-
-                    
-                    
-                                                    
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>                                 
                     
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    
                                                     <?php $i = 0; ?>
                                                     @foreach ($productDetail as $x)
                                                         <?php $i++; ?>
+                                                        <div class="all_row">
                                                         <tr>
+                                                            
+                                                            <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1"  ></td>
                                                             <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
                                                             <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
                     
@@ -282,10 +280,10 @@
                     
                                                             <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
                                                             
-                                                            <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                                            <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                                 <div class="input-group quantity" style=" ">
                                                                     <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                                        <span class="input-group-text"    >-</span>
+                                                                        <span class="input-group-text" >-</span>
                                                                     </div>
                                                                     <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="1">
                                                                     <div class="input-group-append increment-btn" style="cursor: pointer">
@@ -298,7 +296,7 @@
 
 
                                                                                  <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                                <div class="input-group quantity" style=" ">
+                                                                <div class="input-group " style=" ">
                                                                     
                                                                     <input type="text" class=" form-control " style="text-align: center;vertical-align: middle;"id="price" name ="price" onchange="myFun()" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"readonly>
                                                                     
@@ -306,24 +304,26 @@
                                                             </td>
 
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                                <div class="input-group quantity" style=" ">
+                                                                
                                                                     
-                                                                    <input type="text" class="commission_pice form-control " style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="myFun()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                    <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="myFun()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
                                                                     
-                                                                </div>
+                                                                
                                                             </td>
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                                <div class="input-group quantity" style=" ">
+                                                                <div class="input-group" style=" ">
                                                                     
-                                                                    <input type="text" class="form-control total1" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
+                                                                    <input type="text" class="form-control rr" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
                                                                     
                                                                 </div>
                                                             </td>
 
                                                              
-                    
+                                                            
                                                             
                                                         </tr>
+                                                    </div>
+                                                   
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -383,6 +383,10 @@ $(document).ready(function () {
 $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
+   $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
+
+
+
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
     if(value<100){
@@ -418,9 +422,14 @@ $('.decrement-btn').click(function (e) {
 <script>
         function myFunctiontoToDisableReadOnly() {
 
-
-             
-                 document.getElementById('commission_pice').removeAttribute('readonly');
+            var selected = new Array();
+           
+            $("#datatable input[type=text]").each(function() {
+            
+                selected.push(this.value);
+            });
+             alrt(selected.length);
+                 document.getElementsByClassName('commission_pice').removeAttribute('readonly');
 
                 
             
@@ -491,5 +500,31 @@ $('.decrement-btn').click(function (e) {
 
         }
 
+    </script>
+    <script>
+
+
+        function CheckAll(className,elem){
+
+            var elements=document.getElementsByClassName(className);
+            var l=elements.length;
+           
+            if(elem.checked){
+                for(var i=0;i<l;i++){
+
+                    elements[i].checked=true;
+
+                }
+
+
+            }
+            else{
+                for(var i=0;i<l;i++){
+                    elements[i].checked=false;
+                }
+            }
+
+
+        }
     </script>
 @endsection
