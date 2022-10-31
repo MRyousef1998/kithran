@@ -132,7 +132,7 @@
                             </div>
                               <div class="col">
                                 <label for="inputName" class="control-label">حدد العميل </label>
-                                <select name="clint" class="form-control SlectBox" onchange="myFunctiontoToDisableReadOnly()">
+                                <select name="clint" id="clint" class="form-control SlectBox" onchange="">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد العميل </option>
                                     @foreach ($clients as $client)
@@ -285,7 +285,7 @@
                                                                     <div class="input-group-prepend decrement-btn" style="cursor: pointer">
                                                                         <span class="input-group-text" >-</span>
                                                                     </div>
-                                                                    <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="1">
+                                                                    <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
                                                                     <div class="input-group-append increment-btn" style="cursor: pointer">
                                                                         <span class="input-group-text"  >+</span>
                                                                     </div>
@@ -298,7 +298,7 @@
                                                                                  <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                                 <div class="input-group " style=" ">
                                                                     
-                                                                    <input type="text" class=" form-control " style="text-align: center;vertical-align: middle;"id="price" name ="price" onchange="myFun()" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"readonly>
+                                                                    <input type="text" class="price form-control " style="text-align: center;vertical-align: middle;"id="price" name ="price" onchange="myFun()" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"readonly>
                                                                     
                                                                 </div>
                                                             </td>
@@ -313,7 +313,7 @@
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                                 <div class="input-group" style=" ">
                                                                     
-                                                                    <input type="text" class="form-control rr" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
+                                                                    <input type="text" class="total_price form-control" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
                                                                     
                                                                 </div>
                                                             </td>
@@ -383,18 +383,30 @@ $(document).ready(function () {
 $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
-   $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
-
+    var price_elem=$(this).parent().parent().parent().find('.price');
+    
+    
+   
 
 
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
     if(value<100){
-                 document.getElementById('price').removeAttribute('readonly');
-
-        value++;
+         var commission_pice= $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
+       commission_pice.removeAttr("readonly");
+     value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
-        myFun();
+        price_elem.removeAttr("readonly");
+       var clint=document.getElementById("clint").value;
+    if(clint!=""){
+           $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
+        }
+        var total=(price_elem.val()*value )+(commission_pice.val());
+        alert(total);
+        var total_pirce_elem=$(this).parent().parent().parent().find('.total_price');
+        total_pirce_elem.val(total);
+
+        
     }
 
 });
@@ -408,10 +420,18 @@ $('.decrement-btn').click(function (e) {
     if(value>0){
         value--;
         $(this).parents('.quantity').find('.qty-input').val(value);
-        myFun();
+     
     }
     if(value==0){
-         document.getElementById('price').setAttribute('readonly',true);
+         $(this).parent().parent().parent().find('.price').attr("readonly","true");
+         
+         
+        
+            $(this).parent().parent().parent().find('.commission_pice').attr("readonly","true");
+
+    
+         
+       
          document.getElementById("total_price").value = 0;
     }
 });
@@ -438,7 +458,7 @@ $('.decrement-btn').click(function (e) {
 
     </script>
      <script>
-        function myFun() {
+        function myFun(elem) {
 
             var quntity = parseFloat(document.getElementById("quntity").value);
              
