@@ -197,8 +197,8 @@
                                     readonly>
                             </div>
                             <div class="col">
-                                <label for="inputName" class="control-label">قيمة ضريبة القيمة المضافة</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0>
+                                <label for="inputName" class="control-label" >قيمة ضريبة القيمة المضافة</label>
+                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 onchange="calTotal()">
                             </div>
 
                             <div class="col">
@@ -296,9 +296,10 @@
 
 
                                                                                  <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                                <div class="input-group " style=" ">
+                                                                <div class="input-group" style=" ">
                                                                     
-                                                                    <input type="text" class="price form-control " style="text-align: center;vertical-align: middle;"id="price" name ="price" onchange="myFun()" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"readonly>
+                                                                    <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+
                                                                     
                                                                 </div>
                                                             </td>
@@ -306,7 +307,7 @@
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                                 
                                                                     
-                                                                    <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="myFun()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                    <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="calTotal()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
                                                                     
                                                                 
                                                             </td>
@@ -384,27 +385,35 @@ $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
     var price_elem=$(this).parent().parent().parent().find('.price');
+
     
-    
+    var total=0.0;
    
 
 
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
     if(value<100){
-         var commission_pice= $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
-       commission_pice.removeAttr("readonly");
+         var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
+      
      value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
         price_elem.removeAttr("readonly");
        var clint=document.getElementById("clint").value;
-    if(clint!=""){
+    
+    if(String(clint)!=""){
+    
            $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
+           total=parseFloat(price_elem.val()*value )+parseFloat(commission_pice.val()*value);
         }
-        var total=(price_elem.val()*value )+(commission_pice.val());
-        alert(total);
+        else{
+            total=parseFloat(price_elem.val() )*value;
+        }
+       
+        
         var total_pirce_elem=$(this).parent().parent().parent().find('.total_price');
         total_pirce_elem.val(total);
+        calTotal();
 
         
     }
@@ -440,18 +449,13 @@ $('.decrement-btn').click(function (e) {
 </script>
 
 <script>
-        function myFunctiontoToDisableReadOnly() {
+        function priceChange(className,elem) {
+            var qty= $(elem).parent().parent().parent().find('.qty-input').val();
 
-            var selected = new Array();
-           
-            $("#datatable input[type=text]").each(function() {
-            
-                selected.push(this.value);
-            });
-             alrt(selected.length);
-                 document.getElementsByClassName('commission_pice').removeAttribute('readonly');
-
+            var total=
+            $(elem).parent().parent().parent().find('.total_price').val(qty);
                 
+
             
 
         }
@@ -524,27 +528,55 @@ $('.decrement-btn').click(function (e) {
     <script>
 
 
-        function CheckAll(className,elem){
+        function calTotal(){
+            
+            var elements_price=document.getElementsByClassName("total_price");
+            var elements_commission=document.getElementsByClassName("commission_pice");
+            var elements_qty=document.getElementsByClassName("qty-input");
+            
+            var Value_VAT = parseFloat(document.getElementById("Value_VAT").value);
 
-            var elements=document.getElementsByClassName(className);
-            var l=elements.length;
+            var l=elements_price.length;
            
-            if(elem.checked){
+
+          
+           var total_price=0;
+           var total_commission=0;
                 for(var i=0;i<l;i++){
 
-                    elements[i].checked=true;
+                    total_price+=parseFloat(elements_price[i].value);
+                    total_commission+=parseFloat(elements_commission[i].value)*parseFloat(elements_qty[i].value);
 
                 }
 
-
-            }
-            else{
-                for(var i=0;i<l;i++){
-                    elements[i].checked=false;
-                }
-            }
+              
+            document.getElementById("Amount_Commission").value =parseFloat(total_commission);
+              document.getElementById("Total").value =parseFloat(total_price)+parseFloat(total_commission)+Value_VAT;
+          
 
 
         }
+        function CheckAll(className,elem){
+
+var elements=document.getElementsByClassName(className);
+var l=elements.length;
+
+if(elem.checked){
+    for(var i=0;i<l;i++){
+
+        elements[i].checked=true;
+
+    }
+
+
+}
+else{
+    for(var i=0;i<l;i++){
+        elements[i].checked=false;
+    }
+}
+
+
+}
     </script>
 @endsection
