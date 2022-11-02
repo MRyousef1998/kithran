@@ -58,6 +58,8 @@ Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
  
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
+Route::post('add_order', 'App\Http\Controllers\OrderController@store');
+
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 

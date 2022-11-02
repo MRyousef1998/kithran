@@ -221,9 +221,7 @@
                             <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
                                 data-height="70" />
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
-                        </div>
+                      
                         
                         <br>
                             
@@ -330,7 +328,11 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
+
                                         </div>
+                                          <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                        </div>
                                     </div>
                                 </div>
                             </div>
