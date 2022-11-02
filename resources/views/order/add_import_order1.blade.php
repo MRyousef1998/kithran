@@ -24,6 +24,8 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
     
     
+    
+    
 @endsection
 
 @section('title')
@@ -168,13 +170,13 @@
 
                             <div class="col">
                                 <label>تاريخ الفاتورة</label>
-                                <input class="form-control appearance-none block w-full  "type="date"  name="order_Date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full"type="date"  name="order_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
 
                             <div class="col">
                                 <label>تاريخ الاستحقاق</label>
-                                <input class="form-control appearance-none block w-full  " type="date" name="Due_date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full" type="date" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
                           
@@ -305,10 +307,10 @@
                                                             </td>
 
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                                                <div class="input-group" style=" ">
                                                                 
-                                                                    
-                                                                    <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="calTotal()"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
-                                                                    
+                                                                    <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                </div>
                                                                 
                                                             </td>
                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
@@ -394,10 +396,10 @@ $('.increment-btn').click(function (e) {
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
     if(value<100){
-         var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
-      
-     value++;
+        value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
+
+         var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
         price_elem.removeAttr("readonly");
        var clint=document.getElementById("clint").value;
     
@@ -424,23 +426,36 @@ $('.decrement-btn').click(function (e) {
     e.preventDefault();
     var decre_value = $(this).parents('.quantity').find('.qty-input').val();
     var value = parseInt(decre_value, 10);
+    var price_elem=$(this).parent().parent().parent().find('.price');
+    var total=0.0;
     value = isNaN(value) ? 0 : value;
     
     if(value>0){
         value--;
         $(this).parents('.quantity').find('.qty-input').val(value);
+        var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
+       
+       var clint=document.getElementById("clint").value;
+    
+    if(String(clint)!=""){
+    
+          
+           total=parseFloat(price_elem.val()*value )+parseFloat(commission_pice.val()*value);
+        }
+        else{
+            total=parseFloat(price_elem.val() )*value;
+        }
+       
+        
+        var total_pirce_elem=$(this).parent().parent().parent().find('.total_price');
+        total_pirce_elem.val(total);
+        calTotal();
      
     }
     if(value==0){
          $(this).parent().parent().parent().find('.price').attr("readonly","true");
-         
-         
-        
-            $(this).parent().parent().parent().find('.commission_pice').attr("readonly","true");
+         $(this).parent().parent().parent().find('.commission_pice').attr("readonly","true");
 
-    
-         
-       
          document.getElementById("total_price").value = 0;
     }
 });
@@ -451,11 +466,22 @@ $('.decrement-btn').click(function (e) {
 <script>
         function priceChange(className,elem) {
             var qty= $(elem).parent().parent().parent().find('.qty-input').val();
+            var price_elem= $(elem).parent().parent().parent().find('.price');
+            var commission_pice=  $(elem).parent().parent().parent().find('.commission_pice');
 
-            var total=
-            $(elem).parent().parent().parent().find('.total_price').val(qty);
+            if(String(clint)!=""){
+    
+              total=parseFloat(price_elem.val()*qty )+parseFloat(commission_pice.val()*qty);
+                        }
+                        else{
+                    total=parseFloat(price_elem.val() )*qty;
+                               }
+
+            
+            
+            $(elem).parent().parent().parent().find('.total_price').val(total);
                 
-
+            calTotal();
             
 
         }
@@ -551,7 +577,7 @@ $('.decrement-btn').click(function (e) {
 
               
             document.getElementById("Amount_Commission").value =parseFloat(total_commission);
-              document.getElementById("Total").value =parseFloat(total_price)+parseFloat(total_commission)+Value_VAT;
+              document.getElementById("Total").value =parseFloat(total_price)+Value_VAT;
           
 
 
@@ -578,5 +604,6 @@ else{
 
 
 }
+
     </script>
 @endsection
