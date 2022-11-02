@@ -170,7 +170,7 @@
 
                             <div class="col">
                                 <label>تاريخ الفاتورة</label>
-                                <input class="form-control appearance-none block w-full"type="date"  name="order_Date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none   w-full"type="date"  name="order_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
 
@@ -606,4 +606,5 @@ else{
 }
 
     </script>
+    
 @endsection
