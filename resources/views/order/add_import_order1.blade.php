@@ -156,11 +156,9 @@
                                 <select name="status" id="status" class="form-control" onchange="myFunctiontoToDisableReadOnly()">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد الحالة </option>
-                                    <option value="1">لم تصل</option>
-                                    <option value="2">تم الاستلام</option>
-                                    <option value="3">مستلمة وغير مباعة </option>
-                                    <option value="4">قيد التغليف   </option>
-                                    <option value="5">  تم الشحن </option>
+                                     @foreach ($status as $statu)
+                                        <option value="{{ $statu->id }}"> {{ $statu->status_name }}</option>
+                                    @endforeach
 
 
 
@@ -200,7 +198,7 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >قيمة ضريبة القيمة المضافة</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
                             </div>
 
                             <div class="col">

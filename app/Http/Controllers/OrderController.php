@@ -11,6 +11,7 @@ use App\Models\ProductGroup;
 use App\Models\ProductCategory;
 
 use App\Models\ProductDetail;
+use App\Models\Status;
 class OrderController extends Controller
 {
     /**
@@ -115,13 +116,14 @@ class OrderController extends Controller
         $productDetail = ProductDetail::all();
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
-     
+        $status= Status::all();
+    
         $orders= Order::all();
 
 
        
 
-        return view('order.add_import_order1',compact('importClints','clients','productDetail'));
+        return view('order.add_import_order1',compact('importClints','clients','productDetail','status'));
     }
 
 }
