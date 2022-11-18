@@ -102,7 +102,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data"
+                    <form action="" method="post" name="form"id="form"enctype="multipart/form-data"
                         autocomplete="off">
                         {{ csrf_field() }}
                         {{-- 1 --}}
@@ -110,12 +110,18 @@
                         <div class="row">
                             <div class="col">
                                          <label for="inputName" class="control-label">نوع الطلبية   </label>
-                                <label name="productorder" class="form-control SlectBox" 
-                                   >
+                                 <select name="order_category" class="form-control SlectBox"
+                                    >
                                     <!--placeholder-->
-                                    طبية استيراد
+                                    <option value="0" selected enabled>طبية استيراد</option>
                                    
-                                </label>
+                                </select>
+                                    
+                                   
+                              
+
+
+                               
                             </div>
 
                            <div class="col">
@@ -124,7 +130,7 @@
 
                                 <label for="inputName" class="control-label">المورد</label>
                                 <select name="importer" class="form-control SlectBox"
-                                    >
+                                    required>
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد  المورد</option>
                                     @foreach ($importClints as $importClint)
@@ -171,7 +177,10 @@
                                 <input class="form-control appearance-none   w-full"type="date"  name="order_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
-
+                                          <input name="my_hidden_input" id="my_hidden_input" hidden
+                                   >
+                                   
+                                
                             <div class="col">
                                 <label>تاريخ الاستحقاق</label>
                                 <input class="form-control appearance-none block w-full" type="date" name="Due_date" placeholder="YYYY-MM-DD"
@@ -194,7 +203,7 @@
                                 <input type="text" class="form-control form-control-lg" id="Amount_Commission"
                                     name="Amount_Commission" title="يرجي ادخال مبلغ العمولة "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    readonly>
+                                    readonly value=0>
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >قيمة ضريبة القيمة المضافة</label>
@@ -203,7 +212,7 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label"> السعر الاجمالي مع العمولة مع الضريبة </label>
-                                <input type="text" class="form-control form-control-lg" id="Total" name="Total" readonly>
+                                <input type="text" class="form-control form-control-lg" id="Total" name="Total"  readonly>
                             </div>
                         </div>
                         
@@ -329,7 +338,7 @@
 
                                         </div>
                                           <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                            <button  class="" onclick="sandData()">حفظ البيانات</button>
                         </div>
                                     </div>
                                 </div>
@@ -464,6 +473,34 @@ $('.decrement-btn').click(function (e) {
 </script>
 
 <script>
+        function sandData() {
+            alert(11);
+            var order = new Array();
+
+            
+
+            $("#datatable input[type=checkbox]:checked").each(function() {
+                var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
+                               price:$(this).parent().parent().find('.price').val(),
+                                commission_pice: $(this).parent().parent().find('.commission_pice').val(),
+
+                                    
+                                     };
+
+                order.push(item);
+
+           
+                
+            });
+              document.getElementById('my_hidden_input').value = JSON.stringify(order);
+                
+                document.getElementById('form').submit();
+
+        }
+
+    </script>
+
+<script>
         function priceChange(className,elem) {
             var qty= $(elem).parent().parent().parent().find('.qty-input').val();
             var price_elem= $(elem).parent().parent().parent().find('.price');
@@ -582,7 +619,7 @@ $('.decrement-btn').click(function (e) {
 
 
         }
-        function CheckAll(className,elem){
+function CheckAll(className,elem){
 
 var elements=document.getElementsByClassName(className);
 var l=elements.length;
@@ -606,5 +643,20 @@ else{
 }
 
     </script>
+    <script type="text/javascript">
+    $(function() {
+        $("#btn").click(function() {
+            var selected = new Array();
+
+            $("#datatable input[type=checkbox]:checked").each(function() {
+                alert(this.value);
+                alert(this.find('.qty-input').val());
+
+                selected.push(this.value);
+            });
+            
+        });
+    });
+</script>
     
 @endsection
