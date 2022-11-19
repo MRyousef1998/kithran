@@ -113,7 +113,7 @@
                                  <select name="order_category" class="form-control SlectBox"
                                     >
                                     <!--placeholder-->
-                                    <option value="0" selected enabled>طبية استيراد</option>
+                                    <option value="1" selected enabled>طبية استيراد</option>
                                    
                                 </select>
                                     
@@ -212,7 +212,7 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label"> السعر الاجمالي مع العمولة مع الضريبة </label>
-                                <input type="text" class="form-control form-control-lg" id="Total" name="Total"  readonly>
+                                <input type="text" class="form-control form-control-lg" id="Total" name="Total" value=0  readonly>
                             </div>
                         </div>
                         
@@ -409,6 +409,7 @@ $('.increment-btn').click(function (e) {
         $(this).parents('.quantity').find('.qty-input').val(value);
 
          var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
+         $(this).parent().parent().parent().find('.commission_pice');
         price_elem.removeAttr("readonly");
        var clint=document.getElementById("clint").value;
     

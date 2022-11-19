@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\ProductCompany;
 use App\Models\ProductGroup;
 use App\Models\ProductCategory;
+use App\Models\Product;
+
 
 use App\Models\ProductDetail;
 use App\Models\Status;
@@ -60,7 +62,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-            return $request;
+           
         
      
         $products=json_decode($request->my_hidden_input);
@@ -106,7 +108,7 @@ class OrderController extends Controller
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
      foreach($products as $product)
         { 
-            Product::create([
+            $product =  Product::create([
                 'product_details_id' => $product->id,
                 'primary_price' => $product->qty,
                 
@@ -116,8 +118,8 @@ class OrderController extends Controller
    
         
             ]);
-     $product_id = Product::latest()->first()->id;
-
+            $product->order()->attach($order_id);
+    
           }
     
      
@@ -125,7 +127,7 @@ class OrderController extends Controller
 
      
          session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-         return redirect('/all_product');
+         return redirect('add_order');
            
         
      }
