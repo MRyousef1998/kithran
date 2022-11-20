@@ -268,7 +268,7 @@
                                                         <div class="all_row">
                                                         <tr>
                                                             
-                                                            <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1"  ></td>
+                                                            <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1" id="box1" name="box1"  ></td>
                                                             <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
                                                             <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
                     
@@ -396,6 +396,7 @@ $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
     var price_elem=$(this).parent().parent().parent().find('.price');
+    var mycheck= $(this).parent().parent().parent().find('.box1');
 
     
     var total=0.0;
@@ -409,6 +410,12 @@ $('.increment-btn').click(function (e) {
         $(this).parents('.quantity').find('.qty-input').val(value);
 
          var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
+
+        mycheck.attr('checked', true);
+      
+       
+       
+         
          $(this).parent().parent().parent().find('.commission_pice');
         price_elem.removeAttr("readonly");
        var clint=document.getElementById("clint").value;
@@ -433,8 +440,11 @@ $('.increment-btn').click(function (e) {
 });
 
 $('.decrement-btn').click(function (e) {
+
     e.preventDefault();
     var decre_value = $(this).parents('.quantity').find('.qty-input').val();
+    var mycheck= $(this).parent().parent().parent().find('.box1');
+
     var value = parseInt(decre_value, 10);
     var price_elem=$(this).parent().parent().parent().find('.price');
     var total=0.0;
@@ -467,6 +477,7 @@ $('.decrement-btn').click(function (e) {
          $(this).parent().parent().parent().find('.commission_pice').attr("readonly","true");
 
          document.getElementById("total_price").value = 0;
+         mycheck.attr('checked', false);
     }
 });
 

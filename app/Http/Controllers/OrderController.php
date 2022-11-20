@@ -21,15 +21,16 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $productDetail = ProductDetail::all();
-        $productCompany = ProductCompany::all();
-        $productGroups = ProductGroup::all();
-
+        
+       
+        $orders = Order::where('category_id','=',$id)->get();
+      
+ return $orders;
        
 
-        return view('order.import_order',compact('productDetail','productCompany','productGroups'));
+        return view('order.import_order',compact('orders'));
     }
 
     /**
@@ -71,6 +72,11 @@ class OrderController extends Controller
 
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
+            //  return $request;
+              return redirect('add_order');
+        }
+        if($request->pic==null){
+            session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الفاتورة');
             //  return $request;
               return redirect('add_order');
         }
