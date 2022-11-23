@@ -92,18 +92,72 @@
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" >رقم المنتج</th>
-                                    <th class="border-bottom-0">الشركة</th>
-                                    <th class="border-bottom-0">اسم المنتج</th>
+                                    <th class="border-bottom-0" >رقم الطلبية</th>
+                                    <th class="border-bottom-0"> الشركة الموردة</th>
+
+                                  
+                                    <th class="border-bottom-0">عدد المكنات </th>
                                     
-                                    <th class="border-bottom-0">بلد المنشأ</th>
+                                    <th class="border-bottom-0">تاريخ الطلب</th>
 
 
-                                    <th class="border-bottom-0">العمليات</th>
+                                    <th class="border-bottom-0">تاريخ الوصول</th>
+                                    <th class="border-bottom-0">الحالة</th>
+                                     <th class="border-bottom-0">المرفق</th>
+                                    
+
 
                                 </tr>
                             </thead>
+
                             <tbody>
+                                                    
+                                                    <?php $i = 0; ?>
+                                                    @foreach ($orders as $x)
+                                                        <?php $i++; ?>
+                                                        <div class="all_row">
+                                                        <tr>
+                                                            
+                                                            <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:0.5;" >{{ $i }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
+                                                        
+
+                    
+                                                          
+                                                            <td style="text-align: center;vertical-align: middle;">{{ $x->countAllItem()}}</td>
+                    
+                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
+                                                            <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
+                                                            <td>
+                                                            @if ($x->status->id==1)
+                                                                <span class="text-danger">{{ $x->status->status_name }}</span>
+                                                            
+                                                            @elseif ($x->status->id==2)
+                                                                <span class="text-success">{{ $x->status->status_name }}</span>
+                                                            @else
+                                                            
+                                                                <span class="text-warning">{{ $x->status->status_name }}</span>
+                                                                
+                                                            @endif
+                                                        </td>
+
+
+                                                            
+                                                           
+
+
+
+
+
+                                                             
+                                                            
+                                                            
+                                                        </tr>
+                                                    </div>
+                                                   
+                                                    @endforeach
+                            </tbody>
+
                                 
                         </table>
                     </div>

@@ -27,7 +27,7 @@ class OrderController extends Controller
        
         $orders = Order::where('category_id','=',$id)->get();
       
- return $orders;
+
        
 
         return view('order.import_order',compact('orders'));
