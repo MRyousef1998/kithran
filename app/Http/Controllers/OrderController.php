@@ -21,11 +21,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         
        
-        $orders = Order::where('category_id','=',$id)->get();
+        $orders = Order::where('category_id','=',1)->get();
       
 
        

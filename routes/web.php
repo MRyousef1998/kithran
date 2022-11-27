@@ -57,21 +57,22 @@ Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
  
-Route::get('import_order/add_order', 'App\Http\Controllers\OrderController@create1');
+Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
 
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 
+
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
 Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
 
-//Route::resource('import_order', 'App\Http\Controllers\OrderController');
-Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([
-    'show','store','create1'
-]);
+Route::resource('import_order', 'App\Http\Controllers\OrderController');
+// Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([
+//     'show','store','create1'
+// ]);
 
-Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
+// Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
 
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 
