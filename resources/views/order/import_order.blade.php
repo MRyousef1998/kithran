@@ -137,7 +137,7 @@
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->countMachine()->id }}</td>
+                                                            
                                                             <td>
                                                             @if ($x->status->id==1)
                                                                 <span class="text-danger">{{ $x->status->status_name }}</span>
