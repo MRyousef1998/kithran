@@ -15,7 +15,7 @@ class AlterProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('Status');
-            $table->dropColumn('Value_Status');
+         //   $table->dropColumn('Value_Status');
             
 
             $table->unsignedBigInteger('statuses_id')->nullable();

@@ -102,6 +102,12 @@
 
 
                                     <th class="border-bottom-0">تاريخ الوصول</th>
+                                    <th class="border-bottom-0">العمولة</th>
+                                    <th class="border-bottom-0">الضريبة</th>
+                                    <th class="border-bottom-0">التكلفة الاجمالية</th>
+
+
+                                    
                                     <th class="border-bottom-0">الحالة</th>
                                      <th class="border-bottom-0">المرفق</th>
                                     
@@ -128,6 +134,10 @@
                     
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
                                                             <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->countMachine()->id }}</td>
                                                             <td>
                                                             @if ($x->status->id==1)
                                                                 <span class="text-danger">{{ $x->status->status_name }}</span>
@@ -140,6 +150,7 @@
                                                                 
                                                             @endif
                                                         </td>
+
 
 
                                                             

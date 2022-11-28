@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Status;
-
+use LengthException;
 
 class Order extends Model
 {
@@ -26,11 +26,11 @@ class Order extends Model
         $count= $this->belongsToMany(Product::class,'order_product','orders_id','products_id');
         return $count->count();
     }
-    public function  countMachine():int{
+    public function  countMachine(){
         $productes= $this->belongsToMany(Product::class,'order_product','orders_id','products_id');
         
-       
-        return $count->count();
+      return $productes;
+    
     }
     
     public function  status(){

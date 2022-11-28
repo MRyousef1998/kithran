@@ -19,4 +19,5 @@ class Product extends Model
     public function  productsDetaile(){
         return $this->belongsTo(ProductDetail::class,'product_details_id');
     }
+   
 }
