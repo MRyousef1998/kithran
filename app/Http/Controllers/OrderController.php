@@ -68,7 +68,7 @@ class OrderController extends Controller
      
         $products=json_decode($request->my_hidden_input);
        
-  
+         
 
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
@@ -113,8 +113,9 @@ class OrderController extends Controller
      
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
      foreach($products as $product)
-        { 
-            $product =  Product::create([
+     
+        { for($i=0 ;$i<$product->qty;$i++ ){
+            $newproduct =  Product::create([
                 'product_details_id' => $product->id,
                 'primary_price' => $product->qty,
                 
@@ -124,16 +125,16 @@ class OrderController extends Controller
    
         
             ]);
-            $product->order()->attach($order_id);
+            $newproduct->order()->attach($order_id);
     
-          }
+          }}
     
      
           
 
      
          session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-         return redirect('add_order');
+         return redirect('import_order');
            
         
      }
