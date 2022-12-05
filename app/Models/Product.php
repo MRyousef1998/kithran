@@ -9,7 +9,7 @@ use App\Models\ProductDetail;
 
 
 class Product extends Model
-{
+{ protected $table = 'products';
     use HasFactory;
     protected $guarded=[];
 
@@ -17,7 +17,8 @@ class Product extends Model
         return $this->belongsToMany(Order::class,'order_product','products_id','orders_id');
     }
     public function  productsDetaile(){
-        return $this->belongsTo(ProductDetail::class,'product_details_id');
+        return $this->belongsTo(ProductDetail::class,'product_details_id','id');
     }
    
+    
 }

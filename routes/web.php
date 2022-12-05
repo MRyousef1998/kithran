@@ -59,6 +59,9 @@ Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductControll
  
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
+//Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
+Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
+
 
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
@@ -66,6 +69,7 @@ Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
 Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
+
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
 // Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([

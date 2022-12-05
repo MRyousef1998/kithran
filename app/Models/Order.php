@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Status;
+use App\Models\OrderCategory;
+
+
 use LengthException;
 
 class Order extends Model
@@ -15,6 +18,10 @@ class Order extends Model
     protected $guarded=[];
     public function  product(){
         return $this->belongsToMany(Product::class,'order_product','orders_id','products_id');
+    }
+    public function  category(){
+        return $this->belongsTo(OrderCategory::class,'category_id','id');
+       
     }
     public function  importer(){
         return $this->belongsTo(User::class,'exported_id');
@@ -37,7 +44,7 @@ class Order extends Model
         return  $this->belongsTo(Status::class,'statuses_id','id');
         
     }
-  
+    
 
 
     

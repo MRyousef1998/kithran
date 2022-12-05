@@ -130,7 +130,13 @@
 
                     
                                                           
-                                                            <td style="text-align: center;vertical-align: middle;">{{ $x->countAllItem()}}</td>
+                                                            <td >
+                                                            <a href="{{url('OrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
+                                                            {{ $x->countAllItem()}}
+                                                            </a>
+                                                            
+                                                            
+                                                            </td>
                     
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
                                                             <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>

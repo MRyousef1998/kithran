@@ -205,4 +205,9 @@ class OrderController extends Controller
         return view('order.add_import_order1',compact('importClints','clients','productDetail','status'));
     }
 
+  
+
+
+    
+
 }

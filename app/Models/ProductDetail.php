@@ -14,6 +14,7 @@ use App\Models\ProductCategory;
 class ProductDetail extends Model
 {
     use HasFactory;
+    
     protected $guarded=[];
 
 
