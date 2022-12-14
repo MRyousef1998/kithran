@@ -78,7 +78,7 @@
                                             <li><a href="#tab5" class="nav-link" data-toggle="tab">مكنات القهوة</a></li>
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
-                                            <li><a href="#tab7" class="nav-link" data-toggle="tab">المرفقات</a></li>
+                                            <li><a href="#tab8" class="nav-link" data-toggle="tab">المرفقات</a></li>
 
                                         </ul>
                                     </div>
@@ -398,35 +398,101 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tab6">
+                                        <div class="tab-pane" id="tab8">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
                                                 
                                                     <div class="card-body">
+                                                     @if ($order->image_name=="")
                                                         <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                                                         <h5 class="card-title">اضافة مرفقات</h5>
-                                                        <form method="post" action=""
+                                                        <form method="post" action="{{route("addAttachments")}}" 
                                                             enctype="multipart/form-data">
                                                             {{ csrf_field() }}
+                                                            
                                                             <div class="custom-file">
+                                                            
                                                                 <input type="file" class="custom-file-input" id="customFile"
                                                                     name="file_name" required>
-                                                                <input type="hidden" id="customFile" name="invoice_number"
-                                                                    value="">
-                                                                <input type="hidden" id="invoice_id" name="invoice_id"
-                                                                    value="">
+                                                                <input type="hidden" id="order_id" name="order_id"
+                                                                    value="{{$order->id}}">
+                                                                
                                                                 <label class="custom-file-label" for="customFile">حدد
                                                                     المرفق</label>
                                                             </div><br><br>
                                                             <button type="submit" class="btn btn-primary btn-sm "
                                                                 name="uploadedFile">تاكيد</button>
                                                         </form>
+                                                        @endif
                                                     </div>
                                                 
                                                 <br>
+                                                 @if ($order->image_name=="")
+                                                                <div>
+                                                               
+                                                                
+                                                                <span
+                                                                        class="text-muted mt-1 tx-13 mr-2 mb-0">لا يوجد مرفقات</span>
+                                                                </div>
+                                                           
+                                                            @else
 
                                                 <div class="table-responsive mt-15">
-                                                    
+                                                     <div class="table-responsive mt-15">
+                                                    <table class="table center-aligned-table mb-0 table table-hover"
+                                                        style="text-align:center">
+                                                        <thead>
+                                                            <tr class="text-dark">
+                                                                <th scope="col">م</th>
+                                                                <th scope="col">اسم الملف</th>
+                                                                
+                                                                <th scope="col">العمليات</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                                    
+                                                               
+                                                            
+                                                         <tr>
+                                                                    <td>####</td>
+                                                                    <td>{{ $order->image_name }}</td>
+                                                                    
+                                                                    <td>{{ $order->created_at }}</td>
+                                                                    <td colspan="2">
+
+                                                                        <a class="btn btn-outline-success btn-sm"
+                                                                            href="{{ url('View_file') }}/{{ $order->id }}/{{ $order->image_name }}"
+                                                                            role="button"><i class="fas fa-eye"></i>&nbsp;
+                                                                            عرض</a>
+
+                                                                        <a class="btn btn-outline-info btn-sm"
+                                                                            href="{{ url('download') }}/{{ $order->id  }}/{{ $order->image_name }}"
+                                                                            role="button"><i
+                                                                                class="fas fa-download"></i>&nbsp;
+                                                                            تحميل</a>
+
+                                                                       
+                                                                            <button class="btn btn-outline-danger btn-sm"
+                                                                                data-toggle="modal"
+                                                                                data-image_name="{{ $order->image_name}}"
+                                                                                data-order_id="{{ $order->id }}"
+                                
+                                                                                data-target="#delete_file">حذف</button>
+                                                                        
+
+                                                                    </td>
+                                                                </tr>
+                                                            <?php $i = 0; ?>
+                                                            @foreach ($order as $attachment)
+                                                                <?php $i++; ?>
+                                                               
+                                                            @endforeach
+                                                        </tbody>
+                                                  
+                                                    </table>
+                                                              @endif  
+                                                </div>
                                                 </div>
                                             </div>
 
@@ -455,7 +521,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="" method="post">
+                <form action="{{route('delete_file')}}" method="post">
 
                     {{ csrf_field() }}
                     <div class="modal-body">
@@ -463,9 +529,9 @@
                         <h6 style="color:red"> هل انت متاكد من عملية حذف المرفق ؟</h6>
                         </p>
 
-                        <input type="hidden" name="id_file" id="id_file" value="">
-                        <input type="hidden" name="file_name" id="file_name" value="">
-                        <input type="hidden" name="invoice_number" id="invoice_number" value="">
+                        
+                        <input type="hidden" name="image_name" id="image_name" value="">
+                        <input type="hidden" name="order_id" id="order_id" value="">
 
                     </div>
                     <div class="modal-footer">
@@ -502,14 +568,14 @@
     <script>
         $('#delete_file').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
-            var id_file = button.data('id_file')
-            var file_name = button.data('file_name')
-            var invoice_number = button.data('invoice_number')
+           
+            var image_name = button.data('image_name')
+            var order_id = button.data('order_id')
             var modal = $(this)
 
-            modal.find('.modal-body #id_file').val(id_file);
-            modal.find('.modal-body #file_name').val(file_name);
-            modal.find('.modal-body #invoice_number').val(invoice_number);
+            
+            modal.find('.modal-body #image_name').val(image_name);
+            modal.find('.modal-body #order_id').val(order_id);
         })
 
     </script>

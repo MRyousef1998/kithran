@@ -105,19 +105,81 @@
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" >رقم المنتج</th>
-                                    <th class="border-bottom-0">الشركة</th>
-                                    <th class="border-bottom-0">اسم المنتج</th>
-                                    
-                                    <th class="border-bottom-0">بلد المنشأ</th>
-
-
-                                    <th class="border-bottom-0">العمليات</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >رقم المنتج</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">اسم المنتج</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">الصنف</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">بلد المنشأ</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">العدد </th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">العمليات</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                                 
+                             <?php $i = 0; ?>
+                                @foreach ($machines as $x)
+                                    <?php $i++; ?>
+                                    <tr>
+                                        <td  >{{ $i }}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
+
+                                        <td style="text-align: center;vertical-align: middle;">
+                                            
+                                            <div class = "vertical"><div>
+                                                <img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="180"  height="120" /></div>
+                                                <div>
+                                                    {{ $x->product_name }}</div>
+                                            </div>
+
+                                            
+                                            </td>
+                                      
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
+
+                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
+                                        
+                                        <td style="text-align: center;vertical-align: middle;  ">
+                                            
+                                                    {{$x->aggregate}}
+                                               
+                                            
+                                        </td>
+
+
+                                        <td style="text-align: center;vertical-align: middle;" >
+
+                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
+
+                                                data-company_name="{{ $x->company_name }}"
+                                                data-company_id="{{ $x->id }}"
+                                                data-product_g="{{ $x->group_name }}"
+                                                {{-- data-group_id="{{ $x->group_id }}" --}}
+                                                data-image-name ="{{ $x->image_name}}"
+                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
+                                                data-product_category_id ="{{ $x->category->id}}" --}}
+
+                                                
+
+                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
+                                                    class="las la-pen"></i></a>
+
+
+
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
+                                                data-toggle="modal" href="#delete" title="حذف"><i
+                                                    class="las la-trash"></i></a>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+
+
+
+
                         </table>
                     </div>
                 </div>

@@ -24,11 +24,18 @@ class ProductController extends Controller
      */
     public function index($id)
     {
+        
+        $machines =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $id)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        
  $product = Product::where('category_id', $id)->get();
  
 
 
- return view('my_product.machine',compact('product','id'));
+ return view('my_product.machine',compact('product','id','machines'));
     
 
     }
@@ -39,12 +46,13 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    { 
         
         $productDetail = ProductDetail::all();
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
-        $orders= Order::all();
+        $orders= Order::where('statuses_id','=',1)->get();
+        
 
 
        
@@ -152,6 +160,7 @@ class ProductController extends Controller
     {
 
         $order=Order::find($id);
+        
         $detail=OrderDetail::where("orders_id",$id);
         $machines =DB::table('products')->
        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')

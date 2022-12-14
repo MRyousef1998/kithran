@@ -23,14 +23,15 @@ Auth::routes();
 
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
-// Route::get('download/{invoice_number}/{file_name}', 'App\Http\Controllers\InvoicesDetailsController@get_file');
+Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@get_file');
 
-// Route::get('View_file/{invoice_number}/{file_name}', 'App\Http\Controllers\InvoicesDetailsController@open_file');
+ Route::get('View_file/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@open_file');
+ Route::post('delete_file', 'App\Http\Controllers\OrderDetailController@destroy')->name('delete_file');
 
 // Route::post('delete_file', 'App\Http\Controllers\InvoicesDetailsController@destroy')->name('delete_file');
 
 
-// Route::resource('InvoiceAttachments', 'App\Http\Controllers\InvoiceAttachmentsController');
+Route::post('addAttachments', 'App\Http\Controllers\OrderDetailController@addAttachments')->name('addAttachments');
 
 // Route::get('/edit_invoice/{id}', 'App\Http\Controllers\InvoicesController@edit');
 

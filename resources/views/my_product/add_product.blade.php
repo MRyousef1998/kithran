@@ -57,7 +57,7 @@
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد الطلبية</option>
                                     @foreach ($orders as $order)
-                                        <option value="{{ $order->id }}"> {{ $order->code }}</option>
+                                        <option value="{{ $order->id }}"> {{ $order->importer->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
