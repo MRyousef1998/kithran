@@ -183,16 +183,10 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                            <div class="input-group quantity">
-                                                <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">-</span>
-                                                </div>
-                                                <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
-                                                <div class="input-group-append increment-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">+</span>
-                                                </div>
-                                            </div>
+                                            <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                         {{ $x->aggregate }}   
                                         </td>
+                                       
 
 
                                         <td style="text-align: center;vertical-align: middle;" >

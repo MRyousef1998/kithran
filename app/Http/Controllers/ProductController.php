@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\ProductCategory;
 use App\Models\ProductDetail;
 use App\Models\OrderDetail;
+use App\Models\Status;
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -52,12 +54,12 @@ class ProductController extends Controller
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
         $orders= Order::where('statuses_id','=',1)->get();
-        
+        $status=Status::all();
 
 
        
 
-        return view('my_product.add_product',compact('productCompanies','productCatgories','orders'));
+        return view('my_product.add_product',compact('productCompanies','productCatgories','orders','status'));
     }
 
     /**
@@ -68,8 +70,47 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        
+
+            $order_id = $request->productorder;
+     
+            //$request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
+             for($i=0;$i<$request->qountity;$i++){
+                   $newproduct =  Product::create([
+                       'product_details_id' => $request->productClass,
+                       'primary_price' => $request->primary_price,
+                       
+                       'selling_price' => $request->selling_price,
+                       
+                       'statuses_id' =>$request->status ,
+                       'note' =>$request->note ,
+
+          
+               
+                   ]);
+                   $newproduct->order()->attach($order_id);
+                   $order = Order::find($order_id);
+                    $order->Amount_Commission =  ($order->Amount_Commission)+$request->Amount_Commission;
+                    $order->Total =  ($order->Amount_Commission)+($order->Amount_Commission)+$request->Total;
+
+                    $order->save();
+           
+                 }
+
+            
+//                
+                  session()->flash('Add', 'تم اضافة المنتج بنجاح ');
+             return redirect('all_machine/'. $request->productCategory);
+                }
+           
+            
+                 
+       
+            
+            
+                  
+               
+    
 
     /**
      * Display the specified resource.
@@ -138,19 +179,23 @@ class ProductController extends Controller
 
     public function getproductsDetaile($id)
     {
-        $products = DB::table("product_details")->where("company_id", $id)->pluck("product_name", "id");
+        $products = DB::table('product_details')->where("company_id", $id)
+->select('product_name')
+->distinct()
+->pluck("product_name",);
+        $products1 = DB::table("product_details")->where("company_id", $id)->pluck("product_name", "id");
         return json_encode($products);
     }
-    public function getproductsGruops($id)
+    public function getproductsGruops($productName)
     {
 
         
-        $products = ProductDetail::find($id);
+    //     $products = ProductDetail::where('product_name',$name);
         
-       $productName=$products->product_name;
+    //    $productName=$products->product_name;
 
         $products =DB::table('product_details')
-            ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->where("product_details.product_name", $productName)->pluck("product_groups.group_name","product_groups.id");
+            ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->where("product_details.product_name", $productName)->pluck("product_details.id","product_groups.group_name",);
            
            
             return json_encode($products);

@@ -44,7 +44,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post" enctype="multipart/form-data"
+                    <form action="{{route("addProducts")}}"  method="post" enctype="multipart/form-data"
                         autocomplete="off">
                         {{ csrf_field() }}
                         {{-- 1 --}}
@@ -115,10 +115,10 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label">العدد</label>
-                                <input type="text" class="form-control form-control-lg" id="selling_price" name="selling_price"
+                                <input type="text" class="form-control form-control-lg" id="qountity" name="qountity"
                                     title="يرجي العدد "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value=1 required>
+                                     required>
                             </div>
                         </div>
 
@@ -145,15 +145,11 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label">الحالة   </label>
-                                <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myFunction()">
+                                <select name="status" id="status" class="form-control" onchange="myFunction()" required>
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد الحالة </option>
-                                    <option value="1">لم تصل</option>
-                                    <option value="2">تم الاستلام</option>
-                                    <option value="3">مستلمة وغير مباعة </option>
-                                    <option value="3">قيد التغليف   </option>
-                                    <option value="3">  تم الشحن </option>
-
+                                    @foreach ($status as $statu)
+                                        <option value="{{ $statu->id }}"> {{ $statu->status_name }}</option>
+                                    @endforeach
 
 
 
@@ -166,31 +162,18 @@
 
                         <div class="row">
                             <div class="col">
-                                <label for="inputName" class="control-label">قيمة ضريبة القيمة المضافة</label>
-                                <input type="text" class="form-control" id="Value_VAT" name="Value_VAT" readonly>
+                                <label for="inputName" class="control-label">العمولة</label>
+                                <input type="text" class="form-control" id="Amount_Commission" name="Amount_Commission" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    value=0  required>
                             </div>
-
-                            <div class="col">
-                                <label for="inputName" class="control-label">الاجمالي شامل الضريبة</label>
-                                <input type="text" class="form-control" id="Total" name="Total" readonly>
+                                    <div class="col">
+                                <label for="exampleTextarea">ملاحظات</label>
+                                <textarea class="form-control" id="exampleTextarea" name="note" rows="1"></textarea>
                             </div>
                         </div>
 
                         {{-- 5 --}}
-                        <div class="row">
-                            <div class="col">
-                                <label for="exampleTextarea">ملاحظات</label>
-                                <textarea class="form-control" id="exampleTextarea" name="note" rows="3"></textarea>
-                            </div>
-                        </div><br>
-
-                        <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
-                        <h5 class="card-title">المرفقات</h5>
-
-                        <div class="col-sm-12 col-md-12">
-                            <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                data-height="70" />
-                        </div><br>
+                       
 
                         <div class="d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary">حفظ البيانات</button>
@@ -253,7 +236,7 @@
                             
                             $.each(data, function(key, value) {
                                 $('select[name="product"]').append('<option value="' +
-                                    key + '">' + value + '</option>');
+                                    value + '">' + value + '</option>');
                             });
                         },
                     });
@@ -270,16 +253,16 @@
    <script>
         $(document).ready(function() {
             $('select[name="product"]').on('change', function() {
-                var productid = $(this).val();
-                
-                if (productid) {
+                var productname = $(this).val();
+                alert(productname);
+                if (productname) {
                     $.ajax({
-                        url: "{{URL::to('productsgroup')}}/" + productid,
+                        url: "{{URL::to('productsgroup')}}/" + productname,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
                             $('select[name="productClass"]').empty();
-                            $.each(data, function(key, value) {
+                            $.each(data, function(value,key) {
                                 
                                 $('select[name="productClass"]').append('<option value="' +
                                     key + '">' + value + '</option>');
