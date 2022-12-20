@@ -42,6 +42,7 @@ class ProductController extends Controller
 
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -231,6 +232,42 @@ class ProductController extends Controller
        
 
        
+
+    }
+    public function getproductDetails($id)
+    {
+
+        $product =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.id", $id)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        
+
+
+        $detailProduct =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+        leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')->
+       
+        Join('order_product', 'products.id', '=', 'order_product.products_id')->
+        leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+        leftJoin('users', 'orders.exported_id', '=', 'users.id') ->leftJoin('statuses', 'orders.statuses_id', '=', 'statuses.id') ->
+        where("product_details.id", $id)
+        ->selectRaw('order_product.orders_id,orders.order_date,users.name,statuses.status_name,company_name,product_name,group_name,country_of_manufacture,count(order_product.orders_id) as aggregate,product_details.image_name')
+        ->groupBy('users.name','orders.order_date','order_product.orders_id','statuses.status_name','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+   
+        
+// $product = Product::where('category_id', $id)->get();
+ 
+
+
+ return view('order.order_product_details',compact('detailProduct','product'));
+
+
+
+ 
+    
 
     }
 }

@@ -139,38 +139,28 @@
 
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
-                                        <td style="text-align: center;vertical-align: middle;  ">
+                                        <td   style="text-align: center;vertical-align: middle;  ">
                                             
-                                                    {{$x->aggregate}}
+                                                 <a href="{{url('productDetails')}}/{{$x->id}}" > {{$x->aggregate}}
                                                
-                                            
+                                            </a>
                                         </td>
 
 
                                         <td style="text-align: center;vertical-align: middle;" >
 
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->company_name }}"
-                                                data-company_id="{{ $x->id }}"
-                                                data-product_g="{{ $x->group_name }}"
-                                                {{-- data-group_id="{{ $x->group_id }}" --}}
-                                                data-image-name ="{{ $x->image_name}}"
-                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
-                                                data-product_category_id ="{{ $x->category->id}}" --}}
-
-                                                
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
+                                        <div class="dropdown">
+	<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
+	data-toggle="dropdown" type="button">Dropdown Menu<i class="fas fa-caret-down ml-1"></i></button>
+	<div class="dropdown-menu tx-13">
+		<a class="dropdown-item" href="#">Action</a>
+		<a class="dropdown-item disabled" href="#">99999</a>
+		<a class="dropdown-item" href="#">Something else here</a>
+	</div>
+</div>
 
 
 
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
 
                                         </td>
                                     </tr>
