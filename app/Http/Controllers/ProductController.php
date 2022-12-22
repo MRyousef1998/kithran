@@ -159,23 +159,7 @@ class ProductController extends Controller
     }
 
 
-    public function Invoice_Paid()
-    {
-        $invoices = Invoices::where('Value_Status', 1)->get();
-        return view('invoices.invoices_paid',compact('invoices'));
-    }
-
-    public function Invoice_unPaid()
-    {
-        $invoices = Invoices::where('Value_Status',2)->get();
-        return view('invoices.invoices_unpaid',compact('invoices'));
-    }
-
-    public function Invoice_Partial()
-    {
-        $invoices = Invoices::where('Value_Status',3)->get();
-        return view('invoices.invoices_Partial',compact('invoices'));
-    }
+    
 
 
     public function getproductsDetaile($id)
@@ -236,7 +220,7 @@ class ProductController extends Controller
     }
     public function getproductDetails($id)
     {
-
+ 
         $product =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.id", $id)
@@ -254,9 +238,10 @@ class ProductController extends Controller
         leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
         leftJoin('users', 'orders.exported_id', '=', 'users.id') ->leftJoin('statuses', 'orders.statuses_id', '=', 'statuses.id') ->
         where("product_details.id", $id)
-        ->selectRaw('order_product.orders_id,orders.order_date,users.name,statuses.status_name,company_name,product_name,group_name,country_of_manufacture,count(order_product.orders_id) as aggregate,product_details.image_name')
-        ->groupBy('users.name','orders.order_date','order_product.orders_id','statuses.status_name','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        ->selectRaw('order_product.orders_id,orders.order_date,statuses.id as statusesId,users.name,statuses.status_name,company_name,product_name,group_name,country_of_manufacture,count(order_product.orders_id) as aggregate,product_details.image_name')
+        ->groupBy('statuses.id','users.name','orders.order_date','order_product.orders_id','statuses.status_name','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
    
+
         
 // $product = Product::where('category_id', $id)->get();
  

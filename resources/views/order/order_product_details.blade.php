@@ -26,7 +26,7 @@
 								<div class="row row-sm ">
 									<div class=" col-xl-5 col-lg-12 col-md-12">
 										<div class="preview-pic tab-content">
-										  <div class="tab-pane active" id="pic-1"><img src="http://127.0.0.1:8000/Attachments/{{ $product[0]->id }}/{{ $product[0]->image_name }}" alt="image"/></div>
+										  <div class="tab-pane active" id="pic-1"><img src="http://127.0.0.1:8000/Attachments/{{ $product[0]->id }}/{{ $product[0]->image_name }}" width="250"  height="250" alt="image"/></div>
 										 
 										</div>
 										
@@ -46,7 +46,7 @@
 												<span class="fa fa-star text-muted"></span>
 												<span class="fa fa-star text-muted"></span>
 											
-										<h4 class="price"> اجمالي العدد المتوفر:    <span class="h3 ml-2">  {{$product[0]->aggregate}}</span></h4>
+										<h4 class="price"> اجمالي العدد المتوفر:    <span class="h3 ml-2"style="color: rgb(170, 24, 10) ;">  {{$product[0]->aggregate}}</span></h4>
 										
 										
 										<div class="d-flex  mt-2">
@@ -80,9 +80,19 @@
 										<a>تاريخ الوصول</a>
 									</div>
 									<div class="cardprice">
-										<span class="type--strikethrough">{{$x->orders_id}}</span>
+										<span >{{$x->orders_id}}</span>
 										<span>{{$x->name}}</span>
-										<span class="type--strikethrough">{{$x->status_name}}</span>
+										@if ($x->statusesId==1)
+										<span class="text-danger">{{$x->status_name}}</span>
+									
+									@elseif ($x->statusesId==2)
+										<span class="text-success">{{$x->status_name}}</span>
+									@else
+									
+										<span class="text-warning">{{$x->status_name}}</span>
+										
+									@endif
+										
 										<span>{{$x->order_date}}</span>
 									</div>
 									<div class="cardtitle">
@@ -94,12 +104,31 @@
 								</div>
 								<div class="card-body cardbody relative">
 								<div class="cardtitle">
-										<span>العدد </span>
+									@if ($x->statusesId==1)
+										<span class="text-danger">العدد</span>
+									
+									@elseif ($x->statusesId==2)
+										<span class="text-success">العدد</span>
+									@else
+									
+										<span class="text-warning">العدد</span>
+										
+									@endif
+									
 										
 									</div>
 									<div class="cardprice">
+										@if ($x->statusesId==1)
+										<span class="text-danger">{{$x->aggregate}}</span>
+									
+									@elseif ($x->statusesId==2)
+										<span class="text-success">{{$x->aggregate}}</span>
+									@else
+									
+										<span class="text-warning">{{$x->aggregate}}</span>
 										
-										<span>{{$x->aggregate}}</span>
+									@endif
+										
 									</div>
 									</div>
 							</div>
