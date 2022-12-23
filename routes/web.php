@@ -64,6 +64,10 @@ Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name
 
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
+
+
+Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
+Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails');
@@ -77,6 +81,8 @@ Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getpro
 
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
+Route::resource('export_order', 'App\Http\Controllers\ExportController');
+
 // Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([
 //     'show','store','create1'
 // ]);
