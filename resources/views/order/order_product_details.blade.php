@@ -93,7 +93,7 @@
 										
 									@endif
 										
-										<span>{{$x->order_date}}</span>
+										<span>{{$x->order_due_date}}</span>
 									</div>
 									<div class="cardtitle">
 										

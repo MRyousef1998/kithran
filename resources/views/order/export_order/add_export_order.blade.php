@@ -324,7 +324,7 @@
                                     <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
     
                                     <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
-                                    <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                    <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect " data-effect="effect-scale"
                                         data-id="{{ $x->id }}" data-company_name="{{ $x->country_of_manufacture }}"
                                         data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a></td>
 
@@ -636,23 +636,12 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h6 class="modal-title">حذف الشركة</h6><button aria-label="Close" class="close" data-dismiss="modal"
+                    <h6 class="modal-title">تفاصيل الوصول</h6><button aria-label="Close" class="close" data-dismiss="modal"
                         type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="companies/destroy" method="post">
-                    {{ method_field('delete') }}
-                    {{ csrf_field() }}
-                    <div class="modal-body">
-                        <p>هل انت متاكد من عملية الحذف ؟</p><br>
-                        <input type="hidden" name="id" id="id" value="">
-                        <input class="form-control" name="company_name" id="company_name" type="text" readonly>
+                <div class="modal-body">
+                
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                        <button type="submit" class="btn btn-danger">تاكيد</button>
-                    </div>
-            </div>
-            </form>
         </div>
     </div>
 
@@ -695,17 +684,24 @@
 
         var button = $(event.relatedTarget)
         var id = button.data('id')
+        alert(id)
         var company_name = button.data('company_name')
-    
+        $.ajax({
+        type : 'GET',
+        url :"{{URL::to('productDetails')}}/" + id,
 
-        
-        
-
-
-
+        success: function(result) {
+            $('#modaldemo9 div.modal-body').html(result);
+        }
+    });
         var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #company_name').val(company_name);
+
+
+      
+
+
+       alert( $(this).find('.modal-body').children.childrenitem('company_name'));
+       // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
     })
 
 </script>
@@ -825,7 +821,7 @@ $('.decrement-btn').click(function (e) {
 
 <script>
         function sandData() {
-            alert(11);
+           
             var order = new Array();
 
             
