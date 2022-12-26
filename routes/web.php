@@ -71,7 +71,7 @@ Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');
-
+Route::get('/export_productDetails/{id}', 'App\Http\Controllers\ProductController@getexport_productDetails')->name('export_productDetails');
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 

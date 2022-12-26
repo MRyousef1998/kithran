@@ -23,7 +23,10 @@
     <!--Internal  TelephoneInput css-->
     <link rel="stylesheet" href="{{ URL::asset('assets/plugins/telephoneinput/telephoneinput-rtl.css') }}">
     
-    
+    .modal-lg {
+        width:'95';
+        
+    }
     
     
 @endsection
@@ -113,7 +116,7 @@
                                  <select name="order_category" class="form-control SlectBox"
                                     >
                                     <!--placeholder-->
-                                    <option value="1" selected enabled>طبية تصدير</option>
+                                    <option value="2" selected enabled>طبية تصدير</option>
                                    
                                 </select>
                                     
@@ -129,7 +132,7 @@
 
 
                                 <label for="inputName" class="control-label">المستورد</label>
-                                <select name="importer" class="form-control SlectBox"
+                                <select name="exporter" class="form-control SlectBox"
                                     required>
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد  المستورد</option>
@@ -165,9 +168,6 @@
                                      @foreach ($status as $statu)
                                         <option value="{{ $statu->id }}"> {{ $statu->status_name }}</option>
                                     @endforeach
-
-
-
 
                                 </select>
                             </div>
@@ -334,29 +334,35 @@
                                             <div class="input-group-prepend decrement-btn" style="cursor: pointer">
                                                 <span class="input-group-text" >-</span>
                                             </div>
+                                           
                                             <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
                                             <div class="input-group-append increment-btn" style="cursor: pointer">
                                                 <span class="input-group-text"  >+</span>
+                                                
                                             </div>
+                                           
                                         </div>
                                     </td>
     
     
     
     
-                                                         <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                 <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                         <div class="input-group" style=" ">
                                             
                                             <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
-    
-                                            
+                                                
                                         </div>
+                                        
                                     </td>
     
                                     <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                         <div class="input-group" style=" ">
                                         
+                                           
                                             <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                            <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+
                                         </div>
                                         
                                     </td>
@@ -430,8 +436,9 @@
                                                         <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
                         
                                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
-                                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->aggregate }}</td>
-
+                                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect " data-effect="effect-scale"
+                                                            data-id="{{ $x->id }}" data-company_name="{{ $x->country_of_manufacture }}"
+                                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a></td>
                                                         
                                                         <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                             <div class="input-group quantity" style=" ">
@@ -461,6 +468,8 @@
                                                             <div class="input-group" style=" ">
                                                             
                                                                 <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                 <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+                                                            
                                                             </div>
                                                             
                                                         </td>
@@ -533,8 +542,9 @@
                                                         <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
                         
                                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
-                                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->aggregate }}</td>
-
+                                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect " data-effect="effect-scale" 
+                                                            data-id="{{ $x->id }}" data-company_name="{{ $x->country_of_manufacture }}"
+                                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a></td>
                                                         
                                                         <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
                                                             <div class="input-group quantity" style=" ">
@@ -564,6 +574,9 @@
                                                             <div class="input-group" style=" ">
                                                             
                                                                 <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                            
+                                                                <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+                                                                
                                                             </div>
                                                             
                                                         </td>
@@ -633,7 +646,7 @@
 
 
     <div class="modal" id="modaldemo9">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
                     <h6 class="modal-title">تفاصيل الوصول</h6><button aria-label="Close" class="close" data-dismiss="modal"
@@ -681,26 +694,21 @@
 
 <script>
     $('#modaldemo9').on('show.bs.modal', function(event) {
-
+        
         var button = $(event.relatedTarget)
         var id = button.data('id')
-        alert(id)
+        
         var company_name = button.data('company_name')
         $.ajax({
         type : 'GET',
-        url :"{{URL::to('productDetails')}}/" + id,
+        url :"{{URL::to('export_productDetails')}}/" + id,
 
         success: function(result) {
+          
             $('#modaldemo9 div.modal-body').html(result);
         }
     });
-        var modal = $(this)
-
-
-      
-
-
-       alert( $(this).find('.modal-body').children.childrenitem('company_name'));
+        
        // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
     })
 
@@ -717,6 +725,9 @@ $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
     var price_elem=$(this).parent().parent().parent().find('.price');
+    var qty_av=$(this).parent().parent().parent().find('.qtyy').val();
+
+    
     var mycheck= $(this).parent().parent().parent().find('.box1');
 
     
@@ -726,7 +737,7 @@ $('.increment-btn').click(function (e) {
 
     var value = parseInt(incre_value, 10);
     value = isNaN(value) ? 0 : value;
-    if(value<100){
+    if(value<100 && value<qty_av){
         value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
 

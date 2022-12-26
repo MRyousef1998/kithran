@@ -69,7 +69,7 @@ class ExportController extends Controller
     public function store(Request $request)
     {
            
-        
+        return $request;
      
         $products=json_decode($request->my_hidden_input);
        
@@ -78,7 +78,7 @@ class ExportController extends Controller
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
             //  return $request;
-              return redirect('add_order');
+              return redirect('add_export_order');
         }
         if($request->pic==null){
             session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الفاتورة');
@@ -97,7 +97,7 @@ class ExportController extends Controller
              'order_date' => $request->order_Date,
              'order_due_date' => $request->Due_date,
              
-             'exported_id' => $request->importer,
+             'exported_id' => $request->exporter,
              'representative_id' => $request->clint,
              'statuses_id' => $request->status,
 
