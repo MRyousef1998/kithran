@@ -6,13 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductDetail;
 
-
+use illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
-{ protected $table = 'products';
+{ use SoftDeletes;
+     protected $table = 'products';
     use HasFactory;
     protected $guarded=[];
-
+    protected $dates=['deleted_at'];
   public function  order(){
         return $this->belongsToMany(Order::class,'order_product','products_id','orders_id');
     }

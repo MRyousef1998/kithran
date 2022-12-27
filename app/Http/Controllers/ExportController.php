@@ -69,11 +69,11 @@ class ExportController extends Controller
     public function store(Request $request)
     {
            
-        return $request;
+        
      
         $products=json_decode($request->my_hidden_input);
        
-         
+        return $products;
 
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
@@ -81,15 +81,12 @@ class ExportController extends Controller
               return redirect('add_export_order');
         }
         if($request->pic==null){
-            session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الفاتورة');
+            session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الطلبية ');
             //  return $request;
-              return redirect('add_order');
+              return redirect('add_export_order');
         }
         if($request->pic!=null){
-            
-  
-      
-       
+        
             $imageName = $request->pic;
             $fileName = $imageName->getClientOriginalName();
         
