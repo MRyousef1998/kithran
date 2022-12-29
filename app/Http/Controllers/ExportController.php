@@ -74,46 +74,7 @@ class ExportController extends Controller
         $products=json_decode($request->my_hidden_input);
        
       
-        foreach($products as $product)
-     
-        { for($i=0 ;$i<$product->qty;$i++ ){
-          
-            $allProducts =Product::where("product_details_id", $product->id) ->get();
-            
-            $Olderproduct=Product::where("product_details_id", $product->id) ->first();
-            $importOrderOldProdect=$Olderproduct->order()->get();
-            $olderdate=$importOrderOldProdect[0]->order_due_date;
-            $olderProductId=$Olderproduct->id;
-            foreach($allProducts as $currentProduct){
-                $importOrdeForCurrentProdect=$currentProduct->order()->get();
-            $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
-            if($olderdate>$currentdate)
-            {
-                $olderdate=$currentdate;
-                $Olderproduct=$currentProduct;
-                $olderProductId=$currentProduct->id;
-            }
-            
-           
-            }
-            $Olderproduct->Delete();
-            return $Olderproduct->id;
-
-
-          // return $products1->order()->get();
-            $newproduct =  Product::create([
-                'product_details_id' => $product->id,
-                'primary_price' => $product->qty,
-                
-                'selling_price' => ($product->commission_pice+$product->price),
-                
-                'statuses_id' =>$request->status ,
-   
-        
-            ]);
-           // $newproduct->order()->attach($order_id);
-    
-          }}
+      
 
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
@@ -156,7 +117,44 @@ class ExportController extends Controller
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
      ////
     
+     foreach($products as $product)
      
+     { 
+         
+         for($i=0 ;$i<$product->qty;$i++ ){
+       
+         $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->get();
+         
+         $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->first();
+         $importOrderOldProdect=$Olderproduct->order()->get();
+         $olderdate=$importOrderOldProdect[0]->order_due_date;
+         $olderProductId=$Olderproduct->id;
+         foreach($allProducts as $currentProduct){
+             $importOrdeForCurrentProdect=$currentProduct->order()->get();
+         $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+         if($olderdate>$currentdate)
+         {
+             $olderdate=$currentdate;
+             $Olderproduct=$currentProduct;
+             $olderProductId=$currentProduct->id;
+         }
+         
+        
+         }
+         $Olderproduct->update([
+            'selling_date' => $importOrderOldProdect[0]->order_due_date,
+            
+    
+    
+            ]);
+         $Olderproduct->order()->attach($order_id);
+
+
+       
+ 
+       }
+    
+    }
           
 
      
@@ -231,19 +229,19 @@ class ExportController extends Controller
         $machines =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
-         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 1)->where("products.deleted_at", null)
+         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 1)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
        
        
         $grinder =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
-        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 2)->where("products.deleted_at", null)
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 2)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
         $parts =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
-        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 3)->where("products.deleted_at", null)
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 3)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
 
