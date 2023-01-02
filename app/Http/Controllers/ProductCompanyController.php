@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductCompany;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductCompanyController extends Controller
@@ -16,7 +17,11 @@ class ProductCompanyController extends Controller
     {
 
         $productCompany = ProductCompany::all();
-        return view('company.company',compact('productCompany'));
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+        return view('company.company',compact('productCompany','exporter', 'importer','representative'));
     }
 
     /**

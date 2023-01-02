@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 
 
 use App\Models\ProductCompany;
-
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -35,9 +35,12 @@ class ProductController extends Controller
         
  $product = Product::where('category_id', $id)->get();
  
+ $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
 
 
- return view('my_product.machine',compact('product','id','machines'));
+ return view('my_product.machine',compact('product','id','machines','exporter', 'importer','representative'));
     
 
     }
@@ -57,10 +60,13 @@ class ProductController extends Controller
         $orders= Order::where('statuses_id','=',1)->get();
         $status=Status::all();
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
        
 
-        return view('my_product.add_product',compact('productCompanies','productCatgories','orders','status'));
+        return view('my_product.add_product',compact('productCompanies','productCatgories','orders','status','exporter', 'importer','representative'));
     }
 
     /**
@@ -231,8 +237,11 @@ class ProductController extends Controller
        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
 
-     
-        return view('order.details_order',compact('order','machines','grinders','parts'));
+       $exporter = User::where('role_id','=',1)->get();
+            $importer = User::where('role_id','=',2)->get();
+            $representative = User::where('role_id','=',3)->get();
+
+        return view('order.details_order',compact('order','machines','grinders','parts','exporter', 'importer','representative'));
 
         
        
@@ -267,9 +276,12 @@ class ProductController extends Controller
         
 // $product = Product::where('category_id', $id)->get();
  
+$exporter = User::where('role_id','=',1)->get();
+$importer = User::where('role_id','=',2)->get();
+$representative = User::where('role_id','=',3)->get();
 
 
- return view('order.order_product_details',compact('detailProduct','product'));
+ return view('order.order_product_details',compact('detailProduct','product','exporter', 'importer','representative'));
 
 
 

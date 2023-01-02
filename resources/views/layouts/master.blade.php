@@ -16,7 +16,7 @@
 			<img src="{{URL::asset('assets/img/loader.svg')}}" class="loader-img" alt="Loader">
 		</div>
 		<!-- /Loader -->
-		@include('layouts.main-sidebar')		
+		@include('layouts.main-sidebar',  ['exporter' => $exporter,'importer' =>  $importer,'representative' => $representative])		
 		<!-- main-content -->
 		<div class="main-content app-content">
 			@include('layouts.main-header')			

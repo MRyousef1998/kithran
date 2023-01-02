@@ -26,11 +26,14 @@ class OrderController extends Controller
         
        
         $orders = Order::where('category_id','=',1)->get();
-      
+        $exporter = User::where('role_id','=',1)->get();
+            $importer = User::where('role_id','=',2)->get();
+            $representative = User::where('role_id','=',3)->get();
+
 
        
 
-        return view('order.import_order',compact('orders'));
+        return view('order.import_order',compact('orders','exporter', 'importer','representative'));
     }
 
     /**
@@ -49,10 +52,13 @@ class OrderController extends Controller
      
         $orders= Order::all();
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
        
 
-        return view('order.add_import_order',compact('importClints','clients','productDetail'));
+        return view('order.add_import_order',compact('importClints','clients','productDetail','exporter', 'importer','representative'));
     }
 
     /**
@@ -199,10 +205,13 @@ class OrderController extends Controller
     
         $orders= Order::all();
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
        
 
-        return view('order.add_import_order1',compact('importClints','clients','productDetail','status'));
+        return view('order.add_import_order1',compact('importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
 
   

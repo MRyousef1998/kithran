@@ -32,10 +32,13 @@ class ExportController extends Controller
        
         $orders = Order::where('category_id','=',2)->get();
       
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
        
 
-        return view('order.export_order.exports_order',compact('orders'));
+        return view('order.export_order.exports_order',compact('orders','exporter', 'importer','representative'));
     }
 
     /**
@@ -225,6 +228,9 @@ class ExportController extends Controller
         $orders= Order::all();
 
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
         $machines =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
@@ -248,7 +254,7 @@ class ExportController extends Controller
 
        
 
-        return view('order.export_order.add_export_order',compact('grinder','parts','machines','importClints','clients','productDetail','status'));
+        return view('order.export_order.add_export_order',compact('grinder','parts','machines','importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
 
   

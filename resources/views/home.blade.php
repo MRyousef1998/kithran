@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master',['exporter' => $exporter,'importer' =>  $importer,'representative' => $representative])
 @section('css')
 <!--  Owl-carousel css-->
 <link href="{{URL::asset('assets/plugins/owl-carousel/owl.carousel.css')}}" rel="stylesheet" />

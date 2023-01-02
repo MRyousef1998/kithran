@@ -9,6 +9,7 @@ use App\Models\ProductGroup;
 
 
 use App\Models\ProductDetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductDetailController extends Controller
@@ -27,9 +28,12 @@ class ProductDetailController extends Controller
 
 
 
-       
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
-        return view('my_product.all_product',compact('productDetail','productCompany','productGroups',"productCategoies"));
+
+        return view('my_product.all_product',compact('productDetail','productCompany','productGroups',"productCategoies",'exporter', 'importer','representative'));
     }
 
     /**
