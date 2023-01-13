@@ -241,7 +241,42 @@ class ProductController extends Controller
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-        return view('order.details_order',compact('order','machines','grinders','parts','exporter', 'importer','representative'));
+        return view('order.details_order',compact('order','machines','grinders','parts','exporter', 'importer','representative','id'));
+
+        
+       
+
+       
+
+    }
+    public function getExportDetailsOrder($id)
+    {
+
+        $order=Order::find($id);
+        
+        $detail=OrderDetail::where("orders_id",$id);
+        $machines =DB::table('products')->
+       leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+       ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)
+       ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+       ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+   //return $machines;
+       $grinders =DB::table('products')->
+       leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+       ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)
+       ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+       ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+       $parts =DB::table('products')->
+       leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+       ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 3)
+       ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+       ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+
+       $exporter = User::where('role_id','=',1)->get();
+            $importer = User::where('role_id','=',2)->get();
+            $representative = User::where('role_id','=',3)->get();
+
+        return view('order.export_order.details_order1',compact('order','machines','grinders','parts','exporter', 'importer','representative','id'));
 
         
        
@@ -321,6 +356,61 @@ $representative = User::where('role_id','=',3)->get();
 
 
  return view('order.export_order.export_product_details',compact('detailProduct','product'));
+
+
+
+ 
+    
+
+    }
+
+
+    public function getexport_productBoxcDetails(Request $request)
+    { 
+
+
+
+       
+     
+        $product =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.id", $request->id)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->first();
+        
+
+
+
+        $detailProduct =DB::table('products')->where("product_details_id", $request->id)->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        leftJoin('boxes', 'boxes.id', '=', 'products.box_id')->
+        leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+        leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
+        ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $request->order_id)
+        ->get();
+        
+
+
+//         $detailProduct =DB::table('products')->
+//         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+//         leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+//         leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')->
+       
+//         Join('order_product', 'products.id', '=', 'order_product.products_id')->
+//         leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+//         leftJoin('users', 'orders.exported_id', '=', 'users.id') ->leftJoin('statuses', 'orders.statuses_id', '=', 'statuses.id') ->
+//         where("product_details.id", $id)->where("products.selling_date", null)
+//         ->selectRaw('order_product.orders_id,orders.order_due_date,statuses.id as statusesId,users.name,statuses.status_name,company_name,product_name,group_name,country_of_manufacture,count(order_product.orders_id) as aggregate,product_details.image_name')
+//         ->groupBy('statuses.id','users.name','orders.order_due_date','order_product.orders_id','statuses.status_name','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+   
+
+        
+// // $product = Product::where('category_id', $id)->get();
+ 
+
+
+ return view('order.export_order.export_product_box_details',compact('detailProduct','product'));
 
 
 

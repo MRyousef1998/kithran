@@ -187,7 +187,9 @@
                                         
                                       
                                             <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
+                                                <a class="modal-effect " data-effect="effect-scale" 
+                                                data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                                data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
                                         </td>
                                        
                                         <td style="text-align: center;vertical-align: middle;" >
@@ -200,41 +202,14 @@
             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
             data-id="{{ $x->id }}" data-order_id="{{ $id }}"
             data-toggle="modal" href="#capsalation" title="حذف"> تغليف قطعة</a>
-            
+           
         </div>
     </div>
     
     
     
     
-                                            </td>
-
-                                        <td style="text-align: center;vertical-align: middle;" >
-
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->company_name }}"
-                                                data-company_id="{{ $x->id }}"
-                                                data-product_g="{{ $x->group_name }}"
-                                                {{-- data-group_id="{{ $x->group_id }}" --}}
-                                                data-image-name ="{{ $x->image_name}}"
-                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
-                                                data-product_category_id ="{{ $x->category->id}}" --}}
-
-                                                
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
-
-
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
-
-                                        </td>
+                                          
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -609,6 +584,19 @@
     
     </div>
     <!-- main-content closed -->
+
+    <div class="modal" id="modaldemo9">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">تفاصيل الوصول</h6><button aria-label="Close" class="close" data-dismiss="modal"
+                        type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                
+                    </div>
+        </div>
+    </div>
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
@@ -653,6 +641,34 @@
     <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.js') }}"></script>
     <!-- Internal Prism js-->
     <script src="{{ URL::asset('assets/plugins/prism/prism.js') }}"></script>
+
+
+    <script>
+        $('#modaldemo9').on('show.bs.modal', function(event) {
+            
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            
+            var order_id = button.data('order_id')
+            
+            $.ajax({
+            type : 'GET',
+          
+            url :"{{URL::to('export_productDetails_box/')}}?product_id="+id+"&order_id="+order_id,
+            
+            success: function(result) {
+                alert(result);
+                $('#modaldemo9 div.modal-body').html(result);
+            }
+        });
+            
+           // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
+        })
+    
+    </script>
+
+
+
 
     <script>
         $('#delete_file').on('show.bs.modal', function(event) {

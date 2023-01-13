@@ -15,15 +15,15 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->string('image_name');
-            $table->string('');
-            $table->string('');
-
-            $table->string('');
-
+            $table->string('marina_address');
+            $table->string('parking_number');
+            $table->string('image_name')->nullable();
+            $table->string('mark');
+            $table->string('Name_driver_lansh');
+            $table->string('number_driver_lansh');
+            $table->string('Name_driver');
+            $table->string('number_driver');
             $table->decimal('shiping_cost',8,2);
-            
-           
             $table->timestamps();
         });
     }

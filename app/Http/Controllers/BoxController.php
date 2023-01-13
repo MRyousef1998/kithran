@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Box;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BoxController extends Controller
 {
@@ -35,7 +37,36 @@ class BoxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      
+        $product_id =DB::table('products')-> where("product_details_id", $request->id)->
+        Join('order_product', 'products.id', '=', 'order_product.products_id')->
+        where("order_product.orders_id", $request->order_id)->
+       first();
+     
+       $prouct=Product::find($product_id->products_id);
+      
+       Box::create([
+        'code' => $request->box_code,
+    ]);
+       $box_id = Box::latest()->first()->id;
+    
+        if($request->pic!=null){
+            $imageName = $request->pic;
+            $fileName = $imageName->getClientOriginalName();
+     $request->pic->move(public_path('Attachments/Box' . $box_id ), $fileName);
+           
+        
+     }
+
+     $prouct->update([
+        'box_id' => $box_id,
+
+        ]);
+    
+         session()->flash('Add', 'تم التغليف بنجاح ');
+         return redirect('OrderDetails/'. $request->order_id);
+         
+        
     }
 
     /**

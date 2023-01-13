@@ -70,8 +70,12 @@ Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
+Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
+
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');
+
 Route::get('/export_productDetails/{id}', 'App\Http\Controllers\ProductController@getexport_productDetails')->name('export_productDetails');
+Route::get('/export_productDetails_box', 'App\Http\Controllers\ProductController@getexport_productBoxcDetails')->name('export_productDetails_box');
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 
@@ -94,6 +98,7 @@ Route::resource('export_order', 'App\Http\Controllers\ExportController');
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 
 
+Route::resource('box', 'App\Http\Controllers\BoxController');
 
 
 

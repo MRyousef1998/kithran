@@ -131,7 +131,7 @@
                     
                                                           
                                                             <td >
-                                                            <a href="{{url('OrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
+                                                            <a href="{{url('ExportOrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
                                                             {{ $x->countAllItem()}}
                                                             </a>
                                                             
