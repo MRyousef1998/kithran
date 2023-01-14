@@ -36,8 +36,9 @@ class BoxController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-      
+    {   
+   
+
         $product_id =DB::table('products')-> where("product_details_id", $request->id)->
         Join('order_product', 'products.id', '=', 'order_product.products_id')->
         where("order_product.orders_id", $request->order_id)->

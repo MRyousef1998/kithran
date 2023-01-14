@@ -35,15 +35,15 @@
 												<span class="fa fa-star text-muted"></span>
 												<span class="fa fa-star text-muted"></span>
 											
-										<h4 class="price"> اجمالي العدد المطلوب:    <span class="h3 ml-2"style="color: rgb(170, 24, 10) ;">  {{$product[0]->aggregate}}</span></h4>
+										<h4 class="price"> اجمالي العدد المتوفر:    <span class="h3 ml-2"style="color: rgb(170, 24, 10) ;">  {{$product[0]->aggregate}}</span></h4>
 										
 										
 										<div class="d-flex  mt-2">
 											
 										</div>
 										<div class="action">
-											<button class="add-to-cart btn btn-danger" type="button">تغلیف</button>
-											<button class="add-to-cart btn btn-success" type="button">تسلیم</button>
+											<button class="add-to-cart btn btn-danger" type="button">ADD TO WISHLIST</button>
+											<button class="add-to-cart btn btn-success" type="button">ADD TO CART</button>
 										</div>
 									</div>
 								</div>
@@ -63,33 +63,26 @@
 								
 								<div class="card-body cardbody relative">
 									<div class="cardtitle">
-										<span>  رقم المنتج</span>
-										<a>اسم المنتج</a>
+										<span>طلبية رقم </span>
+										<a>اسم المورد</a>
 										<span>الحالة </span>
-										<a>رقم الصندوق</a>
+										<a>تاريخ الوصول</a>
 									</div>
 									<div class="cardprice">
-										<span >{{$x->id}}</span>
-										<span>{{$x->product_name}}</span>
-										@if ($x->box_id==null)
-										<span class="text-danger">غير مغلف</span>
+										<span >{{$x->orders_id}}</span>
+										<span>{{$x->name}}</span>
+										@if ($x->statusesId==1)
+										<span class="text-danger">{{$x->status_name}}</span>
 									
-									
+									@elseif ($x->statusesId==2)
+										<span class="text-success">{{$x->status_name}}</span>
 									@else
 									
-										<span class="text-warning">مغلف</span>
+										<span class="text-warning">{{$x->status_name}}</span>
 										
 									@endif
-									@if ($x->box_id==null)
-									<span class="text-danger">غير مخصص</span>
-								
-								
-								@else
-								
-									<span class="text-warning">{{$x->code}}</span>
-									
-								@endif
 										
+										<span>{{$x->order_due_date}}</span>
 									</div>
 									<div class="cardtitle">
 										
