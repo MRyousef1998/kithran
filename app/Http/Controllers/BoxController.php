@@ -37,14 +37,15 @@ class BoxController extends Controller
      */
     public function store(Request $request)
     {   
-   
+      
 
-        $product_id =DB::table('products')-> where("product_details_id", $request->id)->
-        Join('order_product', 'products.id', '=', 'order_product.products_id')->
-        where("order_product.orders_id", $request->order_id)->
-       first();
+    //     $product_id =DB::table('products')-> where("product_details_id", $request->id)->
+    //     Join('order_product', 'products.id', '=', 'order_product.products_id')->
+    //     where("order_product.orders_id", $request->order_id)->
+    //    first();
      
-       $prouct=Product::find($product_id->products_id);
+    //    $prouct=Product::find($product_id->products_id);
+    $prouct=Product::find($request->id);
       
        Box::create([
         'code' => $request->box_code,
@@ -65,7 +66,7 @@ class BoxController extends Controller
         ]);
     
          session()->flash('Add', 'تم التغليف بنجاح ');
-         return redirect('OrderDetails/'. $request->order_id);
+         return redirect('ExportOrderDetails/'. $request->order_id);
          
         
     }

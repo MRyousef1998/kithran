@@ -37,7 +37,7 @@
 											
 										<h4 class="price"> اجمالي العدد المطلوب:    <span class="h3 ml-2"style="color: rgb(170, 24, 10) ;">  {{$product[0]->aggregate}}</span></h4>
 										
-										
+										<h4 class="price">عدد المكنات المغلفة :    <span class="h3 ml-2"style="color: rgb(170, 24, 10) ;">  {{$product[0]->box_count}}</span></h4>
 										<div class="d-flex  mt-2">
 											
 										</div>
@@ -69,7 +69,7 @@
 										<a>رقم الصندوق</a>
 									</div>
 									<div class="cardprice">
-										<span >{{$x->id}}</span>
+										<span >{{$x->products_id}}</span>
 										<span>{{$x->product_name}}</span>
 										@if ($x->box_id==null)
 										<span class="text-danger">غير مغلف</span>
@@ -86,7 +86,7 @@
 								
 								@else
 								
-									<span class="text-warning">{{$x->code}}</span>
+									<span class="text-warning">{{$x->box_code}}</span>
 									
 								@endif
 										
@@ -100,37 +100,36 @@
 								</div>
 								<div class="card-body cardbody relative">
 								<div class="cardtitle">
-									@if ($x->statusesId==1)
-										<span class="text-danger">العدد</span>
 									
-									@elseif ($x->statusesId==2)
-										<span class="text-success">العدد</span>
-									@else
-									
-										<span class="text-warning">العدد</span>
-										
-									@endif
-									
+									<span class="text-danger">طلبية توريدها</span>
 										
 									</div>
 									<div class="cardprice">
-										@if ($x->statusesId==1)
-										<span class="text-danger">{{$x->aggregate}}</span>
 									
-									@elseif ($x->statusesId==2)
-										<span class="text-success">{{$x->aggregate}}</span>
-									@else
-									
-										<span class="text-warning">{{$x->aggregate}}</span>
-										
-									@endif
-										
+										<span class="text-danger">{{$x->orders_id}}</span>
 									</div>
 									</div>
 							</div>
 							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
-								<a href="#" class="btn btn-primary"> View More</a>
-								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+								@if ($x->box_id==null)
+								<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
+								data-toggle="modal"
+								href="#capsalation" class="btn btn-primary"> تغليف </a>
+								
+								@else
+								<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
+								data-toggle="modal"
+								href="#capsalation" class="btn btn-warning"> تغیر کود </a>
+									
+									
+								@endif
+								
+								
+								
+								
+								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> تسليم</a>
 							</div>
 						</div>
 						
@@ -183,8 +182,70 @@
 			<!-- Container closed -->
 		</div>
 		<!-- main-content closed -->
+		<div class="modal fade" id="capsalation1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">تغليف منتج</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div> 
+				
+				<form action="{{ route('box.store') }}" method="post" method="post" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="modal-body">
+					   
+					  
+
+					  
+						<input name="id" id="id" value="">
+						<input name="order_id" id="order_id" value="">
+
+							<label for="exampleInputEmail1">كود المنتج</label>
+							<input type="text" class="form-control" id="box_code" name="box_code" required>
+					   
+						
+					   
+					<br>
+						
+						<h5 class="card-title">المرفقات</h5>
+
+						<div class="col-sm-12 col-md-12">
+							<input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
+								data-height="70" />
+						</div><br>
+						<p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
+
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">تاكيد</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 @section('js')
+
+
+<script>
+	$('#capsalation').on('show.bs.modal', function(event) {
+	var button = $(event.relatedTarget)
+	var id = button.data('id')
+	var order_id = button.data('order_id')
+
+	
+	var modal = $(this)
+	
+	modal.find('.modal-body #id').val(id);
+	modal.find('.modal-body #order_id').val(order_id);
+   
+})
+
+</script>
 <!-- Internal Select2.min js -->
 <script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 <script src="{{URL::asset('assets/js/select2.js')}}"></script>

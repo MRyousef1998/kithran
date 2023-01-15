@@ -156,6 +156,8 @@
                                     
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد </th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">عدد المغلف </th>
+
 
 
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمليات</th>
@@ -191,6 +193,11 @@
                                                 data-id="{{ $x->id }}" data-order_id="{{ $id }}"
                                                 data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
                                         </td>
+                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->box_count }}</a>
+                                    </td>
                                        
                                         <td style="text-align: center;vertical-align: middle;" >
 
@@ -265,9 +272,15 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
-                                        </td>
-
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
+                                    <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                        <a class="modal-effect " data-effect="effect-scale" 
+                                        data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                        data-toggle="modal" href="#modaldemo9" >{{ $x->box_count }}</a>
+                                </td>
 
                                         <td style="text-align: center;vertical-align: middle;" >
 
@@ -346,10 +359,16 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
-                                        </td>
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
 
-
+                                    <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                        <a class="modal-effect " data-effect="effect-scale" 
+                                        data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                        data-toggle="modal" href="#modaldemo9" >{{ $x->box_count }}</a>
+                                </td>
                                         <td style="text-align: center;vertical-align: middle;" >
 
                                             <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
@@ -645,7 +664,9 @@
 
     <script>
         $('#modaldemo9').on('show.bs.modal', function(event) {
-            
+            const zIndex = 1040 + 10 * $('.modal:visible').length;
+  $(this).css('z-index', zIndex);
+  setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
             var button = $(event.relatedTarget)
             var id = button.data('id')
             
@@ -657,7 +678,7 @@
             url :"{{URL::to('export_productDetails_box/')}}?product_id="+id+"&order_id="+order_id,
             
             success: function(result) {
-                alert(result);
+                alert(1);
                 $('#modaldemo9 div.modal-body').html(result);
             }
         });
