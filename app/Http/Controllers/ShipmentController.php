@@ -14,7 +14,14 @@ class ShipmentController extends Controller
      */
     public function index()
     {
-        //
+        $shipments = Shipment::all();
+      
+        
+       
+
+        return view('order.shipment.shipmentes',compact('shipments'));
+
+  
     }
 
     /**
