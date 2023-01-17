@@ -80,7 +80,7 @@
 							<div class="card-header pb-0">
                                      <div class="d-flex justify-content-between">
 
-                    <a href="add_export_order" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                    <a href="add_shipment" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 > <i
                                 class="fas fa-plus"></i>&nbsp; اضافة شخنة جديدة </a>
                     </div>
@@ -93,22 +93,23 @@
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0" >رقم الشحنة</th>
-                                    <th class="border-bottom-0">عنوان الشحنة</th>
+                                    
+                                    <th class="border-bottom-0">مارك</th>
 
                                   
-                                    <th class="border-bottom-0">عدد المكنات </th>
+                                    <th class="border-bottom-0">عدد الکرتین </th>
                                     
-                                    <th class="border-bottom-0">تاريخ الطلب</th>
+                                    <th class="border-bottom-0">تاريخ الشحن</th>
+                                    <th class="border-bottom-0">عنوان الشحنة</th>
 
-
-                                    <th class="border-bottom-0">تاريخ الوصول</th>
-                                    <th class="border-bottom-0">العمولة</th>
-                                    <th class="border-bottom-0">الضريبة</th>
-                                    <th class="border-bottom-0">القيمة الاجمالية</th>
+                                    <th class="border-bottom-0">رقم البارکن</th>
+                                    <th class="border-bottom-0">اسم سائق اللانش</th>
+                                    <th class="border-bottom-0">رقم سائق اللانش</th>
+                                    <th class="border-bottom-0">اسم سائق البيكاب </th>
 
 
                                     
-                                    <th class="border-bottom-0">الحالة</th>
+                                    <th class="border-bottom-0">رقم سائق البيكاب </th>
                                      <th class="border-bottom-0">المرفق</th>
                                     
 
@@ -116,64 +117,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody>
-                                                    
-                                                    <?php $i = 0; ?>
-                                                    @foreach ($orders as $x)
-                                                        <?php $i++; ?>
-                                                        <div class="all_row">
-                                                        <tr>
-                                                            
-                                                            <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:0.5;" >{{ $i }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
-                                                        
-
-                    
-                                                          
-                                                            <td >
-                                                            <a href="{{url('ExportOrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
-                                                            {{ $x->countAllItem()}}
-                                                            </a>
-                                                            
-                                                            
-                                                            </td>
-                    
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
-                                                            
-                                                            <td>
-                                                            @if ($x->status->id==1)
-                                                                <span class="text-danger">{{ $x->status->status_name }}</span>
-                                                            
-                                                            @elseif ($x->status->id==2)
-                                                                <span class="text-success">{{ $x->status->status_name }}</span>
-                                                            @else
-                                                            
-                                                                <span class="text-warning">{{ $x->status->status_name }}</span>
-                                                                
-                                                            @endif
-                                                        </td>
-
-
-
-                                                            
-                                                           
-
-
-
-
-
-                                                             
-                                                            
-                                                            
-                                                        </tr>
-                                                    </div>
-                                                   
-                                                    @endforeach
-                            </tbody>
+                         
 
                                 
                         </table>
