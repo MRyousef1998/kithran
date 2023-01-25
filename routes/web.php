@@ -91,7 +91,7 @@ Route::resource('export_order', 'App\Http\Controllers\ExportController');
 Route::resource('shipmentes', 'App\Http\Controllers\ShipmentController');
 Route::get('add_shipment', 'App\Http\Controllers\ShipmentController@create1');
 Route::post('add_shipment', 'App\Http\Controllers\ExportController@store');
-Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getproductsGruops');
+Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesOrder');
 // Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([
 //     'show','store','create1'
 // ]);

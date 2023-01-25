@@ -99,7 +99,7 @@ class ShipmentController extends Controller
     }
     public function getboxesOrder($clientId)
     {
-
+return 1;
         
     //     $products = ProductDetail::where('product_name',$name);
         

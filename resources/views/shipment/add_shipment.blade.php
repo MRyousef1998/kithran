@@ -480,13 +480,14 @@ else{
             $('select[name="clints"]').on('change', function() {
                 
                 var clintsId = $(this).val();
-                alert(clintsId);
+                
                 if (clintsId) {
                     $.ajax({
                         url: "{{URL::to('box_order')}}/" + clintsId,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
+                             alert(data);
                             $('select[name="productClass"]').empty();
                             $.each(data, function(value,key) {
                                 
