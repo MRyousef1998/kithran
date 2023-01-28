@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Box;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -48,7 +49,7 @@ class BoxController extends Controller
     $prouct=Product::find($request->id);
       
        Box::create([
-        'code' => $request->box_code,
+        'box_code' => $request->box_code,
     ]);
        $box_id = Box::latest()->first()->id;
     
@@ -114,5 +115,20 @@ class BoxController extends Controller
     public function destroy(Box $box)
     {
         //
+    }
+     public function getBoxDetails(Request $request)
+    {
+         $detailBox =DB::table('products')->where("products.box_id", $request->box_id)->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        
+        leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+        leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+         ->get();
+         
+        
+       
+         
+     return view('shipment.details_box',compact('detailBox'));
+
     }
 }

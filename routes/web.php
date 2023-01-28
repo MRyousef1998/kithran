@@ -76,6 +76,8 @@ Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getpr
 
 Route::get('/export_productDetails/{id}', 'App\Http\Controllers\ProductController@getexport_productDetails')->name('export_productDetails');
 Route::get('/export_productDetails_box', 'App\Http\Controllers\ProductController@getexport_productBoxcDetails')->name('export_productDetails_box');
+Route::get('/box_insaid_detailes', 'App\Http\Controllers\BoxController@getBoxDetails')->name('box_insaid_detailes');
+
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 

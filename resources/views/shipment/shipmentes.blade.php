@@ -80,9 +80,8 @@
 							<div class="card-header pb-0">
                                      <div class="d-flex justify-content-between">
 
-                    <a href="add_shipment" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
-                                > <i
-                                class="fas fa-plus"></i>&nbsp; اضافة شخنة جديدة </a>
+                                        <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                        data-toggle="modal" href="#exampleModal">اضافة شحنة</a>
                     </div>
 
 								
@@ -131,9 +130,45 @@
     </div>
 
 
-<!--update-->
+<!--add-->
 
-           
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">اضافة شحنة للعميل</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div> 
+        
+        <form action="{{ route('shipmentes.create') }}" method="get" method="get">
+            {{ csrf_field() }}
+            <div class="modal-body">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الرجاء تحديد العميل</label>
+                <select name="clintId" id="clintId" class="form-control" required>
+                    <option value="" selected disabled> --حدد الذبون--</option>
+                    @foreach ($importClints as $importClint)
+                        <option value="{{ $importClint->id }}">{{ $importClint->name  }}</option>
+                    @endforeach
+                </select>
+              
+
+             
+            
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">تاكيد</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
 
 
 
@@ -170,7 +205,7 @@
     <!--Internal  Notify js -->
     <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
-
+    <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
   
 
 

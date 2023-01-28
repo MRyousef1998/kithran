@@ -121,7 +121,7 @@
                                 <select name="clints" class="form-control SlectBox"
                                     required>
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد  المستورد</option>
+                                    
                                     @foreach ($importClints as $importClint)
                                         <option value="{{ $importClint->id }}"> {{ $importClint->name }}</option>
                                     @endforeach
@@ -227,84 +227,34 @@
                                             <thead>
                                                 <tr>
                                                      <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
-                                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
-                                                    
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>                                 
+                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم </th>
+                                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">كود الصندوق</th>
+                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">عدد المحتوى</th>
+                                                                             
                 
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 
                                                 <?php $i = 0; ?>
-                                                {{-- @foreach ($productDetail as $x)
-                                                  
+                                                @foreach ($boxes as $x)
+                                                <?php $i++; ?>
                                                     <div class="all_row">
                                                     <tr>
                                                         
-                                                        <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1" id="box1" name="box1"  ></td>
+                                                        <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->boxId }}" class="box1" id="box1" name="box1"  ></td>
                                                         <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
-                                                        <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
+                                                        <td style="text-align: center;vertical-align: middle;">{{ $x->box_code }}</td>
                 
-                                                        <td style="text-align: center;vertical-align: middle;">
-                                                            
-                                                            <div class = "vertical"   ><div>
-                                                                <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" /></div>
-                                                                <div>
-                                                                    {{ $x->product_name }}</div>
-                                                            </div>
-                
-                                                            
-                                                            </td>
+                                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                                            <a class="modal-effect " data-effect="effect-scale" 
+                                                            data-id="{{ $x->boxId }}" 
+                                                            data-toggle="modal" href="#modaldemo9" >{{ $x->count_insaid }}</a>
+                                                    </td>
                                                       
-                                                        <td style="text-align: center;vertical-align: middle;">{{ $x->groups->group_name }}</td>
+                                                       
                 
-                                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
-                                                        
-                                                        <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group quantity" style=" ">
-                                                                <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                                    <span class="input-group-text" >-</span>
-                                                                </div>
-                                                                <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
-                                                                <div class="input-group-append increment-btn" style="cursor: pointer">
-                                                                    <span class="input-group-text"  >+</span>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-
-
-
-
-                                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                                
-                                                                <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
-
-                                                                
-                                                            </div>
-                                                        </td>
-
-                                                        <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                            
-                                                                <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
-                                                            </div>
-                                                            
-                                                        </td>
-                                                        <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                                
-                                                                <input type="text" class="total_price form-control" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
-                                                                
-                                                            </div>
-                                                        </td>
+                                                   
 
                                                          
                                                         
@@ -312,7 +262,7 @@
                                                     </tr>
                                                 </div>
                                                
-                                                @endforeach --}}
+                                                @endforeach
                                             </tbody>
                                         </table>
 
@@ -418,36 +368,33 @@
 
 
 
-
 <script>
-        function sandData() {
-           
-            var order = new Array();
-            
-            
-
-            $("#datatable input[type=checkbox]:checked").each(function() {
-               
-                var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
-                               price:$(this).parent().parent().find('.price').val(),
-                                commission_pice: $(this).parent().parent().find('.commission_pice').val(),
-
-                                    
-                                     };
-                                     
-
-                order.push(item);
-
-           
-                
-            });
-              document.getElementById('my_hidden_input').value = JSON.stringify(order);
-                
-                document.getElementById('form').submit();
-
+    $('#modaldemo9').on('show.bs.modal', function(event) {
+        alert(1111);
+//         const zIndex = 1040 + 10 * $('.modal:visible').length;
+// $(this).css('z-index', zIndex);
+// setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        
+        alert(id);
+        
+        $.ajax({
+        type : 'GET',
+      
+        url :"{{URL::to('box_insaid_detailes/')}}?box_id="+id,
+        
+        success: function(result) {
+            alert(result);
+            $('#modaldemo9 div.modal-body').html(result);
         }
+    });
+        
+       // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
+    })
 
-    </script>
+</script>
+
 
 
      <script>
@@ -475,36 +422,6 @@ else{
 }
 
     </script>
-    <script>
-        $(document).ready(function() {
-            $('select[name="clints"]').on('change', function() {
-                
-                var clintsId = $(this).val();
-                
-                if (clintsId) {
-                    $.ajax({
-                        url: "{{URL::to('box_order')}}/" + clintsId,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                             alert(data);
-                            $('select[name="productClass"]').empty();
-                            $.each(data, function(value,key) {
-                                
-                                $('select[name="productClass"]').append('<option value="' +
-                                    key + '">' + value + '</option>');
-                            });
-                        },
-                    });
-
-
-                } else {
-                    console.log('AJAX load did not work');
-                }
-            });
-
-        });
-
-    </script>
+   
     
 @endsection
