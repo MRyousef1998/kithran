@@ -16,24 +16,22 @@
 				<div class="col-lg-3">
 					<div class="card item-card">
 						<div class="card-body pb-0 h-100">
-							<div class="text-center">
-								<img src="{{URL::asset('assets/img/ecommerce/01.jpg')}}" alt="img" class="img-fluid">
+							<div  class="text-center">
+								<img src="http://127.0.0.1:8000/Attachments/{{ $x->product_details_id }}/{{ $x->image_name }}" alt="img" class="img-fluid">
 							</div>
 							<div class="card-body cardbody relative">
 								<div class="cardtitle">
-									<span>Items</span>
-									<a>Sport shoes</a>
+									<a>{{$x->product_name}}</a>
+									<span>{{$x->group_name}}</span>
+									
 								</div>
 								<div class="cardprice">
-									<span class="type--strikethrough">$999</span>
-									<span>$799</span>
+									<span class="type--strikethrough">{{$x->company_name}}</span>
+									<span>{{$x->country_of_manufacture}}</span>
 								</div>
 							</div>
 						</div>
-						<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
-							<a href="#" class="btn btn-primary"> View More</a>
-							<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-						</div>
+						
 					</div>
 				</div>
 					@endforeach
