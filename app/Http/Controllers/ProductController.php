@@ -370,7 +370,11 @@ $representative = User::where('role_id','=',3)->get();
 
       
 
-       
+        $boxes =DB::table('products')->
+        leftJoin('boxes', 'boxes.id', '=', 'products.box_id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'orders.id', '=', 'order_product.orders_id') ->where("orders.id", $request->order_id)->where("products.box_id",'!=',null)
+        ->selectRaw('boxes.id ,boxes.box_code')
+        ->groupBy('boxes.id','boxes.box_code')->get();
+        
      
         $product =DB::table('products')->
        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
@@ -411,7 +415,7 @@ $representative = User::where('role_id','=',3)->get();
  
 
 
- return view('order.export_order.export_product_box_details',compact('detailProduct','product'));
+ return view('order.export_order.export_product_box_details',compact('detailProduct','product','boxes'));
 
 
 

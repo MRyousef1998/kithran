@@ -104,6 +104,8 @@ Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 
 
 Route::resource('box', 'App\Http\Controllers\BoxController');
+Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
+
 
 
 

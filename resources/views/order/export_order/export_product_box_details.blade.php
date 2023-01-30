@@ -129,7 +129,10 @@
 								
 								
 								
-								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> تسليم</a>
+								<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" 
+								data-toggle="modal"
+								href="#sharcapsalation" class="btn btn-success"> تغليف مشترك</a>
 							</div>
 						</div>
 						
@@ -182,7 +185,7 @@
 			<!-- Container closed -->
 		</div>
 		<!-- main-content closed -->
-		<div class="modal fade" id="capsalation1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		<div class="modal fade" id="capsalation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -228,11 +231,62 @@
 		</div>
 	</div>
 
+
+
+
+	<div class="modal fade" id="sharcapsalation" name ='sharcapsalation' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">تغليف منتج</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div> 
+				
+				<form  action="{{route("sharbox")}}"   method="post" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="modal-body">
+					   
+					  
+
+					  
+						<input name="id" id="id" value="" >
+						<input name="order_id" id="order_id" value="" >
+
+						<div class="col">
+							<label for="inputName" class="control-label">كود الصندوق المشترك</label>
+							<select name="box_id" class="form-control SlectBox"
+								>
+								<!--placeholder-->
+								<option value="" selected disabled>حدد  الصندوق</option>
+								@foreach ($boxes as $box)
+									<option value="{{ $box->id }}"> {{ $box->box_code }}</option>
+								@endforeach
+							</select>
+						</div>
+					   
+						
+					   
+					<br>
+						
+						
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">تاكيد</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 @section('js')
 
 
 <script>
 	$('#capsalation').on('show.bs.modal', function(event) {
+		
 	var button = $(event.relatedTarget)
 	var id = button.data('id')
 	var order_id = button.data('order_id')
@@ -242,6 +296,24 @@
 	
 	modal.find('.modal-body #id').val(id);
 	modal.find('.modal-body #order_id').val(order_id);
+   
+})
+
+</script>
+
+<script>
+	$('#sharcapsalation').on('show.bs.modal', function(event) {
+		
+	var button = $(event.relatedTarget)
+	var id = button.data('id')
+	var order_id = button.data('order_id')
+		
+		
+	var modal = $(this)
+	
+	modal.find('.modal-body #id').val(id);
+	modal.find('.modal-body #order_id').val(order_id);
+
    
 })
 
