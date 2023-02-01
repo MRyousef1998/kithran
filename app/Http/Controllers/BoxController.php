@@ -17,7 +17,7 @@ class BoxController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
@@ -27,7 +27,17 @@ class BoxController extends Controller
      */
     public function create(Request $request)
     {
-        return $request;
+     
+        $prouct=Product::find($request->id);
+        $box_id =$request->box_id;
+        $prouct->update([
+            'box_id' => $box_id,
+    
+            ]);
+        
+             session()->flash('Add', 'تم التغليف بنجاح ');
+             return redirect('ExportOrderDetails/'. $request->order_id);
+             
     }
 
     /**

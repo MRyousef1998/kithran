@@ -33,6 +33,8 @@ Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDeta
 
 Route::post('addAttachments', 'App\Http\Controllers\OrderDetailController@addAttachments')->name('addAttachments');
 
+
+
 // Route::get('/edit_invoice/{id}', 'App\Http\Controllers\InvoicesController@edit');
 
 // Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoicesController@show')->name('Status_show');
@@ -90,9 +92,18 @@ Route::get('/orderProductDeteil/{id}', 'App\Http\Controllers\ProductController@g
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
 Route::resource('export_order', 'App\Http\Controllers\ExportController');
+Route::get('order_file/{id}', 'App\Http\Controllers\ExportController@exporterOrders');
+
 Route::resource('shipmentes', 'App\Http\Controllers\ShipmentController');
 Route::get('add_shipment', 'App\Http\Controllers\ShipmentController@create1');
-Route::post('add_shipment', 'App\Http\Controllers\ExportController@store');
+Route::post('/add_shipment1', 'App\Http\Controllers\ShipmentController@store')->name('add_shipment1');
+Route::get('/shipmentDeteile/{id}', 'App\Http\Controllers\ShipmentController@getShipmentDeteil');
+Route::post('addAttachmentsShipment', 'App\Http\Controllers\ShipmentController@addAttachments')->name('addAttachmentsShipment');
+Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@get_file');
+
+ Route::get('View_file_sipment/{orderNumber}/{file_name}', 'App\Http\Controllers\ShipmentController@open_file');
+ Route::post('delete_file_sipment', 'App\Http\Controllers\ShipmentController@destroy')->name('delete_file_sipment');
+ Route::get('download_file_sipment/{orderNumber}/{file_name}', 'App\Http\Controllers\ShipmentController@get_file');
 Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesOrder');
 // Route::resource('import_order', 'App\Http\Controllers\OrderController')->except([
 //     'show','store','create1'

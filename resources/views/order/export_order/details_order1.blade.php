@@ -616,6 +616,56 @@
                     </div>
         </div>
     </div>
+    </div>
+
+
+    <div class="modal fade" id="sharcapsalation" name ='sharcapsalation' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">تغليف  منتج</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div> 
+				
+				<form  action="{{route("sharbox")}}"   method="post" enctype="multipart/form-data">
+					{{ csrf_field() }}
+					<div class="modal-body">
+					   
+					  
+
+					  
+						<input name="id" id="id" value="" hidden>
+						<input name="order_id" id="order_id" value="" hidden>
+
+						<div class="col">
+							<label for="inputName" class="control-label">كود الصندوق المشترك</label>
+							<select name="box_id" class="form-control SlectBox"
+								>
+								<!--placeholder-->
+								<option value="" selected disabled>حدد  الصندوق</option>
+								@foreach ($boxes as $box)
+									<option value="{{ $box->id }}"> {{ $box->box_code }}</option>
+								@endforeach
+							</select>
+						</div>
+					   
+						
+					   
+					<br>
+						
+						
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-success">تاكيد</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('js')
 <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
@@ -726,6 +776,23 @@
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
 
+    </script>
+    <script>
+        $('#sharcapsalation').on('show.bs.modal', function(event) {
+            alert(122);
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var order_id = button.data('order_id')
+            
+            
+        var modal = $(this)
+        
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #order_id').val(order_id);
+    
+       
+    })
+    
     </script>
 
 @endsection

@@ -105,7 +105,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="" method="post" name="form"id="form"enctype="multipart/form-data"
+                    <form  action="{{ route('shipmentes.store') }}" method="post" name="form" id="form" enctype="multipart/form-data"
                         autocomplete="off">
                         {{ csrf_field() }}
                         {{-- 1 --}}
@@ -129,11 +129,11 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >مارك</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="Mark" name="Mark" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
                             </div>
                             <div class="col">
                                 <label>التاريخ  </label>
-                                <input class="form-control appearance-none block w-full" type="date" name="Due_date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full" type="date" name="sipment_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
                          
@@ -157,15 +157,15 @@
                         <div class="row">
                             
                             <div class="col">
-                                <label for="Amount_Commission" class="control-label">عنوان المرسى</label>
-                                <input type="text" class="form-control form-control-lg" id="Amount_Commission"
-                                    name="Amount_Commission" title="يرجي ادخال عنوان المرسى "
+                                <label for="marce" class="control-label">عنوان المرسى</label>
+                                <input type="text" class="form-control form-control-lg" id="marce"
+                                    name="marce" title="يرجي ادخال عنوان المرسى "
                                    
                                     required>
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >رقم الباركن</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="parking_number" name="parking_number" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
                             </div>
 
                        
@@ -174,29 +174,30 @@
 
                         {{-- 5 --}}
                         <div class="row">
-                            
+                            <input name="my_hidden_input" id="my_hidden_input" hidden
+                            >
                             <div class="col">
-                                <label for="Amount_Commission" class="control-label">اسم سائق اللانش</label>
-                                <input type="text" class="form-control form-control-lg" id="Amount_Commission"
-                                    name="Amount_Commission" title="يرجي ادخال عنوان المرسى "
+                                <label for="naghda_name" class="control-label">اسم سائق اللانش</label>
+                                <input type="text" class="form-control form-control-lg" id="naghda_name"
+                                    name="naghda_name" title="يرجي ادخال عنوان المرسى "
                                    
                                     required>
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >رقم سائق اللانش</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="naghda_number" name="naghda_number" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
                             </div>
 
                             <div class="col">
-                                <label for="Amount_Commission" class="control-label">اسم سائق البيكاب</label>
-                                <input type="text" class="form-control form-control-lg" id="Amount_Commission"
-                                    name="Amount_Commission" title="يرجي ادخال عنوان المرسى "
+                                <label for="driving_name" class="control-label">اسم سائق البيكاب</label>
+                                <input type="text" class="form-control form-control-lg" id="driving_name"
+                                    name="driving_name" title="يرجي ادخال عنوان المرسى "
                                    
                                     required>
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >رقم سائق البيكاب</label>
-                                <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="driving_number" name="driving_number" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
                             </div>
 
                        
@@ -242,7 +243,7 @@
                                                     <div class="all_row">
                                                     <tr>
                                                         
-                                                        <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->boxId }}" class="box1" id="box1" name="box1"  ></td>
+                                                        <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->boxId }}" class="box1" id="box_id" name="box_id"  ></td>
                                                         <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
                                                         <td style="text-align: center;vertical-align: middle;">{{ $x->box_code }}</td>
                 
@@ -269,7 +270,9 @@
                                     </div>
 
 
-
+                                    <div class="d-flex justify-content-center">
+                                        <button  class="" onclick="sandData()">حفظ البيانات</button>
+                                    </div>
 
                                 </div>
                             </div>
@@ -281,13 +284,14 @@
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
 
 
 
 
-
+ 
 
 
                         </div>
@@ -298,9 +302,7 @@
                            
                                
                                        
-                                          <div class="d-flex justify-content-center">
-                            <button  class="" onclick="sandData()">حفظ البيانات</button>
-                        </div>
+                          
                                     
                     
                     
@@ -371,6 +373,7 @@
 <script>
     $('#modaldemo9').on('show.bs.modal', function(event) {
         alert(1111);
+       
 //         const zIndex = 1040 + 10 * $('.modal:visible').length;
 // $(this).css('z-index', zIndex);
 // setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
@@ -422,6 +425,31 @@ else{
 }
 
     </script>
-   
+   <script>
+    function sandData() {
+        
+        var order = new  Array();
+        
+        
+
+        $("#datatable input[type=checkbox]:checked").each(function() {
+            
+            var item = { id:this.value
+                                
+                                 };
+
+            order.push(item);
+
+       
+            
+        });
+          document.getElementById('my_hidden_input').value = JSON.stringify(order);
+          
+            
+            document.getElementById('form').submit();
+
+    }
+
+</script>
     
 @endsection

@@ -250,7 +250,10 @@ class ProductController extends Controller
 
     }
     public function getExportDetailsOrder($id)
-    {
+    {  $boxes =DB::table('products')->
+        leftJoin('boxes', 'boxes.id', '=', 'products.box_id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'orders.id', '=', 'order_product.orders_id') ->where("orders.id", $id)->where("products.box_id",'!=',null)
+        ->selectRaw('boxes.id ,boxes.box_code')
+        ->groupBy('boxes.id','boxes.box_code')->get();
 
         $order=Order::find($id);
         
@@ -276,7 +279,7 @@ class ProductController extends Controller
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-        return view('order.export_order.details_order1',compact('order','machines','grinders','parts','exporter', 'importer','representative','id'));
+        return view('order.export_order.details_order1',compact('order','machines','grinders','parts','exporter', 'importer','representative','id','boxes'));
 
         
        

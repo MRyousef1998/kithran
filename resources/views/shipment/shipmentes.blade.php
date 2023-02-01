@@ -109,14 +109,48 @@
 
                                     
                                     <th class="border-bottom-0">رقم سائق البيكاب </th>
-                                     <th class="border-bottom-0">المرفق</th>
+                                     
                                     
 
 
                                 </tr>
                             </thead>
 
-                         
+                            <?php $i = 0; ?>
+                            @foreach ($shipments as $x)
+                                <?php $i++; ?>
+                                <tr>
+                                    <td  style="text-align: center;vertical-align: middle;" >{{ $i }}</td>
+                                    <td style="text-align: center;vertical-align: middle;">{{ $x->mark }}</td>
+
+                                 
+                                    
+                                       
+                                        <td style="text-align: center;vertical-align: middle;color:rgb(207, 14, 14);"><a href="{{url('shipmentDeteile')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
+                                            {{$x->carton_number}}
+                                            </a></td>
+                                        
+                                        
+                                  
+                                    <td style="text-align: center;vertical-align: middle;">{{ $x->shiping_date }}</td>
+
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->marina_address }}</td>
+                                    
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->parking_number }}</td>
+                                    
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->Name_driver_lansh }}</td>
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->number_driver_lansh }}</td>
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->Name_driver }}</td>
+
+                                    <td style="text-align: center;vertical-align: middle;  " >{{ $x->number_driver }}</td>
+
+                                    
+
+
+                                    
+                                </tr>
+                            @endforeach
+                        </tbody>
 
                                 
                         </table>

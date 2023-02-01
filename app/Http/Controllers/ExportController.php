@@ -257,7 +257,20 @@ class ExportController extends Controller
         return view('order.export_order.add_export_order',compact('grinder','parts','machines','importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
 
-  
+    public function exporterOrders($id)
+    {
+     
+       
+        $orders = Order::where('exported_id','=',$id)->get();
+      
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('order.export_order.exports_order',compact('orders','exporter', 'importer','representative'));
+    }
 
 
 }
