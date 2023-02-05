@@ -110,14 +110,45 @@ Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesO
 // ]);
 
 // Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
+Route::resource('invoices', 'App\Http\Controllers\InvoiceController');
 
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
+Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\InvoiceController@createInvoice');
+
 
 
 Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
+Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice');
+Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
+Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');
+
+
+//
+Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@edit');
+
+Route::get('download/{invoice_number}/{file_name}', 'InvoicesDetailsController@get_file');
+
+Route::get('View_file/{invoice_number}/{file_name}', 'InvoicesDetailsController@open_file');
+
+Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_file');
+
+Route::get('/edit_invoice/{id}', 'InvoicesController@edit');
+
+Route::get('/Status_show/{id}', 'InvoicesController@show')->name('Status_show');
+
+Route::post('/Status_Update/{id}', 'InvoicesController@Status_Update')->name('Status_Update');
+
+Route::resource('Archive', 'InvoiceAchiveController');
+
+Route::get('Invoice_Paid','InvoicesController@Invoice_Paid');
+
+Route::get('Invoice_UnPaid','InvoicesController@Invoice_UnPaid');
+
+Route::get('Invoice_Partial','InvoicesController@Invoice_Partial');
 
 
 
+Route::get('export_invoices', 'InvoicesController@export');
 
 

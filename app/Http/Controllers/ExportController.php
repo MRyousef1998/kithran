@@ -146,7 +146,9 @@ class ExportController extends Controller
          }
          $Olderproduct->update([
             'selling_date' => $importOrderOldProdect[0]->order_due_date,
-            
+            'selling_price' => $product->price,
+            'selling_price_with_comm' => $product->price+$product->commission_pice,
+
     
     
             ]);
@@ -161,8 +163,8 @@ class ExportController extends Controller
           
 
      
-         session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-         return redirect('import_order');
+    session()->flash('Add', ' تم اضافة الطلبية  بنجاح يرجى تحرير الفاتورة');
+    return redirect('add_invoices/'.$request->order_category.'/'.$order_id);
            
         
      }

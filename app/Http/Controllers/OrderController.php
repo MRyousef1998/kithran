@@ -123,8 +123,8 @@ class OrderController extends Controller
         { for($i=0 ;$i<$product->qty;$i++ ){
             $newproduct =  Product::create([
                 'product_details_id' => $product->id,
-                'primary_price' => $product->qty,
-                
+                'primary_price' => $product->price,
+                'price_with_comm' => $product->commission_pice+$product->price,
                 'selling_price' => ($product->commission_pice+$product->price),
                 
                 'statuses_id' =>$request->status ,
@@ -139,8 +139,8 @@ class OrderController extends Controller
           
 
      
-         session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-         return redirect('import_order');
+         session()->flash('Add', ' تم اضافة الطلبية  بنجاح يرجى تحرير الفاتورة');
+         return redirect('add_invoices/'.$request->order_category.'/'.$order_id);
            
         
      }
