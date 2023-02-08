@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 
 use App\Models\InvoiceCategory;
+
+use App\Models\InvoicesDetails;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
@@ -20,12 +23,14 @@ class InvoiceController extends Controller
     public function index()
     {
         
-        $invoices = Invoice::all();
+        $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->get();
+        $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->get();
+
         $exporter = User::where('role_id','=',1)->get();
  $importer = User::where('role_id','=',2)->get();
  $representative = User::where('role_id','=',3)->get();
 
-        return view('invoices.invoices', compact('invoices','exporter','importer','representative'));
+        return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
     }
 
     /**
@@ -62,7 +67,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-
+        
  
         
         $newInvoice =  Invoice::create([
@@ -74,7 +79,7 @@ class InvoiceController extends Controller
             'Amount_collection' =>$request->Amount_collection ,
             'Discount' =>$request->Discount ,
             'Total' =>$request->Total ,
-            'Value_Status' =>1 ,
+            'Value_Status' =>3 ,
           
             'note' =>$request->note ,
 
@@ -120,9 +125,21 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(Invoice $invoice)
+    public function show($id)
     {
-        //
+       
+        $invoices = Invoice::where('id', $id)->first();
+        $order =Order::where('id', $invoices->orders_id)->first();
+        $invoices_detailes =DB::table('invoices_details')->
+      where ("invoices_details.invoices_id",$invoices->id)
+        ->selectRaw('invoices_details.invoices_id,sum(invoices_details.amount_payment) as amount_payment_pefor')
+        ->groupBy('invoices_details.invoices_id')->get();
+        
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+        return view('invoices.status_update', compact('invoices','order','exporter','importer','representative','invoices_detailes'));
+    
     }
 
     /**
@@ -134,6 +151,64 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         //
+    }
+    public function Status_Update( Request $request)
+    { 
+        $fileName=null;
+        if($request->pic!=null){
+    
+            $imageName = $request->pic;
+            $fileName = $imageName->getClientOriginalName();
+            }
+
+        $invoices = Invoice::findOrFail($request->invoice_id);
+
+        if ($request->Status == 1) {
+
+            $invoices->update([
+                'Value_Status' => 1,
+              
+                'Payment_Date' => $request->Payment_Date,
+            ]);
+
+            InvoicesDetails::create([
+                'invoices_id' => $request->invoice_id,
+               
+                'amount_payment' => $request->new_payment,
+                'image_name' => $fileName,
+                'Value_Status' => 1,
+                'note' => $request->note,
+                'payment_Date' => $request->Payment_Date,
+                'user' => (Auth::user()->name),
+            ]);
+        }
+
+        else {
+            $invoices->update([
+                'Value_Status' => 2,
+                
+                'Payment_Date' => $request->Payment_Date,
+            ]);
+            invoicesDetails::create([
+                'invoices_id' => $request->invoice_id,
+               
+                'amount_payment' => $request->new_payment,
+                'image_name' => $fileName,
+            
+                'Value_Status' => 2,
+                'note' => $request->note,
+                'payment_Date' => $request->Payment_Date,
+                'user' => (Auth::user()->name),
+            ]);
+        }
+
+        if($request->pic!=null){
+        $invoice_detail_id = InvoicesDetails::latest()->first()->id;
+        $request->pic->move(public_path('Attachments/InvoicesDetails/' . $invoice_detail_id ), $fileName);
+        }
+        session()->flash('Status_Update');
+        return redirect('/invoices');
+
     }
 
     /**
@@ -186,5 +261,18 @@ class InvoiceController extends Controller
         return view('invoices.Print_invoice',compact('invoices','machines','grinders','parts','exporter','importer','representative','order'));
 
 
+    }
+
+    public function Invoice_Paid()
+    {
+      
+        $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->where('Value_Status', 1)->get();
+        $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->where('Value_Status', 1)->get();
+
+        $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+        return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
     }
 }

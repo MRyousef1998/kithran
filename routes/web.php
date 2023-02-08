@@ -111,10 +111,11 @@ Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesO
 
 // Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
 Route::resource('invoices', 'App\Http\Controllers\InvoiceController');
+Route::get('Invoice_Paid','App\Http\Controllers\InvoiceController@Invoice_Paid')->name('Invoice_Paid');
+
 
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\InvoiceController@createInvoice');
-
 
 
 Route::resource('box', 'App\Http\Controllers\BoxController');
@@ -123,7 +124,8 @@ Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invo
 Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
 Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');
 
-
+Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoiceController@show')->name('Status_show');
+Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 //
 Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@edit');
 
@@ -135,13 +137,12 @@ Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_fi
 
 Route::get('/edit_invoice/{id}', 'InvoicesController@edit');
 
-Route::get('/Status_show/{id}', 'InvoicesController@show')->name('Status_show');
 
-Route::post('/Status_Update/{id}', 'InvoicesController@Status_Update')->name('Status_Update');
+
 
 Route::resource('Archive', 'InvoiceAchiveController');
 
-Route::get('Invoice_Paid','InvoicesController@Invoice_Paid');
+
 
 Route::get('Invoice_UnPaid','InvoicesController@Invoice_UnPaid');
 

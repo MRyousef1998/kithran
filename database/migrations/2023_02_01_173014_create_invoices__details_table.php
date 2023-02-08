@@ -13,8 +13,14 @@ class CreateInvoicesDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices__details', function (Blueprint $table) {
+        Schema::create('invoices_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('invoices_id');
+            $table->foreign('invoices_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->decimal('amount_payment',8,2)->nullable();
+            $table->date('payment_Date')->nullable();
+            $table->text('note')->nullable();
+            $table->string('user',300);
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ class CreateInvoicesDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices__details');
+        Schema::dropIfExists('invoices_details');
     }
 }
