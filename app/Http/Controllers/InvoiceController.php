@@ -275,4 +275,28 @@ class InvoiceController extends Controller
 
         return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
     }
+    public function Invoice_Partial()
+    {
+      
+        $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->where('Value_Status', 2)->get();
+        $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->where('Value_Status', 2)->get();
+
+        $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+        return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
+    }
+    public function Invoice_UnPaid()
+    {
+      
+        $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->where('Value_Status', 3)->get();
+        $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->where('Value_Status', 3)->get();
+
+        $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+        return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
+    }
 }

@@ -100,7 +100,7 @@
 
                             <div class="col">
                                 @php
-                                if($invoices_detailes[0] == null)
+                                if(empty($invoices_detailes[0]))
                                 $payment_pefor =  0 ;
                                 else
                                 $payment_pefor = $invoices_detailes[0]->amount_payment_pefor ;

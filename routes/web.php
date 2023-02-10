@@ -112,6 +112,9 @@ Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesO
 // Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
 Route::resource('invoices', 'App\Http\Controllers\InvoiceController');
 Route::get('Invoice_Paid','App\Http\Controllers\InvoiceController@Invoice_Paid')->name('Invoice_Paid');
+Route::get('Invoice_UnPaid','App\Http\Controllers\InvoiceController@Invoice_UnPaid')->name('Invoice_UnPaid');
+Route::get('Invoice_Partial','App\Http\Controllers\InvoiceController@Invoice_Partial')->name('Invoice_Partial');
+
 
 
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
@@ -144,9 +147,7 @@ Route::resource('Archive', 'InvoiceAchiveController');
 
 
 
-Route::get('Invoice_UnPaid','InvoicesController@Invoice_UnPaid');
 
-Route::get('Invoice_Partial','InvoicesController@Invoice_Partial');
 
 
 
