@@ -57,7 +57,7 @@ class ProductController extends Controller
         $productDetail = ProductDetail::all();
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
-        $orders= Order::where('statuses_id','=',1)->get();
+        $orders= Order::where('category_id','=',1)->get();
         $status=Status::all();
 
         $exporter = User::where('role_id','=',1)->get();
