@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('css')
+@section('css') 
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link href="{{ URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
@@ -186,9 +186,11 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                       
-                                            <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
-                                        </td>
+                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
                                        
                                         <td style="text-align: center;vertical-align: middle;" >
 
@@ -196,10 +198,15 @@
         <button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
         data-toggle="dropdown" type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
         <div class="dropdown-menu tx-13">
-            <a class="dropdown-item" href="#">بيع قطعة </a>
-            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
-            data-toggle="modal" href="#capsalation" title="حذف"> تغليف قطعة</a>
+            <a class="modal-effect btn btn-sm " data-effect="effect-scale"
+          
+            data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
+            data-company_name="{{ $x->company_name }}"
+          
+            data-product_g="{{ $x->group_name }}"
+
+
+            data-toggle="modal" href="#edit_Product" >تأكبد الاستلام</a>
             
         </div>
     </div>
@@ -209,32 +216,7 @@
     
                                             </td>
 
-                                        <td style="text-align: center;vertical-align: middle;" >
-
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->company_name }}"
-                                                data-company_id="{{ $x->id }}"
-                                                data-product_g="{{ $x->group_name }}"
-                                                {{-- data-group_id="{{ $x->group_id }}" --}}
-                                                data-image-name ="{{ $x->image_name}}"
-                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
-                                                data-product_category_id ="{{ $x->category->id}}" --}}
-
-                                                
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
-
-
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
-
-                                        </td>
+                                      
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -290,36 +272,13 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
-                                        </td>
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
 
 
-                                        <td style="text-align: center;vertical-align: middle;" >
-
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->company_name }}"
-                                                data-company_id="{{ $x->id }}"
-                                                data-product_g="{{ $x->group_name }}"
-                                                {{-- data-group_id="{{ $x->group_id }}" --}}
-                                                data-image-name ="{{ $x->image_name}}"
-                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
-                                                data-product_category_id ="{{ $x->category->id}}" --}}
-
-                                                
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
-
-
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
-
-                                        </td>
+                                       
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -371,36 +330,13 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                         
                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                         {{ $x->aggregate }}   
-                                        </td>
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
 
 
-                                        <td style="text-align: center;vertical-align: middle;" >
-
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-
-                                                data-company_name="{{ $x->company_name }}"
-                                                data-company_id="{{ $x->id }}"
-                                                data-product_g="{{ $x->group_name }}"
-                                                {{-- data-group_id="{{ $x->group_id }}" --}}
-                                                data-image-name ="{{ $x->image_name}}"
-                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
-                                                data-product_category_id ="{{ $x->category->id}}" --}}
-
-                                                
-
-                                                data-toggle="modal" href="#edit_Product" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
-
-
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $x->id }}" data-product_name="{{ $x->product_name }}"
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
-
-                                        </td>
+                                      
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -557,34 +493,43 @@
         </div>
     </div>
     </div>
-     <div class="modal fade" id="capsalation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+
+    
+    <div class="modal fade" id="submit1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">تغليف منتج</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">تأكبد استلام منتج</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                    </div> 
-                    
-                    <form action="{{ route('box.store') }}" method="post" method="post" enctype="multipart/form-data">
+                    </div>
+                    <form action='{{ route('submit_product') }}' method="post" enctype="multipart/form-data">
+                       
                         {{ csrf_field() }}
                         <div class="modal-body">
-                           
-                          
 
-                          
-                            <input type="hidden" name="id" id="id" value="">
-                            <input type="hidden" name="order_id" id="order_id" value="">
 
-                                <label for="exampleInputEmail1">كود المنتج</label>
-                                <input type="text" class="form-control" id="box_code" name="box_code" required>
-                           
+                            <input type="hidden" class="form-control" name="company_id" id="company_id" value="">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name" readonly required>
+
+                            <div class="form-group">
+                                <label for="title">اسم المنتج :</label>
+
+                                <input type="hidden" class="form-control" name="id" id="id" value="">
+                                <input type="hidden" class="form-control" name="order_id" id="order_id" value="">
+                                <input type="text" class="form-control" name="product_name" id="product_name" readonly required>
+                            </div>
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الفئة</label>
+                            <input type="text" class="form-control" name="group_name" id="group_name" value="" readonly>
+
                             
                            
-                        <br>
-                            
+
+                           
                             <h5 class="card-title">المرفقات</h5>
     
                             <div class="col-sm-12 col-md-12">
@@ -592,22 +537,87 @@
                                     data-height="70" />
                             </div><br>
                             <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
+                            
+                            
+
+                           
 
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">تاكيد</button>
+                            <button type="submit" class="btn btn-primary"> تأكبد</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
     <!-- Container closed -->
+    <div class="modal fade" id="unsubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> منتج لم یصل </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action='{{ route('unsubmit_product') }}' method="post" enctype="multipart/form-data">
+                       
+                        {{ csrf_field() }}
+                        <div class="modal-body">
 
 
+                            <input type="hidden" class="form-control" name="company_id" id="company_id" value="">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name" readonly required>
 
-    
+                            <div class="form-group">
+                                <label for="title">اسم المنتج :</label>
+
+                                <input type="hidden" class="form-control" name="id" id="id" value="">
+                                <input type="hidden" class="form-control" name="order_id" id="order_id" value="">
+                                <input type="text" class="form-control" name="product_name" id="product_name" readonly required>
+                            </div>
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الفئة</label>
+                            <input type="text" class="form-control" name="group_name" id="group_name" value="" readonly>
+
+                            
+                           
+
+                           
+                            
+                            
+
+                           
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> تأكبد</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+  <!-- Container closed -->
+   
+    <div class="modal" id="modaldemo9">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">تفاصيل الوصول</h6><button aria-label="Close" class="close" data-dismiss="modal"
+                        type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                
+                    </div>
+        </div>
     </div>
+    </div>
+    </div>
+
     <!-- main-content closed -->
 @endsection
 @section('js')
@@ -653,7 +663,31 @@
     <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.js') }}"></script>
     <!-- Internal Prism js-->
     <script src="{{ URL::asset('assets/plugins/prism/prism.js') }}"></script>
-
+    <script>
+        $('#modaldemo9').on('show.bs.modal', function(event) {
+            const zIndex = 1040 + 10 * $('.modal:visible').length;
+  $(this).css('z-index', zIndex);
+  setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            
+            var order_id = button.data('order_id')
+            alert(id);
+            $.ajax({
+            type : 'GET',
+          
+            url :"{{URL::to('import_order_productDetails1/')}}?product_id="+id+"&order_id="+order_id,
+            
+            success: function(result) {
+                alert(111);
+                $('#modaldemo9 div.modal-body').html(result);
+            }
+        });
+            
+           // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
+        })
+    
+    </script>
     <script>
         $('#delete_file').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
@@ -668,18 +702,58 @@
         })
 
 
-        $('#capsalation').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var id = button.data('id')
-        var order_id = button.data('order_id')
+        $('#submit1').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var product_name = button.data('product_name')
+            var company_name = button.data('company_name')
+            var order_id = button.data('order_id')
+            
+            var id = button.data('id')
+            
+            var productG = button.data('product_g')
+            
+            
 
         
-        var modal = $(this)
-        modal.find('.modal-body #id').val(id);
-        modal.find('.modal-body #order_id').val(order_id);
-       
-    })
+            
+            var modal = $(this)
+            modal.find('.modal-body #product_name').val(product_name);
+            modal.find('.modal-body #company_name').val(company_name);
+            modal.find('.modal-body #group_name').val(productG);
+            modal.find('.modal-body #order_id').val(order_id);
+           
+            
 
+
+            modal.find('.modal-body #id').val(id);
+        })
+
+
+        $('#unsubmit').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var product_name = button.data('product_name')
+            var company_name = button.data('company_name')
+            var order_id = button.data('order_id')
+            
+            var id = button.data('id')
+            
+            var productG = button.data('product_g')
+            
+            
+
+        
+            
+            var modal = $(this)
+            modal.find('.modal-body #product_name').val(product_name);
+            modal.find('.modal-body #company_name').val(company_name);
+            modal.find('.modal-body #group_name').val(productG);
+            modal.find('.modal-body #order_id').val(order_id);
+           
+            
+
+
+            modal.find('.modal-body #id').val(id);
+        })
     </script>
 
     <script>

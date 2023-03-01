@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Product;
 
 use App\Models\Order;
@@ -27,20 +28,20 @@ class ProductController extends Controller
     public function index($id)
     {
         
-        $machines =DB::table('products')->
+        $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $id)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
         
- $product = Product::where('category_id', $id)->get();
+
  
  $exporter = User::where('role_id','=',1)->get();
  $importer = User::where('role_id','=',2)->get();
  $representative = User::where('role_id','=',3)->get();
 
 
- return view('my_product.machine',compact('product','id','machines','exporter', 'importer','representative'));
+ return view('my_product.machine',compact('id','machines','exporter', 'importer','representative'));
     
 
     }
@@ -215,7 +216,7 @@ class ProductController extends Controller
           
     }
     public function getDetailsOrder($id)
-    {
+    { 
 
         $order=Order::find($id);
         
@@ -290,7 +291,7 @@ class ProductController extends Controller
     public function getproductDetails($id)
     { 
  
-        $product =DB::table('products')->
+        $product =DB::table('products')->where("products.statuses_id",'!=',4)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.id", $id)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
@@ -298,7 +299,7 @@ class ProductController extends Controller
         
 
 
-        $detailProduct =DB::table('products')->
+        $detailProduct =DB::table('products')->where("products.statuses_id",'!=',4)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
         leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
         leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')->
@@ -395,7 +396,7 @@ $representative = User::where('role_id','=',3)->get();
         leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $request->order_id)
-        -> leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->get();
+        -> get();
         
        
 
@@ -424,6 +425,137 @@ $representative = User::where('role_id','=',3)->get();
 
  
     
+
+    }
+
+
+
+    public function getrechose_product(Request $request)
+    { 
+
+        $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $request->category_id)->where("products.selling_date", null)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        
+       
+
+
+        return view('order.export_order.export_product_rechose',compact('machines'));
+
+        
+    }
+
+    public function submit_product(Request $request){
+       
+        $product = Product::findOrFail($request->id);
+
+      
+
+            $product->update([
+                'statuses_id' => 2,
+            ]);
+
+
+            session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.'PNO'.$request->id .' ORNO '.$request->order_id);
+            return redirect('OrderDetails/'. $request->order_id);
+
+
+    }
+
+
+    public function unsubmit_product(Request $request){
+       
+        $product = Product::findOrFail($request->id);
+
+      
+
+            $product->update([
+                'statuses_id' => 4,
+            ]);
+
+
+            session()->flash('Add', 'تم تحديد المنتج كنقص');
+            return redirect('OrderDetails/'. $request->order_id);
+
+
+    }
+    public function getimport_order_productDetails(Request $request)
+    { 
+        $surproduct =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')
+        ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')
+        ->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
+        ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id",  $request->order_id)->where("products.product_details_id", $request->product_id)->where("products.statuses_id", 2)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+         
+       
+        
+ 
+      
+
+    
+        
+     
+        $product =DB::table('products')->
+       leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')
+       ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')
+       ->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+       ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
+       ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id",  $request->order_id)->where("products.product_details_id", $request->product_id)
+       ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+       ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        
+      
+
+        $detailProduct =DB::table('products')->where("products.product_details_id", $request->product_id)->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+       
+        leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+        leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
+        ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $request->order_id)
+        ->get();
+        
+    
+
+
+ return view('order.import_product_details',compact('detailProduct','product','surproduct'));
+
+
+
+ 
+    
+
+    }
+
+
+    public function removeProductFomOrder(Request $request)
+    {
+        $product=Product::find($request->id);
+$order=Order::find($request->order_id);
+$invoice=Invoice::where('orders_id',$request->order_id)->first();
+$myInvoice=Invoice::findOrFail($invoice->id);
+
+$newValueForInvoice=$invoice->Amount_collection - $request->product_price;
+$newTotalForInvoice=$invoice->Total - $request->product_price;
+$newTotalForOrder=$order->Total - $request->product_price;
+$newAmountComtion=$order->Amount_Commission - ($product->selling_price_with_comm-$product->selling_price);
+
+$product->order()->detach($request->order_id);
+$myInvoice ->update([
+    'Amount_collection' =>$newValueForInvoice ,
+    'Total' =>$newTotalForInvoice ,
+]);
+$order ->update([
+    'Total' => $newTotalForOrder,
+    'Amount_Commission' =>$newAmountComtion ,
+]);
+session()->flash('Add', ' تم ازالة المنتج من الطلبية');
+            return redirect('ExportOrderDetails/'. $request->order_id);
 
     }
 }

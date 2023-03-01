@@ -42,8 +42,7 @@
 											
 										</div>
 										<div class="action">
-											<button class="add-to-cart btn btn-danger" type="button">تغلیف</button>
-											<button class="add-to-cart btn btn-success" type="button">تسلیم</button>
+										
 										</div>
 									</div>
 								</div>
@@ -56,7 +55,7 @@
 				<!-- row -->
 				<div class="row">
 				@foreach ($detailProduct as $x)
-					<div class="col-lg-4">
+					<div class="col-lg-6">
 					 
 						<div class="card item-card" >
 							<div class="card-body pb-0 h-100">
@@ -64,13 +63,23 @@
 								<div class="card-body cardbody relative">
 									<div class="cardtitle">
 										<span>  رقم المنتج</span>
-										<a>اسم المنتج</a>
-										<span>الحالة </span>
-										<a>رقم الصندوق</a>
+										<span>اسم المنتج</span>
+										<span>حالة المنتج </span>
+										<span>حالة التغليف </span>
+										<span>رقم الصندوق</span>
 									</div>
 									<div class="cardprice">
-										<span >{{$x->products_id}}</span>
+										<span >PNO{{$x->products_id}}</span>
 										<span>{{$x->product_name}}</span>
+										@if ($x->statuses_id==4)
+										<span class="text-danger">{{$x->status_name}} </span>
+									
+									
+									@else
+									
+										<span class="text-warning">{{$x->status_name}}</span>
+										
+									@endif
 										@if ($x->box_id==null)
 										<span class="text-danger">غير مغلف</span>
 									
@@ -106,11 +115,22 @@
 									</div>
 									<div class="cardprice">
 									
-										<span class="text-danger">{{$x->orders_id}}</span>
+										<span class="text-danger">ORNO {{$x->orders_id}}</span>
 									</div>
 									</div>
 							</div>
 							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
+
+								@if ($x->statuses_id==4)
+								<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" data-category_id="{{ $x->category_id }}"
+								data-toggle="modal"
+								href="#rechose" class="btn btn-primary"> استبدال </a>
+								<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" 
+								data-toggle="modal"
+								href="#removeProdect" class="btn btn-primary"> تخلي </a>
+								@else 
 								@if ($x->box_id==null)
 								<a
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
@@ -133,6 +153,7 @@
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" 
 								data-toggle="modal"
 								href="#sharcapsalation" class="btn btn-success"> تغليف مشترك</a>
+								@endif
 							</div>
 						</div>
 						

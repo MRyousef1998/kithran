@@ -67,7 +67,7 @@ Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
 
-
+ 
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
@@ -78,6 +78,8 @@ Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getpr
 
 Route::get('/export_productDetails/{id}', 'App\Http\Controllers\ProductController@getexport_productDetails')->name('export_productDetails');
 Route::get('/export_productDetails_box', 'App\Http\Controllers\ProductController@getexport_productBoxcDetails')->name('export_productDetails_box');
+Route::get('/export_product_rechose_product', 'App\Http\Controllers\ProductController@getrechose_product')->name('export_product_rechose_product');
+Route::get('/import_order_productDetails1', 'App\Http\Controllers\ProductController@getimport_order_productDetails')->name('import_order_productDetails1');
 Route::get('/box_insaid_detailes', 'App\Http\Controllers\BoxController@getBoxDetails')->name('box_insaid_detailes');
 
 
@@ -123,6 +125,10 @@ Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\Invoic
 
 Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
+Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');
+
+Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
+Route::post('unsubmit_product', 'App\Http\Controllers\ProductController@unsubmit_product')->name('unsubmit_product');
 Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice');
 Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
 Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');

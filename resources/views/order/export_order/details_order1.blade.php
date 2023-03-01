@@ -596,6 +596,47 @@
                 </div>
             </div>
         </div>
+
+
+        <div class="modal fade" id="removeProdect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">ازالة المنتج من الطلبية </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div> 
+                    
+                    <form action="{{route("remove_product_fom_order")}}" method="post" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+                           
+                          
+
+                          
+                            <input type="hidden" name="id" id="id" value="">
+                            <input type="hidden" name="order_id" id="order_id" value="">
+
+                                <label for="exampleInputEmail1">هل انت متأكد من ازالة المنتج؟ </label>
+                                <div>
+                                    <h6 style="color:red">سوف یتم ازالة قیمة هذا المنتج من الفاتورة الاساسية</h6>
+                                    <input name="product_price" id="product_price"  readonly>
+                              
+                            </div>
+                            
+                           
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">تاكيد</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <!-- Container closed -->
 
 
@@ -617,6 +658,20 @@
         </div>
     </div>
     </div>
+    <div class="modal" id="rechose">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content modal-content-demo">
+                <div class="modal-header">
+                    <h6 class="modal-title">تفاصيل الوصول</h6><button aria-label="Close" class="close" data-dismiss="modal"
+                        type="button"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                
+                    </div>
+        </div>
+    </div>
+    </div>
+
 
 
     <div class="modal fade" id="sharcapsalation" name ='sharcapsalation' tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -738,6 +793,35 @@
     
     </script>
 
+<script>
+    $('#rechose').on('show.bs.modal', function(event) {
+        const zIndex = 1040 + 10 * $('.modal:visible').length;
+$(this).css('z-index', zIndex);
+setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
+        var button = $(event.relatedTarget)
+        var product_id = button.data('id')
+        
+        var category_id = button.data('category_id')
+        var product_price = button.data('product_price')
+        
+        var order_id = button.data('order_id')
+        
+        $.ajax({
+        type : 'GET',
+      
+        url :"{{URL::to('export_product_rechose_product/')}}?product_id="+product_id+"&order_id="+order_id+"&category_id="+category_id,
+        
+        success: function(result) {
+            alert(result);
+            $('#rechose div.modal-body').html(result);
+        }
+    });
+        
+       // modal.find('.modal-body #company_name').innerHTML = "yourTextHere";
+    })
+
+</script>
+
 
 
 
@@ -764,6 +848,20 @@
         var modal = $(this)
         modal.find('.modal-body #id').val(id);
         modal.find('.modal-body #order_id').val(order_id);
+       
+    })
+
+    $('#removeProdect').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var id = button.data('id')
+        var order_id = button.data('order_id')
+        var product_price = button.data('product_price')
+       alert(product_price);
+        
+        var modal = $(this)
+        modal.find('.modal-body #id').val(id);
+        modal.find('.modal-body #order_id').val(order_id);
+        modal.find('.modal-body #product_price').val(product_price);
        
     })
 
