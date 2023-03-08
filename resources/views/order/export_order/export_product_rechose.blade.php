@@ -7,18 +7,13 @@
 @endsection
 
 
-				<!-- row -->
 				
-
-				<!-- row -->
 				<div class="row">
 				@foreach ($machines as $x)
-				<div class="col-lg-3">
+				<div class="col-lg-4">
 					<div class="card item-card">
 						<div class="card-body pb-0 h-100">
-							<div  class="text-center">
-								<img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}"  alt="img" class="img-fluid">
-							</div>
+							
 							<div class="card-body cardbody relative">
 								<div class="cardtitle">
 									<a>{{$x->product_name}}</a>
@@ -31,8 +26,15 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
+							
+							<a 
+							data-id="{{ $x->id }}" data-order_id="{{ $x->orders_id }}" 
+								data-toggle="modal"
+								href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> استبدال</a>
+						</div>
 					</div>
+					
 				</div>
 					@endforeach
 					
@@ -40,12 +42,44 @@
 					
 				</div>
 				<!-- /row -->
-
+				{{-- <div class="row">
+					@foreach ($machines as $x)
+					<div class="col-lg-5">
+						<div class="card item-card">
+							<div class="card-body pb-0 h-100">
+								<div class="text-center">
+									<img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}" alt="img" class="img-fluid">
+								</div>
+								<div class="card-body cardbody relative">
+									<div class="cardtitle">
+										<span>Items</span>
+										<a>Sport shoes</a>
+									</div>
+									<div class="cardprice">
+										<span class="type--strikethrough">$999</span>
+										<span>$799</span>
+									</div>
+								</div>
+							</div>
+							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
+								<a href="#" class="btn btn-primary"> View More</a>
+								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+							</div>
+						</div>
+					</div>
+						@endforeach
+						
+					
+						
+					</div> --}}
 				<!-- row -->
 				
 			<!-- Container closed -->
 		
 		<!-- main-content closed -->
+
+
+		
 
 @section('js')
 <!-- Internal Select2.min js -->
