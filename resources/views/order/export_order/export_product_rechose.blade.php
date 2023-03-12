@@ -11,10 +11,16 @@
 				<div class="row">
 				@foreach ($machines as $x)
 				<div class="col-lg-4">
+					<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						
+						<input type="hidden" name="id" id="id" value="{{ $x->product_detail_id }}">
+						<input type="hidden" name="product_id" id="product_id" value="{{ $product_id }}">	
 					<div class="card item-card">
-						<div class="card-body pb-0 h-100">
+					 	<div class="card-body pb-0 h-100">
 							
 							<div class="card-body cardbody relative">
+								<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
 								<div class="cardtitle">
 									<a>{{$x->product_name}}</a>
 									<span>{{$x->group_name}}</span>
@@ -28,10 +34,7 @@
 						</div>
 						<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
 							
-							<a 
-							data-id="{{ $x->id }}" data-order_id="{{ $x->orders_id }}" 
-								data-toggle="modal"
-								href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> استبدال</a>
+							<button type="submit" class="btn btn-success">تاكيد</button>
 						</div>
 					</div>
 					

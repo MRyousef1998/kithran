@@ -1,9 +1,14 @@
 
 @section('css')
-<!--Internal  Nice-select css  -->
-<link href="{{URL::asset('assets/plugins/jquery-nice-select/css/nice-select.css')}}" rel="stylesheet"/>
-<!-- Internal Select2 css -->
-<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+    <!-- Internal Data table css -->
+    <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/plugins/datatable/css/buttons.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.bootstrap4.min.css') }}" rel="stylesheet" />
+    <link href="{{ URL::asset('assets/plugins/datatable/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('assets/plugins/prism/prism.css') }}" rel="stylesheet">
+    
 @endsection
 
 
@@ -160,47 +165,47 @@
 					</div>@endforeach
 					
 				
-					
+					<div class="modal fade" id="rechoceProductConfirm" name="rechoceProductConfirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true" >
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">استبدال المنتج من الطلبية </h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div> 
+							
+							<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
+								{{ csrf_field() }}
+								<div class="modal-body">
+								   
+								  
+				
+								  
+									<input type="" name="id" id="id" value="">
+									<input type="" name="product_id" id="product_id" value="">
+				
+										<label for="exampleInputEmail1">هل انت متأكد من استبدال المنتج؟ </label>
+										
+									
+								   
+								
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-success">تاكيد</button>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
 				</div>
 				<!-- /row -->
 
 				<!-- row -->
-				<div class="row row-sm">
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-airplane-takeoff bg-purple ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<h5 class="mb-2 tx-16">Free Shipping</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-headset bg-pink  ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<h5 class="mb-2 tx-16">Customer Support</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-refresh bg-teal ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<div class="icon-return"></div>
-								<h5 class="mb-2  tx-16">30 days money back</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<!-- row closed -->
 			</div>
 			<!-- Container closed -->
@@ -208,11 +213,68 @@
 		<!-- main-content closed -->
 		
 @section('js')
+<script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/responsive.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/vfs_fonts.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/buttons.print.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js') }}"></script>
+<!--Internal  Datatable js -->
+<script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
+<!--Internal  Notify js -->
+<script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
+<script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
-<!-- Internal Select2.min js -->
-<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
-<script src="{{URL::asset('assets/js/select2.js')}}"></script>
-<!-- Internal Nice-select js-->
-<script src="{{URL::asset('assets/plugins/jquery-nice-select/js/jquery.nice-select.js')}}"></script>
-<script src="{{URL::asset('assets/plugins/jquery-nice-select/js/nice-select.js')}}"></script>
+
+
+
+
+    <!--Internal  Datepicker js -->
+    <script src="{{ URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js') }}"></script>
+    <!-- Internal Select2 js-->
+    <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <!-- Internal Jquery.mCustomScrollbar js-->
+    <script src="{{ URL::asset('assets/plugins/custom-scroll/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+    <!-- Internal Input tags js-->
+    <script src="{{ URL::asset('assets/plugins/inputtags/inputtags.js') }}"></script>
+    <!--- Tabs JS-->
+    <script src="{{ URL::asset('assets/plugins/tabs/jquery.multipurpose_tabcontent.js') }}"></script>
+    <script src="{{ URL::asset('assets/js/tabs.js') }}"></script>
+    <!--Internal  Clipboard js-->
+    <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/clipboard/clipboard.js') }}"></script>
+    <!-- Internal Prism js-->
+    <script src="{{ URL::asset('assets/plugins/prism/prism.js') }}"></script>
+	<script>
+
+		$('#rechoceProductConfirm').on('show.bs.modal', function(event) {
+			const zIndex = 1040 + 10 * $('.modal:visible').length;
+		  $(this).css('z-index', zIndex);
+		  setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
+			alert(2222);
+				var button = $(event.relatedTarget)
+				var id = button.data('id')
+				var product_id = button.data('product_id')
+			 
+			  
+				
+				var modal = $(this)
+				modal.find('.modal-body #id').val(id);
+				modal.find('.modal-body #product_id').val(product_id);
+			   
+			   
+			})
+		
+		
+		</script>
 @endsection
