@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Invoices_Details;
+use App\Models\InvoicesDetails;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Invoices_Detailstails;
+use App\Models\User;
 
 class InvoicesDetailsController extends Controller
 {
@@ -14,7 +18,7 @@ class InvoicesDetailsController extends Controller
      */
     public function index()
     {
-        //
+        return 0;
     }
 
     /**
@@ -55,9 +59,16 @@ class InvoicesDetailsController extends Controller
      * @param  \App\Models\Invoices_Details  $invoices_Details
      * @return \Illuminate\Http\Response
      */
-    public function edit(Invoices_Details $invoices_Details)
+    public function edit($id)
     {
-        //
+        $invoices = Invoice::where('id',$id)->first();
+        $details  = InvoicesDetails::where('invoices_id',$id)->get();
+     //   $attachments  = invoice_attachments::where('invoice_id',$id)->get();
+     $exporter = User::where('role_id','=',1)->get();
+     $importer = User::where('role_id','=',2)->get();
+     $representative = User::where('role_id','=',3)->get();
+  
+        return view('invoices.details_invoice',compact('invoices','details','exporter', 'importer','representative'));
     }
 
     /**

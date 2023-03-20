@@ -7,19 +7,20 @@
 @endsection
 
 
-				<!-- row -->
 				
-
-				<!-- row -->
 				<div class="row">
 				@foreach ($machines as $x)
-				<div class="col-lg-3">
+				<div class="col-lg-4">
+					<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
+						{{ csrf_field() }}
+						
+						<input type="hidden" name="id" id="id" value="{{ $x->product_detail_id }}">
+						<input type="hidden" name="product_id" id="product_id" value="{{ $product_id }}">	
 					<div class="card item-card">
-						<div class="card-body pb-0 h-100">
-							<div  class="text-center">
-								<img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}"  alt="img" class="img-fluid">
-							</div>
+					 	<div class="card-body pb-0 h-100">
+							
 							<div class="card-body cardbody relative">
+								<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
 								<div class="cardtitle">
 									<a>{{$x->product_name}}</a>
 									<span>{{$x->group_name}}</span>
@@ -31,8 +32,12 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
+							
+							<button type="submit" class="btn btn-success">تاكيد</button>
+						</div>
 					</div>
+					
 				</div>
 					@endforeach
 					
@@ -40,12 +45,44 @@
 					
 				</div>
 				<!-- /row -->
-
+				{{-- <div class="row">
+					@foreach ($machines as $x)
+					<div class="col-lg-5">
+						<div class="card item-card">
+							<div class="card-body pb-0 h-100">
+								<div class="text-center">
+									<img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}" alt="img" class="img-fluid">
+								</div>
+								<div class="card-body cardbody relative">
+									<div class="cardtitle">
+										<span>Items</span>
+										<a>Sport shoes</a>
+									</div>
+									<div class="cardprice">
+										<span class="type--strikethrough">$999</span>
+										<span>$799</span>
+									</div>
+								</div>
+							</div>
+							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
+								<a href="#" class="btn btn-primary"> View More</a>
+								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+							</div>
+						</div>
+					</div>
+						@endforeach
+						
+					
+						
+					</div> --}}
 				<!-- row -->
 				
 			<!-- Container closed -->
 		
 		<!-- main-content closed -->
+
+
+		
 
 @section('js')
 <!-- Internal Select2.min js -->

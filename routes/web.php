@@ -54,7 +54,11 @@ Route::get('/', function () {
     return view('auth.login
     ');
 });
-
+Route::group(['middleware' => ['auth']], function() {
+    Route::resource('roles','App\Http\Controllers\RoleController');
+    Route::resource('users','App\Http\Controllers\UserController');
+    Route::resource('products','ProductController');
+    });
 
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
@@ -126,7 +130,7 @@ Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\Invoic
 Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
 Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');
-
+Route::post('rechoce_product_confirm', 'App\Http\Controllers\ProductController@rechoce_product_confirm')->name('rechoce_product_confirm');
 Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
 Route::post('unsubmit_product', 'App\Http\Controllers\ProductController@unsubmit_product')->name('unsubmit_product');
 Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice');
@@ -136,7 +140,7 @@ Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');
 Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoiceController@show')->name('Status_show');
 Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 //
-Route::get('/InvoicesDetails/{id}', 'InvoicesDetailsController@edit');
+Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
 Route::get('download/{invoice_number}/{file_name}', 'InvoicesDetailsController@get_file');
 

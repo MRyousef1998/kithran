@@ -638,8 +638,7 @@
             </div>
         </div>
     <!-- Container closed -->
-
-
+   
 
     
     </div>
@@ -808,10 +807,11 @@ setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex 
         
         $.ajax({
         type : 'GET',
-      
+        
         url :"{{URL::to('export_product_rechose_product/')}}?product_id="+product_id+"&order_id="+order_id+"&category_id="+category_id,
         
         success: function(result) {
+            alert(111111111);
             alert(result);
             $('#rechose div.modal-body').html(result);
         }

@@ -86,7 +86,7 @@ class ProductController extends Controller
              for($i=0;$i<$request->qountity;$i++){
                    $newproduct =  Product::create([
                        'product_details_id' => $request->productClass,
-                       'primary_price' => $request->primary_price,
+                        'primary_price' => $request->primary_price,
                        
                        'selling_price' => $request->selling_price,
                        
@@ -429,20 +429,28 @@ $representative = User::where('role_id','=',3)->get();
     }
 
 
+    public function rechoce_product_confirm(Request $request)
+    { 
+        
 
+       return $request;
+
+        
+    }
     public function getrechose_product(Request $request)
     { 
+        
 
         $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $request->category_id)->where("products.selling_date", null)
-        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->selectRaw('product_details.id as product_detail_id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
         
-       
+       $product_id=$request->product_id;
 
 
-        return view('order.export_order.export_product_rechose',compact('machines'));
+        return view('order.export_order.export_product_rechose',compact('machines','product_id'));
 
         
     }

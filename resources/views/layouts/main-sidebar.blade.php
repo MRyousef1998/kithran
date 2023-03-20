@@ -116,6 +116,9 @@
 							<li><a class="slide-item" href="{{ url('/' . $page='mail-read') }}">اضافة مستخدمين</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='mail-settings') }}">تعديل الصلاحيات</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='companies') }}">اضافة شركة</a></li>
+							<li><a class="slide-item" href="{{ url('/' . ($page = 'roles')) }}">صلاحيات المستخدمين</a></li>
+                            <li><a class="slide-item" href="{{ url('/' . ($page = 'users')) }}">قائمة المستخدمين</a></li>
+
 
 							
 						</ul>

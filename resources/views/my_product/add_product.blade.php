@@ -226,6 +226,7 @@
             $('select[name="productCompanies"]').on('change', function() {
                 var productCompaniesId = $(this).val();
                 if (productCompaniesId) {
+                    alert(2);
                     $.ajax({
                         url: "{{URL::to('products')}}/" + productCompaniesId,
                         type: "GET",
