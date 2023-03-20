@@ -111,7 +111,7 @@
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
                                     
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصورة </th>
+                                 
 
 
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمليات</th>
@@ -141,17 +141,7 @@
 
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->companies->country_of_manufacture }}</td>
                                         
-                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
-                                            <div class="input-group quantity">
-                                                <div class="input-group-prepend decrement-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">-</span>
-                                                </div>
-                                                <input type="text" class="qty-input form-control" maxlength="2" max="10" value="1">
-                                                <div class="input-group-append increment-btn" style="cursor: pointer">
-                                                    <span class="input-group-text">+</span>
-                                                </div>
-                                            </div>
-                                        </td>
+                                       
 
 
                                         <td style="text-align: center;vertical-align: middle;" >
