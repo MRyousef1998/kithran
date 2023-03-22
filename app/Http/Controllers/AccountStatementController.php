@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountStatement;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AccountStatementController extends Controller
 {
@@ -14,8 +17,8 @@ class AccountStatementController extends Controller
      */
     public function index()
     {
-        $diposit = AccountStatement::where('account_statement_types_id','=',1)->where('account_statement_types_id', Carbon::today())->get();
-        $withdrow = AccountStatement::where('account_statement_types_id','=',2)->where('account_statement_types_id', Carbon::today())->get();
+        $diposit = AccountStatement::where('account_statement_types_id','=',1)->where('pay_date','=', Carbon::today())->get();
+        $withdrow = AccountStatement::where('account_statement_types_id','=',2)->where('pay_date','=', Carbon::today())->get();
 
       
         $exporter = User::where('role_id','=',1)->get();
@@ -33,9 +36,9 @@ class AccountStatementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+       return $request;
     }
 
     /**
@@ -46,7 +49,23 @@ class AccountStatementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
+        AccountStatement::create([
+            'purpose' => $request->purpose,
+            'account_statement_types_id' => $request->type_id,
+            
+            'amount' => $request->amount,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);
+        session()->flash('success', ' تم الاضافة بنجاح');
+
+        return redirect('/today_account_statment');
     }
 
     /**
@@ -78,9 +97,20 @@ class AccountStatementController extends Controller
      * @param  \App\Models\AccountStatement  $accountStatement
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AccountStatement $accountStatement)
+    public function update(Request $request)
     {
-        //
+        $accountStatement = AccountStatement::findOrFail($request->id);
+
+      
+
+        $accountStatement->update([
+            'purpose' => $request->purpose,
+            'amount' => $request->amount,
+            'note' => $request->note,
+        ]);
+        session()->flash('success', ' تم التعديل بنجاح');
+
+        return redirect('/today_account_statment');
     }
 
     /**

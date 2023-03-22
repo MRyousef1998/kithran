@@ -65,6 +65,7 @@ Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
 Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name('addProducts');
 
+Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 
  
 
@@ -156,7 +157,6 @@ Route::resource('Archive', 'InvoiceAchiveController');
 
 
 
-Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 
 
 
