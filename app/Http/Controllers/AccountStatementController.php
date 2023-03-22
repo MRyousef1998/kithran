@@ -14,7 +14,18 @@ class AccountStatementController extends Controller
      */
     public function index()
     {
-        
+        $diposit = AccountStatement::where('account_statement_types_id','=',1)->where('account_statement_types_id', Carbon::today())->get();
+        $withdrow = AccountStatement::where('account_statement_types_id','=',2)->where('account_statement_types_id', Carbon::today())->get();
+
+      
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('account.show_account',compact('diposit','withdrow','exporter', 'importer','representative'));
+    
     }
 
     /**

@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $event)
+                            @foreach ($show_account as $event)
                                 <tr>
                                     <td>{{ ++$i }}</td>
                                     <td>

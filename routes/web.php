@@ -122,7 +122,6 @@ Route::get('Invoice_UnPaid','App\Http\Controllers\InvoiceController@Invoice_UnPa
 Route::get('Invoice_Partial','App\Http\Controllers\InvoiceController@Invoice_Partial')->name('Invoice_Partial');
 
 
-
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\InvoiceController@createInvoice');
 
@@ -157,6 +156,7 @@ Route::resource('Archive', 'InvoiceAchiveController');
 
 
 
+Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 
 
 
