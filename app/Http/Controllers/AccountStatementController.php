@@ -119,8 +119,9 @@ class AccountStatementController extends Controller
      * @param  \App\Models\AccountStatement  $accountStatement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AccountStatement $accountStatement)
+    public function destroy(Request $request)
     {
-        //
+        AccountStatement::find($request->event_id)->delete();
+        return redirect()->route('today_account_statment.index')->with('success','تم حذف المستخدم بنجاح');
     }
 }

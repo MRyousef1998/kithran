@@ -110,8 +110,8 @@
                                           
                                                     <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                         
-                                                        data-toggle="modal" href="#modaldemo8" title="حذف"><i
-                                                        data-event_id="{{ $event->id }}"        class="las la-trash"></i></a>
+                                                        data-toggle="modal" href="#modaldemo8"  data-event_id="{{ $event->id }}"  title="حذف"><i
+                                                              class="las la-trash"></i></a>
                                               
                                             </td>
                                         </tr>
@@ -178,7 +178,7 @@
                                           
                                                     <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                         
-                                                        data-toggle="modal" href="#modaldemo8" title="حذف"><i
+                                                        data-toggle="modal" href="#modaldemo8"  data-event_id="{{ $event->id }}" title="حذف"><i
                                                             class="las la-trash"></i></a>
                                                         </div>
                                             </td>
@@ -202,16 +202,16 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content modal-content-demo">
                 <div class="modal-header">
-                    <h6 class="modal-title">حذف المستخدم</h6><button aria-label="Close" class="close"
+                    <h6 class="modal-title">حذف الحدث</h6><button aria-label="Close" class="close"
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="{{ route('users.destroy', 'test') }}" method="post">
+                <form action="{{ route('today_account_statment.destroy', 'test') }}" method="post">
                     {{ method_field('delete') }}
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <p>هل انت متاكد من عملية الحذف ؟</p><br>
-                        <input type="hidden" name="user_id" id="user_id" value="">
-                        <input class="form-control" name="username" id="username" type="text" readonly>
+                        <input type="hidden" name="event_id" id="event_id" value="">
+                       
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -322,19 +322,6 @@
 <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 <!-- Internal Modal js-->
 <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
-
-<script>
-    $('#modaldemo8').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget)
-        var user_id = button.data('user_id')
-        var username = button.data('username')
-        var modal = $(this)
-        modal.find('.modal-body #user_id').val(user_id);
-        modal.find('.modal-body #username').val(username);
-    })
-
-</script>
-
 <script>
     $('#addModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
@@ -364,6 +351,17 @@
         modal.find('.modal-body #note').val(note);
         modal.find('.modal-body #id').val(event_id);
 
+       
+    })
+
+</script>
+<script>
+    $('#modaldemo8').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var event_id= button.data('event_id')
+        alert(event_id);
+        var modal = $(this)
+        modal.find('.modal-body #event_id').val(event_id);
        
     })
 
