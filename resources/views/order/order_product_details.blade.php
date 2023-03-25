@@ -132,10 +132,7 @@
 									</div>
 									</div>
 							</div>
-							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
-								<a href="#" class="btn btn-primary"> View More</a>
-								<a href="#" class="btn btn-success"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-							</div>
+						
 						</div>
 						
 					</div>@endforeach
@@ -146,42 +143,7 @@
 				<!-- /row -->
 
 				<!-- row -->
-				<div class="row row-sm">
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-airplane-takeoff bg-purple ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<h5 class="mb-2 tx-16">Free Shipping</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-headset bg-pink  ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<h5 class="mb-2 tx-16">Customer Support</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-12 col-xl-4 col-xs-12 col-sm-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="feature2">
-									<i class="mdi mdi-refresh bg-teal ht-50 wd-50 text-center brround text-white"></i>
-								</div>
-								<div class="icon-return"></div>
-								<h5 class="mb-2  tx-16">30 days money back</h5>
-								<span class="fs-14 text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua domenus orioneu.</span>
-							</div>
-						</div>
-					</div>
-				</div>
+				
 				<!-- row closed -->
 			</div>
 			<!-- Container closed -->

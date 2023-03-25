@@ -111,7 +111,6 @@
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">الصنف</th>
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">بلد المنشأ</th>
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">العدد </th>
-                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle;  ">العمليات</th>
 
                                 </tr>
                             </thead>
@@ -149,15 +148,7 @@
 
                                         <td style="text-align: center;vertical-align: middle;" >
 
-                                        <div class="dropdown">
-	<button aria-expanded="false" aria-haspopup="true" class="btn ripple btn-primary"
-	data-toggle="dropdown" type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
-	<div class="dropdown-menu tx-13">
-		<a class="dropdown-item" href="#">بيع قطعة </a>
-		<a class="dropdown-item disabled" href="#">99999</a>
-		<a class="dropdown-item" href="#">Something else here</a>
-	</div>
-</div>
+                                        
 
 
 
