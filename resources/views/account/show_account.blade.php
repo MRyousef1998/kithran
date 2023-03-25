@@ -48,6 +48,8 @@
 			<ul class="nav panel-tabs">
 				<li class=""><a href="#tab11" class="active" data-toggle="tab"><i class="fa fa-cube"></i> دفع</a></li>
 				<li><a href="#tab12" data-toggle="tab"><i class="fa fa-cube"></i> قبض</a></li>
+				<li><a href="#tab13" data-toggle="tab"><i class="fa fa-cube"></i> مصاريف خارجية</a></li>
+
 			
 			</ul>
 		</div>
@@ -190,7 +192,82 @@
                     </div>
                 </div>
 			</div>
-			
+			<!---->
+            <div class="tab-pane" id="tab13">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="d-flex justify-content-between">
+        
+                            <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                            data-payment_type_id="3" data-payment_type_name="مصاريف خارجية"      data-toggle="modal" href="#addModal">اضافة حدث مصاريف خارجية</a>
+                            </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive hoverable-table">
+                            <table class="table table-hover" id="example1" data-page-length='50' style=" text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th class="wd-10p border-bottom-0">#</th>
+                                        <th class="wd-15p border-bottom-0">نوع العملیة</th>
+                                        <th class="wd-15p border-bottom-0">التاریخ</th>
+                                        <th class="wd-20p border-bottom-0">التفاصیبل</th>
+                                        <th class="wd-15p border-bottom-0">المبلغ</th>
+                                        <th class="wd-15p border-bottom-0">المستخدم</th>
+                                        <th class="wd-15p border-bottom-0">ملاحظات</th>
+                                        <th class="wd-10p border-bottom-0">العمليات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 0; ?>
+                                    @foreach ($externalPayment as $event)
+                                        <tr>
+                                            <td>{{ ++$i }}</td>
+                                            <td>
+                                               
+                                                <span class="label text-success d-flex">
+                                                    <div class="dot-label bg-success ml-1"></div>{{ $event->payment_type->type_name }}
+                                                </span>
+                                          
+                            
+                                            
+                                        </td>
+                                        <td>{{ $event->pay_date }}</td>
+                                            <td>{{ $event->purpose }}</td>
+                                            <td>{{ $event->amount }}</td> 
+                                            <td>{{ $event->user->name }}</td>
+                                            <td>{{ $event->note }}</td>
+                                           
+        
+                                            
+        
+                                            <td style="text-align: center;vertical-align: middle;">
+                                              <div>
+                                                    <a href="#editModal" class="btn btn-sm btn-info"
+                                                    data-event_id="{{ $event->id }}"    data-payment_type_id="3" data-purpose="{{$event->purpose}}" data-amount="{{$event->amount}}" data-note="{{$event->note}}" data-toggle="modal" href="#editModal"  title="تعديل"><i class="las la-pen"></i></a>
+                                                </div>
+                                                <div>
+                                          
+                                                    <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                                        
+                                                        data-toggle="modal" href="#modaldemo8"  data-event_id="{{ $event->id }}" title="حذف"><i
+                                                            class="las la-trash"></i></a>
+                                                        </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+			</div>
+
+
+
+
+
+
+
 		</div>
 	</div>
 

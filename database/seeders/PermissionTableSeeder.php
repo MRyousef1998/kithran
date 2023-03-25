@@ -12,7 +12,7 @@ class PermissionTableSeeder extends Seeder
 public function run()
 {
 $permissions = [
-    'الفواتير',
+  
     'قائمة الفواتير',
     'الفواتير المدفوعة',
     'الفواتير المدفوعة جزئيا',

@@ -19,6 +19,7 @@ class AccountStatementController extends Controller
     {
         $diposit = AccountStatement::where('account_statement_types_id','=',1)->where('pay_date','=', Carbon::today())->get();
         $withdrow = AccountStatement::where('account_statement_types_id','=',2)->where('pay_date','=', Carbon::today())->get();
+        $externalPayment = AccountStatement::where('account_statement_types_id','=',3)->where('pay_date','=', Carbon::today())->get();
 
       
         $exporter = User::where('role_id','=',1)->get();
@@ -27,7 +28,7 @@ class AccountStatementController extends Controller
 
        
 
-        return view('account.show_account',compact('diposit','withdrow','exporter', 'importer','representative'));
+        return view('account.show_account',compact('diposit','withdrow','exporter', 'importer','representative','externalPayment'));
     
     }
 

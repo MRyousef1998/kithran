@@ -62,7 +62,7 @@
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="{{ url('/' . $page='today_account_statment') }}">الحركة اليومية</a></li>
 						
-							<li><a class="slide-item" href="{{ url('/' . $page='import_order') }}">الوارد</a></li>
+							<li><a class="slide-item" href="{{ url('/' . $page='account_stetment_report') }}">تقارير الصندوق</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='export_order') }}">الصادر</a></li>
 
 							

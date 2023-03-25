@@ -15,7 +15,7 @@
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
 
 @section('title')
-    تقرير الفواتير - مورا سوفت للادارة الفواتير
+    تقرير الصندوق - مورا سوفت للادارة الفواتير
 @stop
 @endsection
 @section('page-header')
@@ -24,7 +24,7 @@
     <div class="my-auto">
         <div class="d-flex">
             <h4 class="content-title mb-0 my-auto">التقارير</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تقرير
-                الفواتير</span>
+                الصندوق</span>
         </div>
     </div>
 </div>
@@ -55,41 +55,41 @@
 
             <div class="card-header pb-0">
 
-                <form action="/Search_invoices" method="POST" role="search" autocomplete="off">
+                <form action="/account_stetment_report_serch" method="POST" role="search" autocomplete="off">
                     {{ csrf_field() }}
 
 
                     <div class="col-lg-3">
                         <label class="rdiobox">
                             <input checked name="rdio" type="radio" value="1" id="type_div"> <span>بحث بنوع
-                                الفاتورة</span></label>
+                                الدفعات</span></label>
                     </div>
 
 
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
-                        <label class="rdiobox"><input name="rdio" value="2" type="radio"><span>بحث برقم الفاتورة
+                        <label class="rdiobox"><input name="rdio" value="2" type="radio"><span>بحث برقم الدفعة
                             </span></label>
                     </div><br><br>
 
                     <div class="row">
 
                         <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
-                            <p class="mg-b-10">تحديد نوع الفواتير</p><select class="form-control select2" name="type"
+                            <p class="mg-b-10">تحديد نوع الدفعة</p><select class="form-control select2" name="type"
                                 required>
-                                <option value="{{ $type ?? 'حدد نوع الفواتير' }}" selected>
-                                    {{ $type ?? 'حدد نوع الفواتير' }}
+                                <option value="{{ $type ?? 'حدد نوع الدفعات' }}" selected>
+                                    {{ $type ?? 'حدد نوع الدفعات' }}
                                 </option>
 
-                                <option value="مدفوعة">الفواتير المدفوعة</option>
-                                <option value="غير مدفوعة">الفواتير الغير مدفوعة</option>
-                                <option value="مدفوعة جزئيا">الفواتير المدفوعة جزئيا</option>
+                                <option value="1">مدفوعات</option>
+                                <option value="2">مقبوضات</option>
+                                <option value="3">مصاريف خارجية</option>
 
                             </select>
                         </div><!-- col-4 -->
 
 
                         <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="invoice_number">
-                            <p class="mg-b-10">البحث برقم الفاتورة</p>
+                            <p class="mg-b-10">البحث برقم الدفعة</p>
                             <input type="text" class="form-control" id="invoice_number" name="invoice_number">
 
                         </div><!-- col-4 -->
@@ -133,50 +133,42 @@
                         <table id="example" class="table key-buttons text-md-nowrap" style=" text-align: center">
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0">#</th>
-                                    <th class="border-bottom-0">رقم الفاتورة</th>
-                                    <th class="border-bottom-0">تاريخ القاتورة</th>
-                                    <th class="border-bottom-0">تاريخ الاستحقاق</th>
-                                    <th class="border-bottom-0">المنتج</th>
-                                    <th class="border-bottom-0">القسم</th>
-                                    <th class="border-bottom-0">الخصم</th>
-                                    <th class="border-bottom-0">نسبة الضريبة</th>
-                                    <th class="border-bottom-0">قيمة الضريبة</th>
-                                    <th class="border-bottom-0">الاجمالي</th>
-                                    <th class="border-bottom-0">الحالة</th>
-                                    <th class="border-bottom-0">ملاحظات</th>
+                                    <th class="wd-10p border-bottom-0">#</th>
+                                    <th class="wd-15p border-bottom-0">نوع العملیة</th>
+                                    <th class="wd-15p border-bottom-0">التاریخ</th>
+                                    <th class="wd-20p border-bottom-0">التفاصیبل</th>
+                                    <th class="wd-15p border-bottom-0">المبلغ</th>
+                                    <th class="wd-15p border-bottom-0">المستخدم</th>
+                                    <th class="wd-15p border-bottom-0">ملاحظات</th>
+                                    
 
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 0; ?>
-                                @foreach ($details as $invoice)
+                                @foreach ($details as $event)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td>{{ $i }}</td>
-                                        <td>{{ $invoice->invoice_number }} </td>
-                                        <td>{{ $invoice->invoice_Date }}</td>
-                                        <td>{{ $invoice->Due_date }}</td>
-                                        <td>{{ $invoice->product }}</td>
-                                        <td><a
-                                                href="{{ url('InvoicesDetails') }}/{{ $invoice->id }}">{{ $invoice->section->section_name }}</a>
-                                        </td>
-                                        <td>{{ $invoice->Discount }}</td>
-                                        <td>{{ $invoice->Rate_VAT }}</td>
-                                        <td>{{ $invoice->Value_VAT }}</td>
-                                        <td>{{ $invoice->Total }}</td>
+                                        <td>{{ ++$i }}</td>
                                         <td>
-                                            @if ($invoice->Value_Status == 1)
-                                                <span class="text-success">{{ $invoice->Status }}</span>
-                                            @elseif($invoice->Value_Status == 2)
-                                                <span class="text-danger">{{ $invoice->Status }}</span>
-                                            @else
-                                                <span class="text-warning">{{ $invoice->Status }}</span>
-                                            @endif
-
-                                        </td>
-
-                                        <td>{{ $invoice->note }}</td>
+                                           
+                                            <span class="label text-danger d-flex">
+                                                <div class="dot-label bg-danger ml-1"></div>{{ $event->payment_type->type_name }}
+                                            </span>
+                                      
+                        
+                                        
+                                    </td>
+                                    <td>{{ $event->pay_date }}</td>
+                                        <td>{{ $event->purpose }}</td>
+                                        <td>{{ $event->amount }}</td> 
+                                        <td>{{ $event->user->name }}</td>
+                                        <td>{{ $event->note }}</td>
+                                       
+    
+                                        
+    
+                                      
                                     </tr>
                                 @endforeach
                             </tbody>

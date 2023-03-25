@@ -66,7 +66,8 @@ Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductControll
 Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name('addProducts');
 
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
-
+Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
+Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
  
 
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
