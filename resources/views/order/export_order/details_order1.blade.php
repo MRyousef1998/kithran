@@ -81,8 +81,11 @@
                                             <li><a href="#tab5" class="nav-link" data-toggle="tab">مكنات القهوة</a></li>
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
+                                            
                                             <li><a href="#tab8" class="nav-link" data-toggle="tab">المرفقات</a></li>
-
+                                            <li><a href="#tab9" class="nav-link" data-toggle="tab">الفواتير</a></li>
+                                            <li><a href="#tab10" class="nav-link" data-toggle="tab">الدفعات</a></li>
+                                            <li><a href="#tab11" class="nav-link" data-toggle="tab">مرفقات الفواتير</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -406,6 +409,182 @@
                                             </div>
                                         </div>
 
+                                <!--الفواتير-->
+
+                                <div class="tab-pane " id="tab9">
+                                    <div class="table-responsive mt-14">
+
+                                        <table class="table table-striped" style="text-align:center">
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">رقم الفاتورة</th>
+                                                    <td>{{ $invoices->id }}</td>
+                                                    <th scope="row">تاريخ الاصدار</th>
+                                                    <td>{{ $invoices->invoice_Date }}</td>
+                                                    <th scope="row">نوع الفاتورة</th>
+                                                    <td>{{ $invoices->category->category_name }}</td>
+                                                    <th scope="row">العمیل</th>
+                                                    <td>{{ $invoices->order->importer->name }}</td>
+                                                    <th scope="row">عن طلبية رقم</th>
+                                                    <td>ORNO{{ $invoices->order->id }}</td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <th scope="row">الضربية</th>
+                                                    <td>{{ $invoices->order->Value_VAT }}</td>
+                                                    <th scope="row">الخصم</th>
+                                                    <td>{{ $invoices->Discount }}</td>
+                                                    
+                                                    <th scope="row">مبلغ الفاتورة</th>
+                                                    <td> {{ $invoices->Total }}</td>
+                                                   
+                                                    <th scope="row">الحالة</th>
+                                                    <td>
+                                                        @if ($invoices->Value_Status == 3)
+                                                            <span class="text-danger">غیر مدفوعة</span>
+                                                        @elseif($invoices->Value_Status == 1)
+                                                            <span class="text-success">مدفوعة بالكامل</span>
+                                                        @else
+                                                            <span class="text-warning"> مدفوعة جزئياً </span>
+                                                        @endif
+            
+                                                    </td>
+                                                    <th scope="row">ملاحظات</th>
+                                                    <td>  <td>{{ $invoices->note }}</td></td>
+                                                    
+                                                </tr>
+
+
+                                                
+                                            </tbody>
+                                        </table>
+                                        <a href="{{ URL::route('show_invoice', [$invoices->id]) }}" class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" > <i
+                                            class="mdi mdi-printer ml-1"></i>طباعة</a>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane" id="tab10">
+                                    <div class="table-responsive mt-15">
+                                        <table class="table center-aligned-table mb-0 table-hover"
+                                            style="text-align:center">
+                                            <thead>
+                                                <tr class="text-dark">
+                                                    <th>#</th>
+                                                    <th>رقم الفاتورة</th>
+                                                    <th>قيمة الدفعة</th>
+                                                   
+                                                    <th>تاريخ الدفع </th>
+                                                    <th>ملاحظات</th>
+                                                    <th>تاريخ الاضافة </th>
+                                                    <th>المستخدم</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 0; ?>
+                                                @foreach ($details as $x)
+                                                    <?php $i++; ?>
+                                                    <tr>
+                                                        <td>{{ $i }}</td>
+                                                        <td>ORNO{{ $x->invoices_id }}</td>
+                                                        <td>{{ $x->amount_payment }}</td>
+                                                       
+                                                        <td>{{ $x->payment_Date }}</td>
+                                                        <td>{{ $x->note }}</td>
+                                                        <td>{{ $x->created_at }}</td>
+                                                        <td>{{ $x->user }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+
+                                    </div>
+                                </div>
+
+
+                                <div class="tab-pane" id="tab11">
+                                    <!--المرفقات-->
+                                    <div class="card card-statistics">
+                                        @can('اضافة مرفق')
+                                            <div class="card-body">
+                                                <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
+                                                <h5 class="card-title">اضافة مرفقات</h5>
+                                                <form method="post" action="{{ url('/InvoiceAttachments') }}"
+                                                    enctype="multipart/form-data">
+                                                    {{ csrf_field() }}
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input" id="customFile"
+                                                            name="file_name" required>
+                                                        <input type="hidden" id="customFile" name="invoice_number"
+                                                            value="{{ $invoices->invoice_number }}">
+                                                        <input type="hidden" id="invoice_id" name="invoice_id"
+                                                            value="{{ $invoices->id }}">
+                                                        <label class="custom-file-label" for="customFile">حدد
+                                                            المرفق</label>
+                                                    </div><br><br>
+                                                    <button type="submit" class="btn btn-primary btn-sm "
+                                                        name="uploadedFile">تاكيد</button>
+                                                </form>
+                                            </div>
+                                        @endcan
+                                        <br>
+
+                                        <div class="table-responsive mt-15">
+                                            <table class="table center-aligned-table mb-0 table table-hover"
+                                                style="text-align:center">
+                                                <thead>
+                                                    <tr class="text-dark">
+                                                        <th scope="col">م</th>
+                                                        <th scope="col">اسم الملف</th>
+                                                        <th scope="col">قام بالاضافة</th>
+                                                        <th scope="col">تاريخ الاضافة</th>
+                                                        <th scope="col">العمليات</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 0; ?>
+                                                    @foreach ($details as $attachment)
+                                                        <?php $i++; ?>
+                                                        <tr>
+                                                            <td>{{ $i }}</td>
+                                                            <td>{{ $attachment->image_name }}</td>
+                                                            <td>{{ $attachment->Created_by }}</td>
+                                                            <td>{{ $attachment->created_at }}</td>
+                                                            <td colspan="2">
+
+                                                                <a class="btn btn-outline-success btn-sm"
+                                                                    href="{{ url('View_file') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
+                                                                    role="button"><i class="fas fa-eye"></i>&nbsp;
+                                                                    عرض</a>
+
+                                                                <a class="btn btn-outline-info btn-sm"
+                                                                    href="{{ url('download') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
+                                                                    role="button"><i
+                                                                        class="fas fa-download"></i>&nbsp;
+                                                                    تحميل</a>
+
+                                                                @can('حذف المرفق')
+                                                                    <button class="btn btn-outline-danger btn-sm"
+                                                                        data-toggle="modal"
+                                                                        data-file_name="{{ $attachment->file_name }}"
+                                                                        data-invoice_number="{{ $attachment->invoice_number }}"
+                                                                        data-id_file="{{ $attachment->id }}"
+                                                                        data-target="#delete_file">حذف</button>
+                                                                @endcan
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                        <!--الفواتير-->
                                         <div class="tab-pane" id="tab8">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">

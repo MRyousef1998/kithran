@@ -163,7 +163,48 @@
                                                            
 
 
-
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <button aria-expanded="false" aria-haspopup="true"
+                                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                                <div class="dropdown-menu tx-13">
+                                                                    <a class="dropdown-item" href="#update_status"
+                                                                    data-order_id="{{ $x->id }}"
+                                                                    data-toggle="modal"
+                                                                        
+                                                                        ><i
+                                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                                                    تأكيد استلام
+                                                                </a>
+                                                                      
+                                                                
+                
+                                                                    @can('حذف الفاتورة')
+                                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                                            data-toggle="modal" data-target="#delete_invoice"><i
+                                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                                            الفاتورة</a>
+                                                                    @endcan
+                
+                                                                    
+                                                                       
+                                                                  
+                
+                                                                  
+                                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                                            الارشيف</a>
+                                                                   
+                
+                                                                 
+                                                                        
+                                                                   
+                                                                </div>
+                                                            </div>
+                
+                                                        </td>
 
 
                                                              
@@ -201,6 +242,45 @@
     <!-- Container closed -->
     </div>
     <!-- main-content closed -->
+
+
+    <div class="modal fade" id="update_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تغیر حالة الطلبية</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action='update_status_order' method="post">
+                {{ method_field('post') }}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="order_id" value="">
+
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الرجاء تحديد الحالة </label>
+                    <select name="status_id" id="status_id" class="form-control" required>
+                        <option value="" selected disabled> --حدد الحالة--</option>
+                        @foreach ($Statuses as $Status)
+                            <option value="{{ $Status->id }}">{{ $Status->status_name  }}</option>
+                        @endforeach
+                    </select>
+                   
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">تعديل البيانات</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 @endsection
 @section('js')
 
@@ -226,7 +306,19 @@
     <!--Internal  Notify js -->
     <script src="{{ URL::asset('assets/plugins/notify/js/notifIt.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
+    <script>
+        $('#update_status').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+           
+           
+            var order_id = button.data('order_id')
+            var modal = $(this)
 
+            
+           
+            modal.find('.modal-body #order_id').val(order_id);
+        })
+    </script>
   
 
 

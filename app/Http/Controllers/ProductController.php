@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\InvoicesDetails;
 use App\Models\Product;
 
 use App\Models\Order;
@@ -250,7 +251,7 @@ class ProductController extends Controller
        
 
     }
-    public function getExportDetailsOrder($id)
+    public function getExportDetailsOrder($id) 
     {  $boxes =DB::table('products')->
         leftJoin('boxes', 'boxes.id', '=', 'products.box_id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'orders.id', '=', 'order_product.orders_id') ->where("orders.id", $id)->where("products.box_id",'!=',null)
         ->selectRaw('boxes.id ,boxes.box_code')
@@ -275,12 +276,15 @@ class ProductController extends Controller
        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 3)
        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,count(products.box_id) as box_count,product_details.image_name')
        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
-
+       $invoices = Invoice::where('orders_id',$id)->first();
+       
+       $details  = InvoicesDetails::where('invoices_id',$invoices->id)->get();
+      
        $exporter = User::where('role_id','=',1)->get();
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-        return view('order.export_order.details_order1',compact('order','machines','grinders','parts','exporter', 'importer','representative','id','boxes'));
+        return view('order.export_order.details_order1',compact('order','machines','grinders','parts','details','invoices','exporter', 'importer','representative','id','boxes'));
 
         
        

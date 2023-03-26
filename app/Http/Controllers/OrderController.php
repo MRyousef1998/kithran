@@ -14,6 +14,8 @@ use App\Models\Product;
 
 use App\Models\ProductDetail;
 use App\Models\Status;
+use Carbon\Carbon;
+
 class OrderController extends Controller
 {
     /**
@@ -29,11 +31,11 @@ class OrderController extends Controller
         $exporter = User::where('role_id','=',1)->get();
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
-
+            $Statuses =Status::all();
 
        
 
-        return view('order.import_order',compact('orders','exporter', 'importer','representative'));
+        return view('order.import_order',compact('orders','exporter', 'importer','representative','Statuses'));
     }
 
     /**
@@ -214,7 +216,23 @@ class OrderController extends Controller
         return view('order.add_import_order1',compact('importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
 
-  
+    public function Status_Update(Request $request)
+    { 
+        
+        $order = Order::findOrFail($request->order_id);
+
+      
+
+        $order->update([
+            'statuses_id' => $request->status_id,
+            'order_due_date'=> Carbon::today(),
+        ]);
+
+
+        session()->flash('Add', 'تم تحديث الحالة بنجاح');
+        return redirect('import_order');
+    
+    }
 
 
     

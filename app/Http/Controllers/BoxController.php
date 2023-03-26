@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Box;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -57,7 +58,8 @@ class BoxController extends Controller
      
     //    $prouct=Product::find($product_id->products_id);
     $prouct=Product::find($request->id);
-      
+    $order=Order::find($request->order_id);
+    
        Box::create([
         'box_code' => $request->box_code,
     ]);
@@ -75,6 +77,10 @@ class BoxController extends Controller
         'box_id' => $box_id,
 
         ]);
+        $order->update([
+            'statuses_id' => 5,
+    
+            ]);
     
          session()->flash('Add', 'تم التغليف بنجاح ');
          return redirect('ExportOrderDetails/'. $request->order_id);

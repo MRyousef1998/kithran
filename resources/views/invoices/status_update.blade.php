@@ -36,7 +36,7 @@
         <div class="col-lg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('Status_Update') }}" method="post" autocomplete="off"  method="post" enctype="multipart/form-data">
+                    <form action="{{ route('Status_Update') }}" method="post" autocomplete="off"   enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{-- 1 --}}
                         <div class="row">

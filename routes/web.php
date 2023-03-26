@@ -39,7 +39,6 @@ Route::post('addAttachments', 'App\Http\Controllers\OrderDetailController@addAtt
 
 // Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoicesController@show')->name('Status_show');
 
-// Route::post('/Status_Update/{id}', 'App\Http\Controllers\InvoicesController@Status_Update')->name('Status_Update');
 
 
 // Route::get('Invoice_Paid','App\Http\Controllers\InvoicesController@Invoice_Paid');
@@ -59,6 +58,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users','App\Http\Controllers\UserController');
     Route::resource('products','ProductController');
     });
+    Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
@@ -72,6 +72,7 @@ Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatem
 
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
+Route::post('update_status_order', 'App\Http\Controllers\OrderController@Status_Update')->name('update_status_order');
 
  
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
@@ -134,12 +135,11 @@ Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@
 Route::post('rechoce_product_confirm', 'App\Http\Controllers\ProductController@rechoce_product_confirm')->name('rechoce_product_confirm');
 Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
 Route::post('unsubmit_product', 'App\Http\Controllers\ProductController@unsubmit_product')->name('unsubmit_product');
-Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice');
+Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice')->name('show_invoice');
 Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
 Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');
 
 Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoiceController@show')->name('Status_show');
-Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 //
 Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 

@@ -85,7 +85,7 @@
 
 
                                         <div class="tab-pane active" id="tab4">
-                                            <div class="table-responsive mt-15">
+                                            <div class="table-responsive mt-14">
 
                                                 <table class="table table-striped" style="text-align:center">
                                                     <tbody>
@@ -106,12 +106,12 @@
                                                         <tr>
                                                             <th scope="row">الضربية</th>
                                                             <td>{{ $invoices->order->Value_VAT }}</td>
-                                                            <th scope="row">مبلغ الفاتورة</th>
-                                                            <td> <td>{{ $invoices->Total }}</td></td>
-                                                            <th scope="row">ملاحظات</th>
-                                                            <td>  <td>{{ $invoices->note }}</td></td>
                                                             <th scope="row">الخصم</th>
                                                             <td>{{ $invoices->Discount }}</td>
+                                                            
+                                                            <th scope="row">مبلغ الفاتورة</th>
+                                                            <td> {{ $invoices->Total }}</td>
+                                                           
                                                             <th scope="row">الحالة</th>
                                                             <td>
                                                                 @if ($invoices->Value_Status == 3)
@@ -123,34 +123,17 @@
                                                                 @endif
                     
                                                             </td>
-                                                               
-
-                                                        </tr>
-
-
-                                                        <tr>
-                                                            
-
-                                                            @if ($invoices->Value_Status == 1)
-                                                                <td><span
-                                                                        class="badge badge-pill badge-success">{{ $invoices->Status }}</span>
-                                                                </td>
-                                                            @elseif($invoices->Value_Status ==2)
-                                                                
-                                                            @else
-                                                                <td><span
-                                                                        class="badge badge-pill badge-warning">{{ $invoices->Status }}</span>
-                                                                </td>
-                                                            @endif
-                                                        </tr>
-
-                                                        <tr>
                                                             <th scope="row">ملاحظات</th>
-                                                            <td>{{ $invoices->note }}</td>
+                                                            <td>  <td>{{ $invoices->note }}</td></td>
+                                                            
                                                         </tr>
+
+
+                                                        
                                                     </tbody>
                                                 </table>
-
+                                                <a href="{{ URL::route('show_invoice', [$invoices->id]) }}" class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" > <i
+                                                    class="mdi mdi-printer ml-1"></i>طباعة</a>
                                             </div>
                                         </div>
 

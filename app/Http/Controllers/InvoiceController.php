@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountStatement;
 use App\Models\Invoice;
 
 use App\Models\InvoiceCategory;
@@ -9,6 +10,7 @@ use App\Models\InvoiceCategory;
 use App\Models\InvoicesDetails;
 use App\Models\Order;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -110,7 +112,10 @@ class InvoiceController extends Controller
        $exporter = User::where('role_id','=',1)->get();
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
-            $invoices =$newInvoice;
+            $invoices =$newInvoice; 
+
+
+
         return view('invoices.Print_invoice',compact('invoices','machines','grinders','parts','exporter','importer','representative','order'));
 
 
@@ -154,6 +159,7 @@ class InvoiceController extends Controller
     }
     public function Status_Update( Request $request)
     { 
+       
         $fileName=null;
         if($request->pic!=null){
     
@@ -206,6 +212,23 @@ class InvoiceController extends Controller
         $invoice_detail_id = InvoicesDetails::latest()->first()->id;
         $request->pic->move(public_path('Attachments/InvoicesDetails/' . $invoice_detail_id ), $fileName);
         }
+        $order=Order::findOrFail($invoices->orders_id);
+        $clint=User::findOrFail($order->exported_id);
+
+        AccountStatement::create([
+            'purpose' => 'دفعة مقبوضة من الذبون'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
+            'account_statement_types_id' => 2,
+            
+            'amount' => $request->new_payment,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);
+        
         session()->flash('Status_Update');
         return redirect('/invoices');
 
