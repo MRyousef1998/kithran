@@ -58,7 +58,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users','App\Http\Controllers\UserController');
     Route::resource('products','ProductController');
     });
-    Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
@@ -140,6 +139,7 @@ Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
 Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');
 
 Route::get('/Status_show/{id}', 'App\Http\Controllers\InvoiceController@show')->name('Status_show');
+Route::post('/Status_Update', 'App\Http\Controllers\InvoiceController@Status_Update')->name('Status_Update');
 //
 Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
