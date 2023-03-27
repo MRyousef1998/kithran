@@ -214,7 +214,7 @@ class InvoiceController extends Controller
         }
         $order=Order::findOrFail($invoices->orders_id);
         $clint=User::findOrFail($order->exported_id);
-
+if($invoices->invoice_categories_id == 2){
         AccountStatement::create([
             'purpose' => 'دفعة مقبوضة من الذبون'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
             'account_statement_types_id' => 2,
@@ -227,7 +227,21 @@ class InvoiceController extends Controller
 
             'pay_date' =>  Carbon::today(),
   
-        ]);
+        ]);}
+        else {
+        AccountStatement::create([
+            'purpose' => 'دفعة للمورد'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
+            'account_statement_types_id' => 1,
+            
+            'amount' => $request->new_payment,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);}
         
         session()->flash('Status_Update');
         return redirect('/invoices');

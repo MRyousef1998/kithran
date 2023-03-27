@@ -133,6 +133,8 @@ Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharb
 Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');
 Route::post('rechoce_product_confirm', 'App\Http\Controllers\ProductController@rechoce_product_confirm')->name('rechoce_product_confirm');
 Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
+Route::post('submit_all_product', 'App\Http\Controllers\ProductController@submit_all_product')->name('submit_all_product');
+
 Route::post('unsubmit_product', 'App\Http\Controllers\ProductController@unsubmit_product')->name('unsubmit_product');
 Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice')->name('show_invoice');
 Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');

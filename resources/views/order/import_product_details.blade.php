@@ -43,7 +43,25 @@
 										</div>
 										<div class="action">
 											
-											<button class="add-to-cart btn btn-success" type="button">تأكيد</button>
+											<a class="add-to-cart btn btn-success" type="button"
+											
+											data-id="{{$product[0]->id }}" data-order_id="{{ $product[0]->orders_id }}"
+								 data-product_name="{{ $product[0]->product_name }}"
+
+                                                data-company_name="{{ $product[0]->company_name }}"
+                                               
+                                                data-product_g="{{ $product[0]->group_name }}"
+                                                {{-- data-group_id="{{ $x->group_id }}" --}}
+                                                data-image-name ="{{ $product[0]->image_name}}"
+												data-count={{$product[0]->aggregate}}
+                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
+                                                data-product_category_id ="{{ $x->category->id}}" --}}
+
+
+
+								data-toggle="modal"
+								href="#submitall"
+											>تأكيد</a>
 										</div>
 									</div>
 								</div>
@@ -80,13 +98,13 @@
 										<span class="text-success">{{$x->status_name}}</span>
 										
 									@endif
-									@if ($x->statuses_id==1||$x->statuses_id=4)
+									@if ($x->statuses_id==1||$x->statuses_id==4)
 									<span class="text-danger">غير مخصص</span>
 								
 								
 								@else
 								
-									<span class="text-success">NO{{$x->statuses_id}}</span>
+									<span class="text-success">NO{{$x->products_id}}</span>
 									
 								@endif
 								
