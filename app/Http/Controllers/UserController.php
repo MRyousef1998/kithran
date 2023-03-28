@@ -2,6 +2,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\InvoicesDetails;
+use App\Models\Order;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -134,4 +137,29 @@ User::find($id)->delete();
 return redirect()->route('users.index')
 ->with('success','User deleted successfully');
 }
+
+
+public function show_profile($id)
+{
+$userDetail =User::find($id);
+
+
+if($userDetail->role_id==1||$userDetail->role_id==2){
+$orders = Order::where('exported_id','=',$userDetail->id)->get();
+//return $orders;
+// $invoices = Invoice::where('orders_id',$orders->id)->get();
+// return $invoices;
+// $details  = InvoicesDetails::where('invoices_id',$invoices->id)->get();
+
+}
+      
+$exporter = User::where('role_id','=',1)->get();
+$importer = User::where('role_id','=',2)->get();
+$representative = User::where('role_id','=',3)->get();
+
+return view('users.profile',compact('userDetail','orders','exporter','importer','representative'));
+}
+
+
+
 }

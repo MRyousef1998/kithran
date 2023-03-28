@@ -101,6 +101,8 @@ Route::get('/orderProductDeteil/{id}', 'App\Http\Controllers\ProductController@g
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
 Route::resource('export_order', 'App\Http\Controllers\ExportController');
 Route::get('order_file/{id}', 'App\Http\Controllers\ExportController@exporterOrders');
+Route::get('user_profile/{id}', 'App\Http\Controllers\UserController@show_profile');
+
 
 Route::resource('shipmentes', 'App\Http\Controllers\ShipmentController');
 Route::get('add_shipment', 'App\Http\Controllers\ShipmentController@create1');

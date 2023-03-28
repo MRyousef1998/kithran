@@ -21,7 +21,7 @@ protected $guarded=[];
 */
 protected $hidden = [
 'password', 'remember_token',
-];
+]; 
 /**
 * The attributes that should be cast to native types.
 *
@@ -30,4 +30,9 @@ protected $hidden = [
 protected $casts = [
 'email_verified_at' => 'datetime',
 ];
+
+public function  role(){
+    return $this->belongsTo(Role::class,'role_id','id');
+   
+}
 }
