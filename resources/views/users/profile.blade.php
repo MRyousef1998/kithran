@@ -88,7 +88,18 @@
 											</div>
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير المدفوعة</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,587</h2>
+												<h2 class="mb-0 tx-22 mb-1 mt-1">{{$invoice_paid->invoice_count}}
+													@if ($invoice_paid->invoice_count!=null)
+													<th class="border-bottom-0"> {{$invoice_paid->invoice_count}}</th>
+														
+													@else
+													<th class="border-bottom-0"> 0</th>
+													
+														
+													@endif
+												
+												
+												</h2>
 												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>increase</p>
 											</div>
 										</div>
@@ -104,7 +115,19 @@
 											</div>
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير المدفوعة جزئيا</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">46,782</h2>
+												<h2 class="mb-0 tx-22 mb-1 mt-1">
+													@if ($invoice_almost_paid!=null)
+													<th class="border-bottom-0"> {{$invoice_almost_paid->invoice_count}}</th>
+														
+													@else
+													<th class="border-bottom-0"> 0</th>
+													
+														
+													@endif
+												
+												   
+												
+												</h2>
 												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>increase</p>
 											</div>
 										</div>
@@ -120,7 +143,18 @@
 											</div>
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير الغير مدفوعة</h5>
-												<h2 class="mb-0 tx-22 mb-1 mt-1">1,890</h2>
+												<h2 class="mb-0 tx-22 mb-1 mt-1">
+												
+													@if ($invoice_unpaid!=null)
+													<th class="border-bottom-0"> {{$invoice_unpaid->invoice_count}}</th>
+														
+													@else
+													<th class="border-bottom-0"> 0</th>
+													
+														
+													@endif
+												
+												</h2>
 												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>increase</p>
 											</div>
 										</div>
