@@ -83,21 +83,11 @@
 								<div class="card ">
 									<div class="card-body">
 										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-primary-transparent">
-												<i class="icon-layers text-primary"></i>
-											</div>
+											
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير المدفوعة</h5>
 												<h2 class="mb-0 tx-22 mb-1 mt-1">{{$invoice_paid->invoice_count}}
-													@if ($invoice_paid->invoice_count!=null)
-													<th class="border-bottom-0"> {{$invoice_paid->invoice_count}}</th>
-														
-													@else
-													<th class="border-bottom-0"> 0</th>
-													
-														
-													@endif
-												
+
 												
 												</h2>
 												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>increase</p>
@@ -110,9 +100,7 @@
 								<div class="card ">
 									<div class="card-body">
 										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-danger-transparent">
-												<i class="icon-paypal text-danger"></i>
-											</div>
+										
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير المدفوعة جزئيا</h5>
 												<h2 class="mb-0 tx-22 mb-1 mt-1">
@@ -138,9 +126,7 @@
 								<div class="card ">
 									<div class="card-body">
 										<div class="counter-status d-flex md-mb-0">
-											<div class="counter-icon bg-success-transparent">
-												<i class="icon-rocket text-success"></i>
-											</div>
+											
 											<div class="mr-auto">
 												<h5 class="tx-13">الفواتير الغير مدفوعة</h5>
 												<h2 class="mb-0 tx-22 mb-1 mt-1">
