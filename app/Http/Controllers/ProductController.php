@@ -643,4 +643,14 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
         
            
     }
+
+
+
+    public function product_set_proken(Request $request){
+       
+           return $request;
+    }
 }
+
+
+

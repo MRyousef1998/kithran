@@ -73,6 +73,7 @@ Route::post('product_report_serch', 'App\Http\Controllers\ProductController@prod
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
 Route::post('update_status_order', 'App\Http\Controllers\OrderController@Status_Update')->name('update_status_order');
+Route::post('product_set_proken', 'App\Http\Controllers\ProductController@product_set_proken')->name('product_set_proken');
 
  
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
