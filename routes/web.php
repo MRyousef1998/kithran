@@ -67,7 +67,8 @@ Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
- 
+Route::get('product_report', 'App\Http\Controllers\ProductController@product_report_view')->name('product_report');
+Route::post('product_report_serch', 'App\Http\Controllers\ProductController@product_report_serch')->name('product_report_serch');
 
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');

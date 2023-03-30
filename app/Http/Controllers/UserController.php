@@ -152,15 +152,16 @@ $invoice_paid =DB::table('invoices')->
         selectRaw('users.id,count(invoices.id) as invoice_count,sum(invoices.Total) as sum')
         ->groupBy('users.id')->get();
        
-       if ($invoice_paid->isEmpty()) {
+       if ($invoice_paid->isEmpty()==true) {
 
-        $invoice_paid=new Request(['id'=>$id,
+        $invoice_paid=[new Request(['id'=>$id,
     'invoice_count'=>0,
     'sum'=>0
     
-    ]);
+    ])];
         
        }
+  
      
   
  $invoice_almost_paid =DB::table('invoices')->
@@ -169,28 +170,27 @@ $invoice_paid =DB::table('invoices')->
  ->groupBy('users.id')->get();   
 
 
- if ($invoice_almost_paid->isEmpty()) {
+ if ($invoice_almost_paid->isEmpty()==true) {
 
-    $invoice_almost_paid=new Request(['id'=>$id,
+    $invoice_almost_paid=[new Request(['id'=>$id,
 'invoice_count'=>0,
 'sum'=>0
 
-]);
+])];
     
-   }
-
+    }
  $invoice_unpaid =DB::table('invoices')->
  leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 2)->where("users.id", $id)->
  selectRaw('users.id,count(invoices.id) as invoice_count,sum(invoices.Total) as sum')
  ->groupBy('users.id')->get();
     
- if ($invoice_unpaid->isEmpty()) {
+ if ($invoice_unpaid->isEmpty()==true) {
 
-    $invoice_unpaid=new Request(['id'=>$id,
+    $invoice_unpaid=[new Request(['id'=>$id,
 'invoice_count'=>0,
 'sum'=>0
 
-]);
+])];
     
    }
 
@@ -198,8 +198,13 @@ $invoice_paid =DB::table('invoices')->
 // $invoices = Invoice::where('orders_id',$orders->id)->get();
 // return $invoices;
 // $details  = InvoicesDetails::where('invoices_id',$invoices->id)->get();
-
+$invoice_paid=$invoice_paid[0];
+$invoice_almost_paid=$invoice_almost_paid[0];
+$invoice_unpaid=$invoice_unpaid[0];
 }
+
+
+
       
 $exporter = User::where('role_id','=',1)->get();
 $importer = User::where('role_id','=',2)->get();

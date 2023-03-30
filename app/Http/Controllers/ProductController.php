@@ -598,4 +598,49 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
             return redirect('ExportOrderDetails/'. $request->order_id);
 
     }
+
+
+
+    public function product_report_view(){
+       
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+        return view('reports.product_report',compact('exporter', 'importer','representative',));
+           
+    }
+    public function product_report_serch(Request $request){
+        $products =DB::table('products')->
+       leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')
+       ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')
+       ->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+       ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
+       ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') -> leftJoin('users', 'orders.exported_id', '=', 'users.id') ->where("products.id", $request->product_id)
+      -> leftJoin('boxes', 'boxes.id', '=', 'products.box_id')->leftJoin('shipments', 'boxes.shipment_id', '=', 'shipments.id') -> get();
+     
+     if ($products->isEmpty()==false) {
+        $satatus=Status::find($products[0]->statuses_id);
+      
+        
+       }
+       else{
+
+        $satatus=new Request(['id'=>0,
+        'status_name'=>null,
+      
+        
+        ]);
+       }
+  
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+        return view('reports.product_report',compact('exporter', 'importer','representative','products','satatus'));
+           
+      
+        
+           
+    }
 }

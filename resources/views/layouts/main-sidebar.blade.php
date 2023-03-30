@@ -36,7 +36,7 @@
 							<li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='2') }}">مطاحن</a></li>
 
 							<li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='3') }}">قطع التبديل</a></li>
-
+							<li><a class="slide-item" href="{{ url('/' . $page='product_report') }}">بحث سریع</a></li>
 							
 						</ul>
 					</li>
