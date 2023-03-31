@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function index($id)
     {
         
-        $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
+        $machines =DB::table('products')->where("products.statuses_id",'!=',4)->where("products.statuses_id",'!=',7)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $id)->where("products.selling_date", null)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
@@ -47,7 +47,27 @@ class ProductController extends Controller
 
     }
 
+    public function broken_machine_view($id)
+    {
+        
+        $machines =DB::table('products')->where("products.statuses_id",'=',7)->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $id)->where("products.selling_date", null)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+        
+
+ 
+ $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+
+ return view('my_product.machine',compact('id','machines','exporter', 'importer','representative'));
     
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -172,6 +192,7 @@ class ProductController extends Controller
 
     public function getproductsDetaile($id)
     {
+       
         $products = DB::table('product_details')->where("company_id", $id)
 ->select('product_name')
 ->distinct()
@@ -433,13 +454,55 @@ $representative = User::where('role_id','=',3)->get();
     
 
     }
-
+ 
 
     public function rechoce_product_confirm(Request $request)
-    { 
+    { $unwont_prodect=Product::find($request->product_id);
+        $sellingDate=$unwont_prodect->selling_date;
+        $price=$unwont_prodect->selling_price;
+        $commision=$unwont_prodect->selling_price_with_comm;
+        $unwont_prodect->update([
+            'selling_date' => null,
+            'selling_price' => null,
+            'selling_price_with_comm' => null,
+ 
+    
+    
+            ]);
+            $unwont_prodect->order()->detach($request->order_id);
+        $allProducts =Product::where("product_details_id", $request->id)->where("selling_date", null)->where("statuses_id", 2)->get();
+         
+        $Olderproduct=Product::where("product_details_id", $request->id)->where("selling_date", null) ->where("statuses_id", 2)->first();
+        $importOrderOldProdect=$Olderproduct->order()->get();
+        $olderdate=$importOrderOldProdect[0]->order_due_date;
+        $olderProductId=$Olderproduct->id;
+        foreach($allProducts as $currentProduct){
+            $importOrdeForCurrentProdect=$currentProduct->order()->get();
+        $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+        if($olderdate>$currentdate)
+        {
+            $olderdate=$currentdate;
+            $Olderproduct=$currentProduct;
+            $olderProductId=$currentProduct->id;
+        }
         
+       
+        }
+        $Olderproduct->update([
+           'selling_date' => $sellingDate,
+           'selling_price' => $price,
+           'selling_price_with_comm' => $commision,
 
-       return $request;
+   
+   
+           ]);
+        $Olderproduct->order()->attach($request->order_id);
+
+
+        session()->flash('Add', ' تم استبدال المنتج');
+        return redirect('ExportOrderDetails/'. $request->order_id);
+
+       
 
         
     }
@@ -455,8 +518,8 @@ $representative = User::where('role_id','=',3)->get();
         
        $product_id=$request->product_id;
 
-
-        return view('order.export_order.export_product_rechose',compact('machines','product_id'));
+$order_id=$request->order_id;
+        return view('order.export_order.export_product_rechose',compact('machines','product_id','order_id'));
 
         
     }
@@ -618,9 +681,10 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
        ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') -> leftJoin('users', 'orders.exported_id', '=', 'users.id') ->where("products.id", $request->product_id)
       -> leftJoin('boxes', 'boxes.id', '=', 'products.box_id')->leftJoin('shipments', 'boxes.shipment_id', '=', 'shipments.id') -> get();
-     
+     $product_data =Product::find($request->product_id);
      if ($products->isEmpty()==false) {
-        $satatus=Status::find($products[0]->statuses_id);
+   
+        $satatus=Status::find($product_data->statuses_id);
       
         
        }
@@ -648,7 +712,15 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
 
     public function product_set_proken(Request $request){
        
-           return $request;
+          $product =Product::find($request->products_id);
+       
+          $product->update(['statuses_id' => 7,
+        
+        'note'=>$request->note]);
+          session()->flash('Add', ' تم تحديد المنتج كانقص في القطع الداخلية');
+            return redirect('product_report_serch');
+
+
     }
 }
 

@@ -226,12 +226,13 @@
             $('select[name="productCompanies"]').on('change', function() {
                 var productCompaniesId = $(this).val();
                 if (productCompaniesId) {
-                    alert(2);
+                   
                     $.ajax({
                         url: "{{URL::to('products')}}/" + productCompaniesId,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
+                            alert (22);
                             $('select[name="product"]').empty();
                             $('select[name="product"]').append('<option value="" selected disabled>حدد  منتج</option>');
                             

@@ -261,7 +261,8 @@
                                                     
                                                     <li><a href="#tab5" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                                     <li><a href="#tab6" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
-                                                    
+                                                    <li><a href="#tab7" class="nav-link" data-toggle="tab">مکائن کسر</a></li>
+                                                    <li><a href="#tab8" class="nav-link" data-toggle="tab">مطاحن كسر</a></li>
         
                                                 </ul>
                                             </div>
@@ -492,8 +493,236 @@
                                         </table>
                                     </div>
                                 </div>
+<!-- -->
+
+<div class="tab-pane " id="tab7">
+    <div class="table-responsive mt-15">
+                        
+      <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
+          <thead>
+              <tr>
+                   <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
+                  <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
+                  
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد المتاح</th>
+
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
+                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>                                 
+
+              </tr>
+          </thead>
+          <tbody>
+              
+              <?php $i = 0; ?>
+              @foreach ($broken_machines as $x)
+                  <?php $i++; ?>
+                  <div class="all_row">
+                  <tr>
+                      
+                      <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1" id="box1" name="box1"  ></td>
+                      <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                      <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
+
+                      <td style="text-align: center;vertical-align: middle;">
+                          
+                          <div class = "vertical"   ><div>
+                              <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" /></div>
+                              <div>
+                                  {{ $x->product_name }}</div>
+                          </div>
+
+                          
+                          </td>
+                    
+                      <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
+
+                      <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
+                      <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect " data-effect="effect-scale"
+                          data-id="{{ $x->id }}" data-company_name="{{ $x->country_of_manufacture }}"
+                          data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a></td>
+
+                      
+                      <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                          <div class="input-group quantity" style=" ">
+                              <div class="input-group-prepend decrement-btn" style="cursor: pointer">
+                                  <span class="input-group-text" >-</span>
+                              </div>
+                             
+                              <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
+                              <div class="input-group-append increment-btn" style="cursor: pointer">
+                                  <span class="input-group-text"  >+</span>
+                                  
+                              </div>
+                             
+                          </div>
+                      </td>
 
 
+
+
+                   <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                          <div class="input-group" style=" ">
+                              
+                              <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                  
+                          </div>
+                          
+                      </td>
+
+                      <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                          <div class="input-group" style=" ">
+                          
+                             
+                              <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                              <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+
+                          </div>
+                          
+                      </td>
+                      <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                          <div class="input-group" style=" ">
+                              
+                              <input type="text" class="total_price form-control" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
+                              
+                          </div>
+                      </td>
+
+                       
+                      
+                      
+                  </tr>
+              </div>
+             
+              @endforeach
+          </tbody>
+      </table>
+
+                      </div>
+                  </div>
+
+
+
+
+                  <div class="tab-pane " id="tab8">
+                    <div class="table-responsive mt-15">
+                                        
+                      <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                          <thead>
+                              <tr>
+                                   <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
+                                  <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
+                                  
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد المتاح</th>
+  
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
+                                  <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>                                 
+      
+                              </tr>
+                          </thead>
+                          <tbody>
+                              
+                              <?php $i = 0; ?>
+                              @foreach ($broken_grinder as $x)
+                                  <?php $i++; ?>
+                                  <div class="all_row">
+                                  <tr>
+                                      
+                                      <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->id }}" class="box1" id="box1" name="box1"  ></td>
+                                      <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                      <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
+      
+                                      <td style="text-align: center;vertical-align: middle;">
+                                          
+                                          <div class = "vertical"   ><div>
+                                              <img src="Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="140"  height="80" /></div>
+                                              <div>
+                                                  {{ $x->product_name }}</div>
+                                          </div>
+      
+                                          
+                                          </td>
+                                    
+                                      <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
+      
+                                      <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
+                                      <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " > <a class="modal-effect " data-effect="effect-scale"
+                                          data-id="{{ $x->id }}" data-company_name="{{ $x->country_of_manufacture }}"
+                                          data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a></td>
+  
+                                      
+                                      <td   style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                          <div class="input-group quantity" style=" ">
+                                              <div class="input-group-prepend decrement-btn" style="cursor: pointer">
+                                                  <span class="input-group-text" >-</span>
+                                              </div>
+                                             
+                                              <input type="text" class="qty-input form-control  "  id= "quntity" name ="quntity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
+                                              <div class="input-group-append increment-btn" style="cursor: pointer">
+                                                  <span class="input-group-text"  >+</span>
+                                                  
+                                              </div>
+                                             
+                                          </div>
+                                      </td>
+      
+      
+      
+      
+                                   <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                          <div class="input-group" style=" ">
+                                              
+                                              <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                  
+                                          </div>
+                                          
+                                      </td>
+      
+                                      <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                          <div class="input-group" style=" ">
+                                          
+                                             
+                                              <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                              <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+  
+                                          </div>
+                                          
+                                      </td>
+                                      <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
+                                          <div class="input-group" style=" ">
+                                              
+                                              <input type="text" class="total_price form-control" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
+                                              
+                                          </div>
+                                      </td>
+      
+                                       
+                                      
+                                      
+                                  </tr>
+                              </div>
+                             
+                              @endforeach
+                          </tbody>
+                      </table>
+  
+                                      </div>
+                                  </div>
+  
+  
+
+<!-- -->
                  <div class="tab-pane" id="tab6">
                                     <div class="table-responsive mt-15">
                                       

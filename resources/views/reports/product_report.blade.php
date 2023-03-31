@@ -149,7 +149,7 @@
                                     <th class="wd-15p border-bottom-0">رقم الصندوق</th>
                                     <th class="wd-15p border-bottom-0">حالة الشحن</th>
                                     <th class="wd-15p border-bottom-0">رقم الشحنة</th>
-
+                                    <th class="wd-15p border-bottom-0">ملاحظات</th>
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمليات</th>
 
                                     
@@ -216,7 +216,7 @@
                                                 
                                                 
                                                 
-                                                <td style="text-align: center;vertical-align: middle;">{{$products->box_code}}</td>}
+                                                <td style="text-align: center;vertical-align: middle;">{{$products[0]->box_code}}</td>}
                                             @endif
 
                                             @if($products[0]->shipment_id==null)
@@ -229,10 +229,10 @@
                                                     
                                                     
                                                     
-                                                    <td style="text-align: center;vertical-align: middle;">{{$products->shipment_id}}</td>}
+                                                    <td style="text-align: center;vertical-align: middle;">{{$products[0]->shipment_id}}</td>}
                                                 @endif
 
-
+                                                <td style="text-align: center;vertical-align: middle;">{{$products[0]->note}}</td>
 
                                         <td style="text-align: center;vertical-align: middle;" >
                                             @if($satatus->id!=7 && $satatus->id!=0)

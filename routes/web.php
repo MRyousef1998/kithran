@@ -56,13 +56,14 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles','App\Http\Controllers\RoleController');
     Route::resource('users','App\Http\Controllers\UserController');
-    Route::resource('products','ProductController');
+  //  Route::resource('products','ProductController');
     });
-
+    Route::resource('add_payment_representative', 'App\Http\Controllers\PaymentController');
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
 Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name('addProducts');
+Route::get('broken_machine/{id}', 'App\Http\Controllers\ProductController@broken_machine_view');
 
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
@@ -89,7 +90,7 @@ Route::get('/export_productDetails_box', 'App\Http\Controllers\ProductController
 Route::get('/export_product_rechose_product', 'App\Http\Controllers\ProductController@getrechose_product')->name('export_product_rechose_product');
 Route::get('/import_order_productDetails1', 'App\Http\Controllers\ProductController@getimport_order_productDetails')->name('import_order_productDetails1');
 Route::get('/box_insaid_detailes', 'App\Http\Controllers\BoxController@getBoxDetails')->name('box_insaid_detailes');
-
+ 
 
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 

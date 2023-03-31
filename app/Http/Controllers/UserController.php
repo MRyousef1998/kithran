@@ -201,16 +201,28 @@ $invoice_paid =DB::table('invoices')->
 $invoice_paid=$invoice_paid[0];
 $invoice_almost_paid=$invoice_almost_paid[0];
 $invoice_unpaid=$invoice_unpaid[0];
-}
-
-
-
       
 $exporter = User::where('role_id','=',1)->get();
 $importer = User::where('role_id','=',2)->get();
 $representative = User::where('role_id','=',3)->get();
 
-return view('users.profile',compact('userDetail','orders','exporter','importer','representative','invoice_almost_paid','invoice_unpaid','invoice_paid'));
+return view('users.exporter_importer_profile',compact('userDetail','orders','exporter','importer','representative','invoice_almost_paid','invoice_unpaid','invoice_paid'));
+}
+else if($userDetail->role_id==5){
+    $orders = Order::where('representative_id','=',$userDetail->id)->get();
+
+    
+      
+$exporter = User::where('role_id','=',1)->get();
+$importer = User::where('role_id','=',2)->get();
+$representative = User::where('role_id','=',3)->get();
+
+return view('users.representative_profile',compact('userDetail','orders','exporter','importer','representative'));
+
+}
+
+
+
 }
 
 

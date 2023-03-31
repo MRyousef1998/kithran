@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -34,8 +35,22 @@ class PaymentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+     
+        Payment::create([
+           
+            'amount' => $request->amount_payments,
+            'note' => $request->note,
+            'orders_id' =>$request->order_id,
+            'representative_id' =>$request->representative_id	,
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);
+        session()->flash('success', ' تم اضافة الدفعة  بنجاح');
+
+        return redirect("user_profile/".$request->representative_id);
     }
 
     /**

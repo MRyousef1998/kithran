@@ -8,7 +8,7 @@
 
 
 				
-				<div class="row">
+				<div class="row"> 
 				@foreach ($machines as $x)
 				<div class="col-lg-4">
 					<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
@@ -16,11 +16,12 @@
 						
 						<input type="hidden" name="id" id="id" value="{{ $x->product_detail_id }}">
 						<input type="hidden" name="product_id" id="product_id" value="{{ $product_id }}">	
+						<input type="hidden" name="order_id" id="order_id" value="{{ $order_id }}">
 					<div class="card item-card">
 					 	<div class="card-body pb-0 h-100">
 							
 							<div class="card-body cardbody relative">
-								<form action="{{route("rechoce_product_confirm")}}" method="post" method="post" enctype="multipart/form-data">
+							
 								<div class="cardtitle">
 									<a>{{$x->product_name}}</a>
 									<span>{{$x->group_name}}</span>
@@ -37,7 +38,7 @@
 							<button type="submit" class="btn btn-success">تاكيد</button>
 						</div>
 					</div>
-					
+					</form>
 				</div>
 					@endforeach
 					
