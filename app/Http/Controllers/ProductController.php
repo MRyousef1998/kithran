@@ -718,7 +718,7 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
         
         'note'=>$request->note]);
           session()->flash('Add', ' تم تحديد المنتج كانقص في القطع الداخلية');
-            return redirect('product_report_serch');
+            return redirect('product_report/');
 
 
     }

@@ -79,6 +79,9 @@ Route::post('product_set_proken', 'App\Http\Controllers\ProductController@produc
  
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
+
+Route::get('add_shop_order', 'App\Http\Controllers\SmallShopController@create1');
+Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
@@ -98,11 +101,13 @@ Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
 Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
 Route::get('/orderProductDeteil/{id}', 'App\Http\Controllers\ProductController@getorderProductDeteil');
+Route::get('/shop_exporter_order/{id}', 'App\Http\Controllers\SmallShopController@getOrder');
 
 
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
 Route::resource('export_order', 'App\Http\Controllers\ExportController');
+Route::resource('small_shop', 'App\Http\Controllers\SmallShopController');
 Route::get('order_file/{id}', 'App\Http\Controllers\ExportController@exporterOrders');
 Route::get('user_profile/{id}', 'App\Http\Controllers\UserController@show_profile');
 
