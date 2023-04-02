@@ -173,7 +173,7 @@ class SmallShopController extends Controller
 // ->select('id')
 // ->distinct()
 // ->pluck("id",);
-        $order = DB::table("orders")->where("exported_id", $id)->pluck("order_date", "id");
+        $order = DB::table("orders")->where("exported_id", $id)->pluck("order_date", "id",);
         return json_encode($order);
     }
 

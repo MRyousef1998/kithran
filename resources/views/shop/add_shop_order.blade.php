@@ -135,25 +135,20 @@
                                 <select name="importer" class="form-control SlectBox" 
                                     required>
                                     <!--placeholder-->
-                                    <option value="1" selected disabled>محل صغیر</option>
+                                    <option value="1" selected >محل صغیر</option>
                                     @foreach ($importer as $importClint)
                                         <option value="{{ $importClint->id }}">تكملة لطلبية {{ $importClint->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            
                             <div class="col">
-                          
-
-
-                                <label for="inputName" class="control-label">عن  طلبية رقم</label>
-                                <select name="orderID" class="form-control SlectBox"
-                                    required>
-                                    <!--placeholder-->
-                                   
-                                  
+                                <label for="inputName" class="control-label"  onclick="console.log($(this).val())"
+                                onchange="console.log('change is firing')">عن طلبية رقم</label>
+                                <select id="orderID" name="orderID" class="form-control">
+                                    <option value="" selected disabled>حدد  الطلبية</option>
                                 </select>
                             </div>
-                             
                          
 
                         </div>
@@ -179,37 +174,16 @@
                         
                             
                         <div class="col-xl-12">
-                            <div class="card mg-b-20">
+                            <div class=" mg-b-20">
                                 <div class="card-header pb-0">
                              
                                 </div>
                                 <div class="card-body">
-                                    <div class="panel panel-primary tabs-style-2">
-                                        <div class=" tab-menu-heading">
-                                            <div class="tabs-menu1">
-                                                <!-- Tabs -->
-                                                <ul class="nav panel-tabs main-nav-line">
-                                                    
-
-                              
-                                                    <li><a href="#tab6" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
-                                                   
-        
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
-                        <div class="panel-body tabs-menu-body main-content-body-right border">
-                        
-
-                            <div class="tab-content">
-
-
-
-                 <div class="tab-pane" id="tab6">
+                     
                                     <div class="table-responsive mt-15">
                                       
                                         <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
@@ -225,9 +199,7 @@
                                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد المتاح</th>
 
                                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العمولة</th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">السعر الاجمالي</th>                                 
+                                                                     
                         
                                                 </tr>
                                             </thead>
@@ -250,7 +222,13 @@
                                                                 <div>
                                                                     {{ $x->product_name }}</div>
                                                             </div>
-                        
+                                                            <div class="input-group" style=" ">
+                                                            
+                                                               
+                                                            
+                                                                <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
+                                                                
+                                                            </div>
                                                             
                                                             </td>
                                                       
@@ -276,33 +254,10 @@
                         
                         
                         
-                                                                             <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                                
-                                                                <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
+                                                                          
                         
-                                                                
-                                                            </div>
-                                                        </td>
-                        
-                                                        <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                            
-                                                                <input type="text" class="commission_pice form-control" style="text-align: center;vertical-align: middle;"id="commission_pice"  name ="commission_pice" onchange="priceChange('commission_pice',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" readonly>
-                                                            
-                                                                <input type="text" class="qtyy form-control" style="text-align: center;vertical-align: middle;"id="qtyy"  name ="qtyy" value="{{ $x->aggregate }}" hidden>
-                                                                
-                                                            </div>
-                                                            
-                                                        </td>
-                                                        <td class="cart-product-quantity"  style="text-align: center;vertical-align: middle;width:15% ;height:15%">
-                                                            <div class="input-group" style=" ">
-                                                                
-                                                                <input type="text" class="total_price form-control" style="text-align: center;vertical-align: middle;"id="total_price" name ="total_price" maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" readonly>
-                                                                
-                                                            </div>
-                                                        </td>
-                        
+                                                    
+                                         
                                                          
                                                         
                                                         
@@ -319,15 +274,15 @@
                                     </div>
                                 </div>
 
-                                
+                                          
+                                <div class="d-flex justify-content-center">
+                                    <button  class="" onclick="sandData()">حفظ البيانات</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-
+           
 
 
 
@@ -341,10 +296,7 @@
 
                            
                                
-                                       
-                                          <div class="d-flex justify-content-center">
-                            <button  class="" onclick="sandData()">حفظ البيانات</button>
-                        </div>
+                             
                                     
                     
                     
@@ -439,14 +391,14 @@ $(document).ready(function () {
 $('.increment-btn').click(function (e) {
     e.preventDefault();
     var incre_value = $(this).parents('.quantity').find('.qty-input').val();
-    var price_elem=$(this).parent().parent().parent().find('.price');
+
     var qty_av=$(this).parent().parent().parent().find('.qtyy').val();
 
     
     var mycheck= $(this).parent().parent().parent().find('.box1');
 
     
-    var total=0.0;
+   
    
 
 
@@ -456,37 +408,18 @@ $('.increment-btn').click(function (e) {
         value++;
         $(this).parents('.quantity').find('.qty-input').val(value);
 
-         var commission_pice= $(this).parent().parent().parent().find('.commission_pice');
+        
 
         mycheck.attr('checked', true);
       
        
        
          
-         $(this).parent().parent().parent().find('.commission_pice');
-        price_elem.removeAttr("readonly");
+      
+       
        var clint=document.getElementById("clint").value;
     
-    if(String(clint)!=""){
-      if(!document.getElementById("com_all").checked){
-          alert("11");
-           $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
-           total=parseFloat(price_elem.val()*value )+parseFloat(commission_pice.val()*value);}
-           else{
-            alert(document.getElementById("Amount_Commission").value);
-            total=parseFloat(price_elem.val()*value );
-            alert(total);
-           }
-
-        }
-        else{
-            total=parseFloat(price_elem.val() )*value;
-        }
-       
-        
-        var total_pirce_elem=$(this).parent().parent().parent().find('.total_price');
-        total_pirce_elem.val(total);
-        calTotal();
+   
 
         
     }
@@ -555,8 +488,7 @@ $('.decrement-btn').click(function (e) {
             $("#datatable input[type=checkbox]:checked").each(function() {
                
                 var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
-                               price:$(this).parent().parent().find('.price').val(),
-                                commission_pice: $(this).parent().parent().find('.commission_pice').val(),
+                              
 
                                     
                                      };
@@ -575,103 +507,8 @@ $('.decrement-btn').click(function (e) {
 
     </script>
 
-<script>
-        function priceChange(className,elem) {
-            var qty= $(elem).parent().parent().parent().find('.qty-input').val();
-            var price_elem= $(elem).parent().parent().parent().find('.price');
-            var commission_pice=  $(elem).parent().parent().parent().find('.commission_pice');
 
-            if(String(clint)!=""){
-
-                if(!document.getElementById("com_all").checked){
-                    total=parseFloat(price_elem.val()*qty )+parseFloat(commission_pice.val()*qty);
-                    
-                                }
-           else{
-            total=parseFloat(price_elem.val()*qty );
-
-                    }
-               
-             // total=parseFloat(price_elem.val()*qty )+parseFloat(commission_pice.val()*qty);
-                        }
-                        else{
-                    total=parseFloat(price_elem.val() )*qty;
-                               }
-
-            
-            
-            $(elem).parent().parent().parent().find('.total_price').val(total);
-                
-            calTotal();
-            
-
-        }
-
-    </script>
-     <script>
-        function myFun(elem) {
-
-            var quntity = parseFloat(document.getElementById("quntity").value);
-             
-            var pirce = parseFloat(document.getElementById("price").value);
-            var commission_pice = parseFloat(document.getElementById("commission_pice").value);
-            var Value_VAT = parseFloat(document.getElementById("Value_VAT").value);
-
-            var total_pirce = (pirce *quntity)+(commission_pice*quntity);
-
-
-            if (typeof total_pirce === 'undefined'  ) {
-
-                alert('يرجي ادخال مبلغ العمولة ');
-
-            } 
-            
-            document.getElementById("total_price").value = total_pirce;
-            var total_order=0;
-             var total_commission=0;
-        var total_elements=document.getElementsByClassName("total1");
-        
-        var commission_pice_elements=document.getElementsByClassName("commission_pice");
-              
-
-        var l=total_elements.length;
-
-            for(var i=0;i<l;i++)
-            {
-
-           total_order=+total_elements[i].value;
-           
-           
-            total_commission=+commission_pice_elements[i].value;
-               
-            }
-           
-
-            document.getElementById("Total").value =total_order+Value_VAT;
-            document.getElementById("Amount_Commission").value =total_commission;
-
-
-
-
-            
-            {{-- else {
-                var intResults = Amount_Commission2 * Rate_VAT / 100;
-
-                var intResults2 = parseFloat(intResults + Amount_Commission2);
-
-                sumq = parseFloat(intResults).toFixed(2);
-
-                sumt = parseFloat(intResults2).toFixed(2);
-
-                
-
-                document.getElementById("Total").value = sumt;
-
-            } --}}
-
-        }
-
-    </script>
+     
     <script>
 
         function oneByone_check(){
@@ -746,11 +583,11 @@ else{
     <script type="text/javascript">
     $(function() {
         $("#btn").click(function() {
-            alert(111111);
+           
             var selected = new Array();
 
             $("#datatable input[type=checkbox]:checked").each(function() {
-                alert(this.value);
+               
                 alert(this.find('.qty-input').val());
 
                 selected.push(this.value);
@@ -774,13 +611,13 @@ else{
                     type: "GET",
                     dataType: "json",
                     success: function(data) {
-                        alert(data)
+                       
                         $('select[name="orderID"]').empty();
                         $('select[name="orderID"]').append('<option value="" selected disabled>حدد  الطلبية</option>');
                         
                         $.each(data, function(key, value) {
                             $('select[name="orderID"]').append('<option value="' +
-                                key + '">' + value + '</option>');
+                                key + '">'+'('+key+')' + value + '</option>');
                         });
                     },
                 });}
