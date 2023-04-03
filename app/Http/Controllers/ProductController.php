@@ -109,11 +109,14 @@ class ProductController extends Controller
                        'product_details_id' => $request->productClass,
                         'primary_price' => $request->primary_price,
                        
-                       'selling_price' => $request->selling_price,
+                   
                        
                        'statuses_id' =>$request->status ,
                        'note' =>$request->note ,
-
+                       
+                       'price_with_comm' => $request->primary_price+$request->Amount_Commission,
+                       'selling_price' => $request->primary_price+$request->Amount_Commission,
+                       
           
                
                    ]);
@@ -190,17 +193,17 @@ class ProductController extends Controller
     
 
 
-    public function getproductsDetaile($id)
+    public function getproductsDetaile($id,$category_id)
     {
        
-        $products = DB::table('product_details')->where("company_id", $id)
+        $products = DB::table('product_details')->where("company_id", $id)->where("category_id", $category_id)
 ->select('product_name')
 ->distinct()
 ->pluck("product_name",);
         $products1 = DB::table("product_details")->where("company_id", $id)->pluck("product_name", "id");
         return json_encode($products);
     }
-    public function getproductsGruops($productName)
+    public function getproductsGruops($productName,$category_id)
     {
 
         
@@ -209,7 +212,7 @@ class ProductController extends Controller
     //    $productName=$products->product_name;
 
         $products =DB::table('product_details')
-            ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->where("product_details.product_name", $productName)->pluck("product_details.id","product_groups.group_name",);
+            ->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->where("product_details.product_name", $productName)->where("product_details.category_id", $category_id)->pluck("product_details.id","product_groups.group_name",);
            
            
             return json_encode($products);

@@ -224,11 +224,13 @@
     <script>
         $(document).ready(function() {
             $('select[name="productCompanies"]').on('change', function() {
-                var productCompaniesId = $(this).val();
+                var productCompaniesId = $(this).val(); 
+                var category_id=  $('select[name="productCategory"]').val();
+               
                 if (productCompaniesId) {
                    
                     $.ajax({
-                        url: "{{URL::to('products')}}/" + productCompaniesId,
+                        url: "{{URL::to('products')}}/" + productCompaniesId+"/"+category_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
@@ -256,10 +258,11 @@
         $(document).ready(function() {
             $('select[name="product"]').on('change', function() {
                 var productname = $(this).val();
-                alert(productname);
+                var category_id=  $('select[name="productCategory"]').val();
+                alert(category_id);
                 if (productname) {
                     $.ajax({
-                        url: "{{URL::to('productsgroup')}}/" + productname,
+                        url: "{{URL::to('productsgroup')}}/" + productname+"/"+category_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

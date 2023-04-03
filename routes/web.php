@@ -98,12 +98,12 @@ Route::get('/box_insaid_detailes', 'App\Http\Controllers\BoxController@getBoxDet
 Route::resource('companies', 'App\Http\Controllers\ProductCompanyController');
 
 
-Route::get('/products/{id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
-Route::get('/productsgroup/{id}', 'App\Http\Controllers\ProductController@getproductsGruops');
+Route::get('/products/{id}/{category_id}', 'App\Http\Controllers\ProductController@getproductsDetaile');
+Route::get('/productsgroup/{id}/{category_id}', 'App\Http\Controllers\ProductController@getproductsGruops');
 Route::get('/orderProductDeteil/{id}', 'App\Http\Controllers\ProductController@getorderProductDeteil');
 Route::get('/shop_exporter_order/{id}', 'App\Http\Controllers\SmallShopController@getOrder');
 
-
+Route::get('/shop_orders_detail/{id}', 'App\Http\Controllers\SmallShopController@getDetailsOrder');
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
 Route::resource('export_order', 'App\Http\Controllers\ExportController');

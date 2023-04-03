@@ -18,6 +18,7 @@ use App\Models\ProductDetail;
 
 
 use App\Models\Status;
+use Carbon\Carbon;
 
 class ExportController extends Controller
 {
@@ -145,7 +146,7 @@ class ExportController extends Controller
         
          }
          $Olderproduct->update([
-            'selling_date' => $importOrderOldProdect[0]->order_due_date,
+            'selling_date' => Carbon::today(),
             'selling_price' => $product->price,
             'selling_price_with_comm' => $product->price+$product->commission_pice,
 

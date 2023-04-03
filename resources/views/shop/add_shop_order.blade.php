@@ -129,7 +129,8 @@
 
                            <div class="col">
                           
-
+                            <input name="my_hidden_input" id="my_hidden_input" hidden
+                            >
 
                                 <label for="inputName" class="control-label">الهدف</label>
                                 <select name="importer" class="form-control SlectBox" 
@@ -145,7 +146,7 @@
                             <div class="col">
                                 <label for="inputName" class="control-label"  onclick="console.log($(this).val())"
                                 onchange="console.log('change is firing')">عن طلبية رقم</label>
-                                <select id="orderID" name="orderID" class="form-control">
+                                <select id="orderID" name="orderID" class="form-control" required>
                                     <option value="" selected disabled>حدد  الطلبية</option>
                                 </select>
                             </div>
@@ -480,7 +481,7 @@ $('.decrement-btn').click(function (e) {
 
 <script>
         function sandData() {
-           
+           alert (0);
             var order = new Array();
             
             

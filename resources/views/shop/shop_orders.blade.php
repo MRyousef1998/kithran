@@ -92,24 +92,24 @@
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
-                                    <th class="border-bottom-0" >رقم الطلبية</th>
-                                    <th class="border-bottom-0">المستورد</th>
+                                    <th class="border-bottom-0" >رقم الطلبية  </th>
+                                    <th class="border-bottom-0">المورد</th>
 
                                   
-                                    <th class="border-bottom-0">عدد المكنات </th>
+                                    <th class="border-bottom-0">عدد القطع </th>
                                     
                                     <th class="border-bottom-0">تاريخ الطلب</th>
+                                    <th class="border-bottom-0" >رقم الطلبية المكملة </th>
+                                
 
 
-                                    <th class="border-bottom-0">تاريخ الوصول</th>
-                                    <th class="border-bottom-0">العمولة</th>
-                                    <th class="border-bottom-0">الضريبة</th>
+                               
+                                 
                                     <th class="border-bottom-0">القيمة الاجمالية</th>
-
+                                    <th class="border-bottom-0">العمليات</th>
 
                                     
-                                    <th class="border-bottom-0">الحالة</th>
-                                     <th class="border-bottom-0">المرفق</th>
+                              
                                     
 
 
@@ -124,39 +124,31 @@
                                                         <div class="all_row">
                                                         <tr>
                                                             
-                                                            <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:0.5;" >{{ $i }}</td>
+                                                            <td  style="text-align: center;vertical-align: middle; horizontal-align: middle; " >{{ $i }}</td>
                                                             <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
                                                         
 
                     
                                                           
                                                             <td >
-                                                            <a href="{{url('ExportOrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
-                                                            {{ $x->countAllItem()}}
+                                                            <a href="{{url('shop_orders_detail')}}/{{$x->id}}"style="horizontal-align: middle; text-align: center;vertical-align: middle;">
+                                                             {{ $x->countAllItem()}}
                                                             </a>
                                                             
                                                             
                                                             </td>
                     
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >
+                                                            <a href="{{url('OrderDetails')}}/{{$x->related_to_id}}"style="text-align: center;vertical-align: middle;">
+                                                                {{ $x->related_to_id }}
+                                                                </a>
+                                                                
+                                                            
+                                                            </td>
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
                                                             
-                                                            <td>
-                                                            @if ($x->status->id==1)
-                                                                <span class="text-danger">{{ $x->status->status_name }}</span>
                                                             
-                                                            @elseif ($x->status->id==2)
-                                                                <span class="text-success">{{ $x->status->status_name }}</span>
-                                                            @else
-                                                            
-                                                                <span class="text-warning">{{ $x->status->status_name }}</span>
-                                                                
-                                                            @endif
-                                                        </td>
-
                                                         <td>
                                                             <div class="dropdown">
                                                                 <button aria-expanded="false" aria-haspopup="true"
