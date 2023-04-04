@@ -246,9 +246,22 @@
 
                                                 
 
-                                                data-toggle="modal" href="#delete" title="تعديل"><i
-                                                    class="las la-pen"></i></a>
+                                                data-toggle="modal" href="#delete" title="نقل الى قائمة الكسر"><i
+                                                    class="las la-pentext-warning fas fa-exchange-alt"></i></a>
+                                                @elseif($satatus->id==7)
+                                                    <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
+                                                    data-products_id="{{ $products[0]->products_id }}" 
+                                                   
+                                  
+                                            
+                                                    data-toggle="modal" href="#unbroken" title="استعادة الى الفائمة الاساسية"><i
+                                                        class="las fa-exchange-alt"></i></a>
+                                                    
 
+
+
+                                                        
+                                                
                                                 @endif
 
                                             <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
@@ -281,6 +294,37 @@
                         </button>
                     </div>
                     <form action="product_set_proken" method="post">
+                        
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+                            <p>هل انت متاكد من العملية  ؟</p><br>
+                            <input type="hidden" name="products_id" id="products_id" value="">
+                           <label for="exampleTextarea">ملاحظات</label>
+                                <textarea class="form-control" id="note" name="note" rows="1"></textarea>
+                             
+                        </div>
+                         
+                                
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                            <button type="submit" class="btn btn-danger">تاكيد</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="unbroken" tabindex="-1" role="dialog" aria-labelledby="delete"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">استعادة المنتج من قائمة النقص</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="product_remove_from_proken" method="post">
                         
                         {{ csrf_field() }}
                         <div class="modal-body">
@@ -385,5 +429,14 @@
         modal.find('.modal-body #product_name').val(note);
     })
 </script>
-
+<script>
+    $('#unbroken').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+        var products_id = button.data('products_id')
+        var note = button.data('note')
+        var modal = $(this)
+        modal.find('.modal-body #products_id').val(products_id);
+        modal.find('.modal-body #product_name').val(note);
+    })
+</script>
 @endsection

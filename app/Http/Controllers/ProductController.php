@@ -243,8 +243,9 @@ class ProductController extends Controller
     public function getDetailsOrder($id)
     { 
 
-        $order=Order::find($id); 
-        
+      $order=Order::find($id); 
+      $smallShop = Order::where('category_id','=',3)->where('related_to_id','=',$id)->get();
+     
         $detail=OrderDetail::where("orders_id",$id);
         $machines =DB::table('products')->
        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
@@ -269,7 +270,7 @@ class ProductController extends Controller
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-        return view('order.details_order',compact('order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id'));
+        return view('order.details_order',compact('order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id','smallShop'));
 
         
        
@@ -725,6 +726,19 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
 
 
     }
+
+    public function product_remove_from_proken(Request $request){
+       
+        $product =Product::find($request->products_id);
+     
+        $product->update(['statuses_id' => 2,
+      
+      'note'=>$request->note]);
+        session()->flash('Add', ' تم استعادة المنتج');
+          return redirect('product_report/');
+
+
+  }
 }
 
 

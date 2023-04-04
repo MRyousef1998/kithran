@@ -52,10 +52,7 @@
 										<div class="d-flex  mt-2">
 											
 										</div>
-										<div class="action">
-											<button class="add-to-cart btn btn-danger" type="button">ADD TO WISHLIST</button>
-											<button class="add-to-cart btn btn-success" type="button">ADD TO CART</button>
-										</div>
+										
 									</div>
 								</div>
 							</div>

@@ -75,7 +75,7 @@ Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
 Route::post('update_status_order', 'App\Http\Controllers\OrderController@Status_Update')->name('update_status_order');
 Route::post('product_set_proken', 'App\Http\Controllers\ProductController@product_set_proken')->name('product_set_proken');
-
+Route::post('product_remove_from_proken', 'App\Http\Controllers\ProductController@product_remove_from_proken')->name('product_remove_from_proken');
  
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
