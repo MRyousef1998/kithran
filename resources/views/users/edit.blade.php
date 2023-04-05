@@ -77,23 +77,21 @@
                 </div>
 
                 <div class="row row-sm mg-b-20">
-                    <div class="col-lg-6">
-                        <label class="form-label">حالة المستخدم</label>
-                        <select name="Status" id="select-beast" class="form-control  nice-select  custom-select">
-                            <option value="{{ $user->Status}}">{{ $user->Status}}</option>
-                            <option value="مفعل">مفعل</option>
-                            <option value="غير مفعل">غير مفعل</option>
-                        </select>
-                    </div>
+                   
                 </div>
 
                 <div class="row mg-b-20">
                     <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                            <strong>نوع المستخدم</strong>
-                            {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple'))
-                            !!}
-                        </div>
+                        <label for="userRole" class="form-label">الصلاحية</label>
+                        <select name="role_id" class="form-control  nice-select  custom-select"
+                            >
+                            <!--placeholder-->
+                            <option value="" selected disabled>حدد  الصلاحية</option>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}"> {{ $role->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     </div>
                 </div>
                 <div class="mg-t-30">

@@ -56,7 +56,7 @@
                                 <th class="wd-10p border-bottom-0">#</th>
                                 <th class="wd-15p border-bottom-0">اسم المستخدم</th>
                                 <th class="wd-20p border-bottom-0">البريد الالكتروني</th>
-                                <th class="wd-15p border-bottom-0">حالة المستخدم</th>
+                               
                                 <th class="wd-15p border-bottom-0">نوع المستخدم</th>
                                 <th class="wd-10p border-bottom-0">العمليات</th>
                             </tr>
@@ -67,26 +67,16 @@
                                     <td>{{ ++$i }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>
-                                        @if ($user->Status == 'مفعل')
-                                            <span class="label text-success d-flex">
-                                                <div class="dot-label bg-success ml-1"></div>{{ $user->Status }}
-                                            </span>
-                                        @else
-                                            <span class="label text-danger d-flex">
-                                                <div class="dot-label bg-danger ml-1"></div>{{ $user->Status }}
-                                            </span>
-                                        @endif
-                                    </td>
+                                    
 
                                     <td>
-                                        @if (!empty($user->getRoleNames()))
-                                            @foreach ($user->getRoleNames() as $v)
-                                                <label class="badge badge-success">{{ $v }}</label>
-                                            @endforeach
-                                        @endif
+                                        
+                                            
+                                                <label class="badge badge-success">{{ $user->role->name }}</label>
+                                         
+                                     
                                     </td>
-
+ 
                                     <td>
                                       
                                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info"

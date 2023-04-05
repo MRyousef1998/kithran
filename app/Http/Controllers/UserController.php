@@ -92,10 +92,16 @@ return view('users.show',compact('user'));
 */
 public function edit($id)
 {
+    
 $user = User::find($id);
-$roles = Role::pluck('name','name')->all();
-$userRole = $user->roles->pluck('name','name')->all();
-return view('users.edit',compact('user','roles','userRole'));
+$roles = Role::all();
+
+
+$exporter = User::where('role_id','=',1)->get();
+
+$importer = User::where('role_id','=',2)->get();
+$representative = User::where('role_id','=',3)->get();
+return view('users.edit',compact('user','roles','representative','importer','exporter'));
 }
 /**
 * Update the specified resource in storage.
@@ -105,12 +111,12 @@ return view('users.edit',compact('user','roles','userRole'));
 * @return \Illuminate\Http\Response
 */
 public function update(Request $request, $id)
-{
+{ 
 $this->validate($request, [
 'name' => 'required',
 'email' => 'required|email|unique:users,email,'.$id,
 'password' => 'same:confirm-password',
-'roles' => 'required'
+'role_id' => 'required'
 ]);
 $input = $request->all();
 if(!empty($input['password'])){
@@ -119,9 +125,17 @@ $input['password'] = Hash::make($input['password']);
 $input = array_except($input,array('password'));
 }
 $user = User::find($id);
-$user->update($input);
-DB::table('model_has_roles')->where('model_id',$id)->delete();
-$user->assignRole($request->input('roles'));
+$user->update(
+    [
+        'name' =>  $request->name,
+        'email' =>$request->email,
+        'password' => $input['password'],
+        'role_id' => $request->role_id
+        ]
+    
+    
+   );
+
 return redirect()->route('users.index')
 ->with('success','User updated successfully');
 }
