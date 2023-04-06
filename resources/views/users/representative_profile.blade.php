@@ -170,7 +170,7 @@
 													</thead>
 						
 													<tbody>
-																			
+														@if ($orders[0]->category_id!=0)
 																			<?php $i = 0; ?>
 																			@foreach ($orders as $x)
 																				<?php $i++; ?>
@@ -262,6 +262,7 @@
 																			</div>
 																		   
 																			@endforeach
+																			@endif
 													</tbody>
 						
 														
@@ -327,6 +328,7 @@
 										</div>
 									</div>
 									<div class="tab-pane" id="settings">
+										@if ($orders[0]->category_id!=0)
 										<form role="form" action="{{ route('add_payment_representative.store') }}"  method="post" enctype="multipart/form-data">
 											{{ csrf_field() }}
 											<div class="form-group">
@@ -356,6 +358,7 @@
 											</div>
 											<button class="btn btn-primary waves-effect waves-light w-md" type="submit">Save</button>
 										</form>
+										@endif
 									</div>
 								</div>
 							</div>

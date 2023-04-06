@@ -118,12 +118,9 @@
                                 <select name="Rate_VAT" id="Rate_VAT" class="form-control" onchange="myFunction()">
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد الحالة </option>
-                                    <option value="1">لم تصل</option>
-                                    <option value="2">تم الاستلام</option>
-                                    <option value="3">مستلمة وغير مباعة </option>
-                                    <option value="3">قيد التغليف   </option>
-                                    <option value="3">  تم الشحن </option>
-
+                                    @foreach ($status as $status1)
+                                        <option value="{{ $status1->id }}"> {{ $status1->status_name }}</option>
+                                    @endforeach
 
 
 
@@ -131,13 +128,13 @@
                             </div>
 
                             <div class="col">
-                                <label>تاريخ الفاتورة</label>
+                                <label>تاريخ الطلب</label>
                                 <input class="form-control fc-datepicker" name="invoice_Date" placeholder="YYYY-MM-DD"
                                     type="text" value="{{ date('Y-m-d') }}" required>
                             </div>
 
                             <div class="col">
-                                <label>تاريخ الاستحقاق</label>
+                                <label>تاريخ المتوقع للوصول</label>
                                 <input class="form-control fc-datepicker" name="Due_date" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>

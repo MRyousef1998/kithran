@@ -160,6 +160,7 @@ $userDetail =User::find($id);
 
 
 if($userDetail->role_id==1||$userDetail->role_id==2){
+    
 $orders = Order::where('exported_id','=',$userDetail->id)->get();
 $invoice_paid =DB::table('invoices')->
         leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 1)->where("users.id", $id)->
@@ -222,11 +223,19 @@ $representative = User::where('role_id','=',3)->get();
 
 return view('users.exporter_importer_profile',compact('userDetail','orders','exporter','importer','representative','invoice_almost_paid','invoice_unpaid','invoice_paid'));
 }
-else if($userDetail->role_id==5){
+else if($userDetail->role_id==3){
+   
     $orders = Order::where('representative_id','=',$userDetail->id)->get();
 
     
-      
+    if ($orders->isEmpty()==true) {
+
+        $orders=[new Request(['category_id'=>0,
+    
+    
+    ])];
+        
+       }
 $exporter = User::where('role_id','=',1)->get();
 $importer = User::where('role_id','=',2)->get();
 $representative = User::where('role_id','=',3)->get();
@@ -234,7 +243,7 @@ $representative = User::where('role_id','=',3)->get();
 return view('users.representative_profile',compact('userDetail','orders','exporter','importer','representative'));
 
 }
-
+ 
 
 
 }
