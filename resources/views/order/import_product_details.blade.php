@@ -89,8 +89,8 @@
 									<div class="cardprice">
 										<span >{{$x->products_id}}</span>
 										<span>{{$x->product_name}}</span>
-										@if ($x->statuses_id==1)
-										<span class="text-danger">غير مؤكد</span>
+										@if ($x->statuses_id==1||$x->statuses_id==3||$x->statuses_id==4)
+										<span class="text-danger">{{$x->status_name}}</span>
 									
 									
 									@else
@@ -98,13 +98,13 @@
 										<span class="text-success">{{$x->status_name}}</span>
 										
 									@endif
-									@if ($x->statuses_id==1||$x->statuses_id==4)
+									@if ($x->statuses_id==1||$x->statuses_id==4||$x->statuses_id==3)
 									<span class="text-danger">غير مخصص</span>
 								
 								
 								@else
 								
-									<span class="text-success">NO{{$x->products_id}}</span>
+									<span class="text-success">OR{{$x->orders_id}}NO{{$x->products_id}}</span>
 									
 								@endif
 								
@@ -138,7 +138,7 @@
 									</div>
 							</div>
 							<div class="text-center border-top pt-3 pb-3 pl-2 pr-2 ">
-								@if ($x->statuses_id==1)
+								@if ($x->statuses_id==1||$x->statuses_id==4||$x->statuses_id==3)
 								<a
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
 								data-id="{{ $x->products_id }}" data-product_name="{{ $x->product_name }}"
@@ -163,7 +163,7 @@
 									
 								@endif
 								
-								@if ($x->statuses_id==1)
+								@if ($x->statuses_id==1||$x->statuses_id==4||$x->statuses_id==3)
 								<a
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
 								data-id="{{ $x->products_id }}" data-product_name="{{ $x->product_name }}"

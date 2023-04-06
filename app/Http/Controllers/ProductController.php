@@ -539,7 +539,7 @@ $order_id=$request->order_id;
             ]);
 
 
-            session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.'PNO'.$request->id .' ORNO '.$request->order_id);
+            session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.' OR'.$request->order_id.'NO'.$request->id );
             return redirect('OrderDetails/'. $request->order_id);
 
 

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
 class SmallShopController extends Controller
 {
     public function index()
-    {
+    { 
        
        
         $orders = Order::where('category_id','=',3)->get();
@@ -132,7 +132,7 @@ class SmallShopController extends Controller
 
 
         $exporter = User::where('role_id','=',1)->get();
-        $importer = User::where('role_id','=',3)->get();
+        $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
 
         $parts =DB::table('products')->
