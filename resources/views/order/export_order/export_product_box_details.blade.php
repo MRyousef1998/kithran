@@ -158,6 +158,28 @@
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" 
 								data-toggle="modal"
 								href="#sharcapsalation" class="btn btn-success"> تغليف مشترك</a>
+
+
+								<div class="card-body cardbody relative">
+								<div class="cardtitle">
+									
+									
+										<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" data-category_id="{{ $x->category_id }}"
+								data-toggle="modal"
+								href="#rechose" class="btn btn-primary"> استبدال </a>
+									</div>
+									<div class="cardprice">
+									
+										<a
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" 
+								data-toggle="modal"
+								href="#removeProdect" class="btn btn-primary"> تخلي </a>
+									</div>
+									</div>
+
+								
+								
 								@endif
 							</div>
 						</div>

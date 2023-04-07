@@ -180,7 +180,7 @@ $invoice_paid =DB::table('invoices')->
      
   
  $invoice_almost_paid =DB::table('invoices')->
- leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 3)->where("users.id", $id)->
+ leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 2)->where("users.id", $id)->
  selectRaw('users.id,count(invoices.id) as invoice_count,sum(invoices.Total) as sum')
  ->groupBy('users.id')->get();   
 
@@ -195,7 +195,7 @@ $invoice_paid =DB::table('invoices')->
     
     }
  $invoice_unpaid =DB::table('invoices')->
- leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 2)->where("users.id", $id)->
+ leftJoin('orders', 'orders.id', '=', 'invoices.orders_id')->leftJoin('users', 'users.id', '=', 'orders.exported_id')->where("invoices.Value_Status", 3)->where("users.id", $id)->
  selectRaw('users.id,count(invoices.id) as invoice_count,sum(invoices.Total) as sum')
  ->groupBy('users.id')->get();
     

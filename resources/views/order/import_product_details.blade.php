@@ -163,7 +163,7 @@
 									
 								@endif
 								
-								@if ($x->statuses_id==1||$x->statuses_id==4||$x->statuses_id==3)
+								@if ($x->statuses_id==1||$x->statuses_id==3)
 								<a
 								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
 								data-id="{{ $x->products_id }}" data-product_name="{{ $x->product_name }}"

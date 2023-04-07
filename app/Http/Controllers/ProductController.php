@@ -467,7 +467,7 @@ $representative = User::where('role_id','=',3)->get();
         $commision=$unwont_prodect->selling_price_with_comm;
         $unwont_prodect->update([
             'selling_date' => null,
-            'selling_price' => null,
+            'selling_price' => $unwont_prodect->price_with_comm,
             'selling_price_with_comm' => null,
  
     
@@ -514,7 +514,7 @@ $representative = User::where('role_id','=',3)->get();
     { 
         
 
-        $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
+        $machines =DB::table('products')->where("statuses_id", 2)->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", $request->category_id)->where("products.selling_date", null)
         ->selectRaw('product_details.id as product_detail_id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
@@ -653,6 +653,10 @@ $newTotalForOrder=$order->Total - $request->product_price;
 $newAmountComtion=$order->Amount_Commission - ($product->selling_price_with_comm-$product->selling_price);
 
 $product->order()->detach($request->order_id);
+$product ->update([
+    'selling_date' => null,
+    
+]);
 $myInvoice ->update([
     'Amount_collection' =>$newValueForInvoice ,
     'Total' =>$newTotalForInvoice ,
@@ -685,7 +689,9 @@ session()->flash('Add', ' تم ازالة المنتج من الطلبية');
        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') 
        ->Join('order_product', 'products.id', '=', 'order_product.products_id')-> leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') -> leftJoin('users', 'orders.exported_id', '=', 'users.id') ->where("products.id", $request->product_id)
       -> leftJoin('boxes', 'boxes.id', '=', 'products.box_id')->leftJoin('shipments', 'boxes.shipment_id', '=', 'shipments.id') -> get();
+      
      $product_data =Product::find($request->product_id);
+     
      if ($products->isEmpty()==false) {
    
         $satatus=Status::find($product_data->statuses_id);
