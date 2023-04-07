@@ -68,6 +68,8 @@ Route::get('broken_machine/{id}', 'App\Http\Controllers\ProductController@broken
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
+Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
+
 Route::get('product_report', 'App\Http\Controllers\ProductController@product_report_view')->name('product_report');
 Route::post('product_report_serch', 'App\Http\Controllers\ProductController@product_report_serch')->name('product_report_serch');
 
@@ -106,7 +108,9 @@ Route::get('/shop_exporter_order/{id}', 'App\Http\Controllers\SmallShopControlle
 Route::get('/shop_orders_detail/{id}', 'App\Http\Controllers\SmallShopController@getDetailsOrder');
 
 Route::resource('import_order', 'App\Http\Controllers\OrderController');
+
 Route::resource('export_order', 'App\Http\Controllers\ExportController');
+Route::post('export_order_serch', 'App\Http\Controllers\ExportController@export_order_serch')->name('export_order_serch');
 Route::resource('small_shop', 'App\Http\Controllers\SmallShopController');
 Route::get('order_file/{id}', 'App\Http\Controllers\ExportController@exporterOrders');
 Route::get('user_profile/{id}', 'App\Http\Controllers\UserController@show_profile');

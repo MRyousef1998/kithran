@@ -253,7 +253,11 @@
                                         <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
                                        
 
-                                       
+                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -305,7 +309,11 @@
                                         
                                         
 
-
+  <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
                                       
                                     </tr>
                                 @endforeach

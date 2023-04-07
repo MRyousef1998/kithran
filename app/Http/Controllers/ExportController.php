@@ -31,7 +31,7 @@ class ExportController extends Controller
     {
        
        
-        $orders = Order::where('category_id','=',2)->get();
+        //$orders = Order::where('category_id','=',2)->get();
       
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
@@ -39,9 +39,35 @@ class ExportController extends Controller
 
        
 
-        return view('order.export_order.exports_order',compact('orders','exporter', 'importer','representative'));
+        return view('order.export_order.exports_order',compact('exporter', 'importer','representative'));
     }
 
+
+    public function export_order_serch(Request $request)
+    {
+        $start_at = date($request->start_at);
+        $end_at = date($request->end_at);
+        if($start_at==null){
+
+            $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',2)->get();
+
+        }
+        else
+        {
+        $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',2)->get();
+
+        }
+        
+        
+      
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('order.export_order.exports_order',compact('start_at','end_at','orders','exporter', 'importer','representative'));
+    }
     /**
      * Show the form for creating a new resource.
      *

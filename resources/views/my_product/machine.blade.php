@@ -30,6 +30,9 @@
     @endif
        @if ($id==3)
      <?php $s="قطع التبديل"; ?>
+      @endif
+       @if ($id==4)
+     <?php $s="مكنات كسر "; ?>
        
     @endif
     
@@ -98,6 +101,51 @@
                                 class="fas fa-plus"></i>&nbsp; اضافة {{$s}} إلى المستودع</a>
                     </div>
 
+                      <form action="/Search_invoices" method="POST" role="search" autocomplete="off">
+                    {{ csrf_field() }}
+
+
+                    
+
+                    <div class="row">
+
+                        <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
+                            <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="type"
+                                required>
+                                <option value="{{ $type ?? 'حدد نوع الفواتير' }}" selected>
+                                    {{ $type ?? 'حدد نوع الفواتير' }}
+                                </option>
+
+                                
+
+                            </select>
+                        </div><!-- col-4 -->
+<div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
+                            <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="type"
+                                required>
+                                <option value="{{ $type ?? 'حدد نوع الفواتير' }}" selected>
+                                    {{ $type ?? 'حدد نوع الفواتير' }}
+                                </option>
+
+                                
+
+                            </select>
+                        </div><!-- col-4 -->
+
+
+                        
+
+                        
+                    </div><br>
+
+                    <div class="row">
+                        <div class="col-sm-1 col-md-1">
+                            <button class="btn btn-primary btn-block">بحث</button>
+                        </div>
+                    </div>
+                </form>
+
+
 								
                 </div>
                 <div class="card-body">
@@ -146,14 +194,7 @@
                                         </td>
 
 
-                                        <td style="text-align: center;vertical-align: middle;" >
-
                                         
-
-
-
-
-                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

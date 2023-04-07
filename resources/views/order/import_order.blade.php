@@ -84,11 +84,54 @@
                                 > <i
                                 class="fas fa-plus"></i>&nbsp; اضافة طلبية استيراد جديدة </a>
                     </div>
+<form action="/import_order_serch" method="POST" role="search" autocomplete="off">
+                    {{ csrf_field() }}
 
+
+
+                    <div class="row">
+
+                        <div class="col-lg-6 " id="start_at">
+                            <label for="exampleFormControlSelect1">من تاريخ</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control "type="date"  name="start_at" placeholder="YYYY-MM-DD"
+                                    type="text" value="{{ $start_at ?? '' }}">
+                               
+                            </div><!-- input-group -->
+                        </div>
+
+                        <div class="col-lg-6" id="end_at">
+                            <label for="exampleFormControlSelect1">الي تاريخ</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control "type="date"  name="end_at" placeholder="YYYY-MM-DD"
+                                    type="text" value="{{ $start_at ?? date('Y-m-d') }}" required>
+                                
+                               
+                            </div><!-- input-group -->
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class="col-sm-1 col-md-2">
+                            <button class="btn btn-primary btn-block">بحث</button>
+                        </div>
+                    </div>
+                </form>
 								
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                      @if (isset($orders))
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
@@ -218,6 +261,7 @@
 
                                 
                         </table>
+                        @endif
                     </div>
                 </div>
             </div>

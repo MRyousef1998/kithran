@@ -250,7 +250,9 @@
                                             <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                                                 <thead>
                                                     <tr>
-                                                         <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
+                                                        <!-- <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>!-->>
+                                                        <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " > #</th>
+                                                       
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
                                                         <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
@@ -509,12 +511,13 @@ $('.decrement-btn').click(function (e) {
 
 <script>
         function sandData() {
-            alert(11);
+           
             var order = new Array();
 
             
 
-            $("#datatable input[type=checkbox]:checked").each(function() {
+            $("#example1 input[type=checkbox]:checked").each(function() {
+                alert(0);
                 var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
                                price:$(this).parent().parent().find('.price').val(),
                                 commission_pice: $(this).parent().parent().find('.commission_pice').val(),

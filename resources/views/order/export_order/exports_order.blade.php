@@ -84,11 +84,55 @@
                                 > <i
                                 class="fas fa-plus"></i>&nbsp; اضافة طلبية تصدير جديدة </a>
                     </div>
+<form action="/export_order_serch" method="POST" role="search" autocomplete="off">
+                    {{ csrf_field() }}
+
+
+
+                    <div class="row">
+
+                        <div class="col-lg-6 " id="start_at">
+                            <label for="exampleFormControlSelect1">من تاريخ</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control "type="date"  name="start_at" placeholder="YYYY-MM-DD"
+                                    type="text" value="{{ $start_at ?? '' }}">
+                               
+                            </div><!-- input-group -->
+                        </div>
+
+                        <div class="col-lg-6" id="end_at">
+                            <label for="exampleFormControlSelect1">الي تاريخ</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <input class="form-control "type="date"  name="end_at" placeholder="YYYY-MM-DD"
+                                    type="text" value="{{ $start_at ?? date('Y-m-d') }}" required>
+                                
+                               
+                            </div><!-- input-group -->
+                        </div>
+                    </div><br>
+
+                    <div class="row">
+                        <div class="col-sm-1 col-md-2">
+                            <button class="btn btn-primary btn-block">بحث</button>
+                        </div>
+                    </div>
+                </form>
 
 								
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                     @if (isset($orders))
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
@@ -101,7 +145,7 @@
                                     <th class="border-bottom-0">تاريخ الطلب</th>
 
 
-                                    <th class="border-bottom-0">تاريخ الوصول</th>
+                                    <th class="border-bottom-0">تاريخ المتوقع للشحن</th>
                                     <th class="border-bottom-0">العمولة</th>
                                     <th class="border-bottom-0">الضريبة</th>
                                     <th class="border-bottom-0">القيمة الاجمالية</th>
@@ -212,6 +256,7 @@
 
                                 
                         </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -263,7 +308,19 @@
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
   
+<script src="{{ URL::asset('assets/plugins/amazeui-datetimepicker/js/amazeui.datetimepicker.min.js') }}"></script>
+<!-- Ionicons js -->
+<script src="{{ URL::asset('assets/plugins/jquery-simple-datetimepicker/jquery.simple-dtpicker.js') }}"></script>
+<!--Internal  pickerjs js -->
+<script src="{{ URL::asset('assets/plugins/pickerjs/picker.min.js') }}"></script>
+<!-- Internal form-elements js -->
+<script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
+<script>
+    var date = $('.fc-datepicker').datepicker({
+        dateFormat: 'yy-mm-dd'
+    }).val();
 
+</script>
 
 	
 
