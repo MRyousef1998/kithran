@@ -25,9 +25,7 @@ class ProductDetailController extends Controller
         $productCompany = ProductCompany::all();
         $productGroups = ProductGroup::all();
         $productCategoies = ProductCategory::all();
-
-
-
+  
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
@@ -35,7 +33,44 @@ class ProductDetailController extends Controller
 
         return view('my_product.all_product',compact('productDetail','productCompany','productGroups',"productCategoies",'exporter', 'importer','representative'));
     }
+    public function all_product_serch (Request $request)
+    {
 
+        if($request->productGroup!=null && $request->productCompany!=null ){
+            $productDetail = ProductDetail::where("category_id",$request->productCatgory)->where("company_id",$request->productCompany)->where("group_id",$request->productGroup)->get();
+          }
+        else if($request->productGroup!=null){
+            $productDetail = ProductDetail::where("category_id",$request->productCatgory)->where("group_id",$request->productGroup)->get();
+            
+            
+        }
+       else if( $request->productCompany!=null ){
+        $productDetail = ProductDetail::where("category_id",$request->productCatgory)->where("company_id",$request->productCompany)->get();
+    }
+            else{
+                $productDetail = ProductDetail::where("category_id",$request->productCatgory)->get();
+ 
+
+            }
+          
+    
+            $productCompany = ProductCompany::all();
+            $productGroups = ProductGroup::all();
+            $productCategoies = ProductCategory::all();
+$typeproductGroupes=ProductGroup::find($request->productGroup);
+$typeproductCompanies=ProductCompany::find($request->productCompany);
+$typeproductCatgories=ProductCategory::find($request->productCatgory);
+$id=$request->productCatgory;
+ $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+ return view('my_product.all_product',compact('typeproductGroupes','typeproductCompanies','typeproductCatgories','productDetail','productCompany','productGroups',"productCategoies",'exporter', 'importer','representative'));
+
+ 
+    
+
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -69,6 +69,10 @@ Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatement
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
+Route::post('machine_serch', 'App\Http\Controllers\ProductController@machine_serch')->name('machine_serch');
+Route::post('broken_machine_serch', 'App\Http\Controllers\ProductController@broken_machine_serch')->name('broken_machine_serch');
+Route::post('all_product_serch', 'App\Http\Controllers\ProductDetailController@all_product_serch')->name('all_product_serch');
+
 
 Route::get('product_report', 'App\Http\Controllers\ProductController@product_report_view')->name('product_report');
 Route::post('product_report_serch', 'App\Http\Controllers\ProductController@product_report_serch')->name('product_report_serch');

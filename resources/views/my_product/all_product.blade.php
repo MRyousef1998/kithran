@@ -10,7 +10,7 @@
       text-align: center;
       vertical-align: middle;
     }
-  </style>
+  </style> 
 @section('css')
     <!-- Internal Data table css -->
     <link href="{{ URL::asset('assets/plugins/datatable/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -98,10 +98,85 @@
 
                     <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 data-toggle="modal" href="#exampleModal">اضافة منتج</a>
-                    </div>
+                     </div>
+                     <form action="/all_product_serch" method="POST" role="search" autocomplete="off">
+                        {{ csrf_field() }}
+    
+    
+                        
+    
+                        <div class="row">
+                            
+                            <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                                <p class="mg-b-10">تحديد الصنف</p><select class="form-control select2" name="productCatgory"
+                                required >
+                                 <option value="{{ $typeproductCatgories->id ?? null }}" selected>
+                                     {{ $typeproductCatgories->category_name ?? 'يرجى اختيار الصنف' }}
+                                 </option>
+                            
+                                 @foreach ($productCategoies as $productCatgory)
+                                 <option value="{{ $productCatgory->id }}"> {{ $productCatgory->category_name }}</option>
+                             @endforeach
+                                 
+    
+                             </select>
+                            </div><!-- col-4 -->
+    
+    
+                            <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                                <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="productCompany"
+                                >
+                                <option value="{{ null }}" >
+                                    {{ 'الکل' }}
+                                </option>
+                                <option value="{{ $typeproductCompanies->id ?? null }}" selected>
+                                    {{ $typeproductCompanies->company_name ?? 'یرجى تحديد الشركة' }}
+                                </option>
+                                @foreach ($productCompany as $productCompany1)
+                                <option value="{{ $productCompany1->id }}"> {{ $productCompany1->company_name }}</option>
+                            @endforeach
+                                
+    
+                            </select>
+                            </div><!-- col-4 -->
+    
+    
+                            <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                                <p class="mg-b-10">تحديد الفئة</p>
+                                <select class="form-control select2" name="productGroup"
+                                    >
+                                    <option value="{{ null }}" >
+                                        {{  'الکل' }}
+                                    </option>
+                                    <option value="{{ $typeproductGroupes->id ?? null }}" selected>
+                                        {{ $typeproductGroupes->group_name ?? 'یرجى تحديد الفئة' }}
+                                    </option>
+                                    @foreach ($productGroups as $productGroup)
+                                    <option value="{{ $productGroup->id }}"> {{ $productGroup->group_name }}</option>
+                                @endforeach
+    
+                                    
+    
+                                </select>
+                            </div><!-- col-4 -->
+    
+                            
+                        </div><br>
+    
+                        <div class="row">
+                            <div class="col-sm-1 col-md-1">
+                                <button class="btn btn-primary btn-block">بحث</button>
+                            </div>
+                        </div>
+                    </form>
+    
+
+
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        @if (isset($productDetail))
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
@@ -174,6 +249,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -204,7 +280,7 @@
                             <select name="productCategory" id="productCategory" class="form-control" required>
                                 <option value="" selected disabled> --حدد الصنف--</option>
                                 @foreach ($productCategoies as $productCategory)
-                                    <option value="{{ $productCategory->id }}">{{ $productCategory->category_name }}</option>
+                                    <option value="{{$productCategory->id}}">{{$productCategory->category_name}}</option>
                                 @endforeach
                             </select>
                           
@@ -213,7 +289,7 @@
                             <select name="productC" id="productC" class="form-control" required>
                                 <option value="" selected disabled> --حدد الشركة--</option>
                                 @foreach ($productCompany as $productC)
-                                    <option value="{{ $productC->id }}">{{ $productC->company_name }}</option>
+                                    <option value="{{$productC->id }}">{{$productC->company_name}}</option>
                                 @endforeach
                             </select>
                           

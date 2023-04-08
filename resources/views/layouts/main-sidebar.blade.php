@@ -32,12 +32,12 @@
 							<li><a class="slide-item" href="{{ url('/' . $page='all_product') }}">قائمة المنتجات</a></li>
 							
 							<li>
-							<a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='1') }}">مكنات قهوة </a></li>
-							<li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='2') }}">مطاحن</a></li>
+							<a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='1') }}">مكنات /مطاحن /قطع تبديل </a></li>
+							{{-- <li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='2') }}">مطاحن</a></li>
 
-							<li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='3') }}">قطع التبديل</a></li>
-							<li><a class="slide-item" href="{{ url('/' . $page='broken_machine/'.$id='1') }}">مکائن كسر</a></li>
-							<li><a class="slide-item" href="{{ url('/' . $page='broken_machine/'.$id='2') }}">مطاحن كسر</a></li>
+							<li><a class="slide-item" href="{{ url('/' . $page='all_machine/'.$id='3') }}">قطع التبديل</a></li> --}}
+							<li><a class="slide-item" href="{{ url('/' . $page='broken_machine/'.$id='1') }}">مکائن/مطاحن... كسر</a></li>
+							{{-- <li><a class="slide-item" href="{{ url('/' . $page='broken_machine/'.$id='2') }}">مطاحن كسر</a></li> --}}
 
 							<li><a class="slide-item" href="{{ url('/' . $page='product_report') }}">بحث سریع</a></li>
 							

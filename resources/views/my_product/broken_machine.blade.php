@@ -20,12 +20,12 @@
     <!-- breadcrumb -->
 
     @if ($id==1)
-     <?php $s="مكنات القهوة"; ?>
+     <?php $s=" مكنات القهوة الکسر"; ?>
        
     @endif
 
      @if ($id==2)
-     <?php $s="المطاحن"; ?>
+     <?php $s=" المطاحن الکسر"; ?>
        
     @endif
        @if ($id==3)
@@ -101,7 +101,7 @@
                                 class="fas fa-plus"></i>&nbsp; اضافة {{$s}} إلى المستودع</a>
                     </div>
 
-                      <form action="/machine_serch" method="POST" role="search" autocomplete="off">
+                      <form action="/broken_machine_serch" method="POST" role="search" autocomplete="off">
                     {{ csrf_field() }}
 
 
@@ -111,35 +111,35 @@
                         
                         <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
                             <p class="mg-b-10">تحديد الصنف</p><select class="form-control select2" name="productCatgory"
-                               required >
-                                <option value="{{ $typeproductCatgories->id ?? null }}" selected>
-                                    {{ $typeproductCatgories->category_name ?? 'يرجى اختيار الصنف' }}
-                                </option>
-                           
-                                @foreach ($productCatgories as $productCatgory)
-                                <option value="{{ $productCatgory->id }}"> {{ $productCatgory->category_name }}</option>
-                            @endforeach
-                                
+                            required >
+                             <option value="{{ $typeproductCatgories->id ?? null }}" selected>
+                                 {{ $typeproductCatgories->category_name ?? 'يرجى اختيار الصنف' }}
+                             </option>
+                        
+                             @foreach ($productCatgories as $productCatgory)
+                             <option value="{{ $productCatgory->id }}"> {{ $productCatgory->category_name }}</option>
+                         @endforeach
+                             
 
-                            </select>
+                         </select>
                         </div><!-- col-4 -->
 
 
                         <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
                             <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="productCompany"
-                                >
-                                <option value="{{ null }}" >
-                                    {{ 'الکل' }}
-                                </option>
-                                <option value="{{ $typeproductCompanies->id ?? null }}" selected>
-                                    {{ $typeproductCompanies->company_name ?? 'یرجى تحديد الشركة' }}
-                                </option>
-                                @foreach ($productCompanies as $productCompany)
-                                <option value="{{ $productCompany->id }}"> {{ $productCompany->company_name }}</option>
-                            @endforeach
-                                
+                            >
+                            <option value="{{ null }}" >
+                                {{ 'الکل' }}
+                            </option>
+                            <option value="{{ $typeproductCompanies->id ?? null }}" selected>
+                                {{ $typeproductCompanies->company_name ?? 'یرجى تحديد الشركة' }}
+                            </option>
+                            @foreach ($productCompanies as $productCompany)
+                            <option value="{{ $productCompany->id }}"> {{ $productCompany->company_name }}</option>
+                        @endforeach
+                            
 
-                            </select>
+                        </select>
                         </div><!-- col-4 -->
 
 
