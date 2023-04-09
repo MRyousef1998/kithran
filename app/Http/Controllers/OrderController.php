@@ -275,13 +275,13 @@ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("o
      
  
  $machinesSold =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
-        Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_price", '!=',null)
+        Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_date", '!=',null)
          ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
          ->groupBy('order_product.orders_id')->get();
 
           
  $GrinderSold =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
- Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_price", '!=',null)
+ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_date", '!=',null)
   ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
   ->groupBy('order_product.orders_id')->get();
     
@@ -294,13 +294,13 @@ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("o
 
 
  $machinesRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
- Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_price", '==',null)
+ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_date", '=',null)
   ->selectRaw('order_product.orders_id,count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
   ->groupBy('order_product.orders_id')->get();
 
    
 $GrinderRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
-Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_price", '==',null)
+Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_date", '=',null)
  ->selectRaw('order_product.orders_id,count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
  ->groupBy('order_product.orders_id')->get();
 

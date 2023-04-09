@@ -31,7 +31,11 @@
 														<th scope="row">المورد</th>
 														<td>{{ $order->importer->name  }}</td>
 														<th scope="row">العميل</th>
-														<td>{{ $order->representative->name  }}</td>
+														  @if($order->representative_id!=null)
+                                                            <td>{{ $order->representative->name  }}</td>
+                                                            @else
+                                                              <td>لايوجد</td>
+                                                              @endif
 													</tr>
 													<tr>
 
@@ -274,13 +278,15 @@
 														<h6 class="mb-3 tx-16 text-white">الربح    :</h6>
 													</div>
 													<div class=" col-xl-6 col-lg-6 col-md-6 col-xm-12">
-														<h6 class="mb-3 tx-16 text-white">{{ number_format($allSold[0]->selling_price_with_com_product_sold-$allRemining[0]->primery_price_with_com_product_remining-$smallShop[0]->primery_price_with_com_productParts)}}</h6>
+														<h6 class="mb-3 tx-16 text-white">{{ number_format(($allSold[0]->selling_price_with_com_product_sold)
+														-($allSold[0]->primery_price_with_com_product_sold+
+														$smallShop[0]->primery_price_with_com_productParts))}}</h6>
 														
 													</div>
 												</div>	
 												<span class="float-right my-auto mr-auto">
 													<i class="fas fa-arrow-circle-up text-white"></i>
-													<span class="text-white op-7"> +427</span>
+													<span class="text-white op-7"> {{$allRemining[0]->primery_price_with_com_product_remining}}</span>
 												</span>
 								
 										</div>
@@ -299,7 +305,7 @@
 											<div class="mr-auto">
 												<h5 class="tx-13">مكنات القهوة المباعة</h5>
 												<h2 class="mb-0 tx-22 mb-1 mt-1">
-													{{ number_format($machinesSold[0]->selling_price_with_com_product_sold)}}
+												 	{{ number_format($machinesSold[0]->selling_price_with_com_product_sold)}}
 													
 												</h2>
 												<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>{{$machinesSold[0]->number_sold}}</p>
