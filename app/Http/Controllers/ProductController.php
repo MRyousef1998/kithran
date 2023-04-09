@@ -380,7 +380,7 @@ $id=$request->productCatgory;
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-        return view('order.details_order',compact('order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id','smallShop'));
+         return view('order.details_order',compact('order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id','smallShop'));
 
         
        

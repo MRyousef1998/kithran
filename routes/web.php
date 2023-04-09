@@ -58,7 +58,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users','App\Http\Controllers\UserController');
   //  Route::resource('products','ProductController');
     });
-    Route::resource('add_payment_representative', 'App\Http\Controllers\PaymentController');
+    
+    Route::resource('add_payment_representative', 'App\Http\Controllers\PaymentController'); 
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
@@ -171,8 +172,8 @@ Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_fi
 
 Route::get('/edit_invoice/{id}', 'InvoicesController@edit');
 
-
-
+Route::get('/order_report/{id}', 'App\Http\Controllers\OrderController@order_report')->name('order_report');
+Route::get('payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('payment_continer');
 
 Route::resource('Archive', 'InvoiceAchiveController');
 

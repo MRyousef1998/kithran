@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AccountStatement;
 use App\Models\Payment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Ui\Presets\React;
 
 class PaymentController extends Controller
 {
@@ -23,8 +27,9 @@ class PaymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+       return 0;
         //
     }
 
@@ -43,6 +48,20 @@ class PaymentController extends Controller
             'note' => $request->note,
             'orders_id' =>$request->order_id,
             'representative_id' =>$request->representative_id	,
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+   
+        ]);
+        $userName=User::find($request->representative_id)->name;
+        AccountStatement::create([
+            'purpose' =>" دفعة للعميل".$userName,
+            'account_statement_types_id' => 1,
+            
+            'amount' => $request->amount_payments,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
             //'palance_after_this' => $fileName,
 
             'pay_date' =>  Carbon::today(),
@@ -96,5 +115,9 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         //
+    }
+    public function payment_continer(Request $request)
+    {
+        return $request;
     }
 }

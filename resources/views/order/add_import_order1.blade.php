@@ -250,7 +250,7 @@
                                             <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                                                 <thead>
                                                     <tr>
-                                                        <!-- <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>!-->>
+                                                        <!-- <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>!-->
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " > #</th>
                                                        
                                                         <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>

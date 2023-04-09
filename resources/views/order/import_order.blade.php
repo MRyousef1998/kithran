@@ -221,7 +221,14 @@
                                                                     تأكيد استلام
                                                                 </a>
                                                                       
-                                                                
+                                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
+                                                       
+                                                                 
+                                                                        
+                                                                        ><i
+                                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                                             التقاریر
+                                                                </a>
                 
                                                                     @can('حذف الفاتورة')
                                                                         <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"

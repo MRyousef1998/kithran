@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Status;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -149,7 +150,7 @@ class OrderController extends Controller
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
      foreach($products as $product)
      
-        { for($i=0 ;$i<$product->qty;$i++ ){
+        { for($d=0 ;$d<$product->qty;$d++ ){
             $newproduct =  Product::create([
                 'product_details_id' => $product->id,
                 'primary_price' => $product->price,
@@ -260,7 +261,151 @@ class OrderController extends Controller
         return redirect('import_order');
     
     }
+    public function order_report($id)
+    {
+        
 
+        $order=Order::find($id); 
+        
+
+$allSold=DB::table('products')-> 
+Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("products.selling_date", '!=',null)
+ ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
+ ->groupBy('order_product.orders_id')->get();
+     
+ 
+ $machinesSold =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_price", '!=',null)
+         ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
+         ->groupBy('order_product.orders_id')->get();
+
+          
+ $GrinderSold =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_price", '!=',null)
+  ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
+  ->groupBy('order_product.orders_id')->get();
+    
+
+
+  $allRemining=DB::table('products')-> 
+Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("products.selling_date",'=',null)
+ ->selectRaw('order_product.orders_id,count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+ ->groupBy('order_product.orders_id')->get();
+
+
+ $machinesRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.selling_price", '==',null)
+  ->selectRaw('order_product.orders_id,count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+  ->groupBy('order_product.orders_id')->get();
+
+   
+$GrinderRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)->where("products.selling_price", '==',null)
+ ->selectRaw('order_product.orders_id,count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+ ->groupBy('order_product.orders_id')->get();
+
+
+ $smallShop = DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("orders.category_id", 3)->leftJoin('orders', 'orders.id', '=', 'order_product.orders_id')->where("orders.related_to_id", $id)
+  ->selectRaw('orders.related_to_id,count(products.id) as number ,sum(products.price_with_comm) as primery_price_with_com_productParts')
+  ->groupBy('orders.related_to_id')->get();
+ 
+ 
+
+
+  if ($allSold->isEmpty()==true) {
+
+    $allSold=[new Request(['id'=>$id,
+
+    "number_sold"=>0,
+    "primery_price_with_com_product_sold"=>0,
+    "selling_price_without_com_product_sold"=>0,
+    "selling_price_with_com_product_sold"=>0,
+])];
+    
+   }
+
+
+   if ($machinesSold->isEmpty()==true) {
+
+    $machinesSold=[new Request(['id'=>$id,
+
+    "number_sold"=>0,
+    "primery_price_with_com_product_sold"=>0,
+    "selling_price_without_com_product_sold"=>0,
+    "selling_price_with_com_product_sold"=>0,
+])];
+    
+   }
+   if ($GrinderSold->isEmpty()==true) {
+
+    $GrinderSold=[new Request(['id'=>$id,
+
+    "number_sold"=>0,
+    "primery_price_with_com_product_sold"=>0,
+    "selling_price_without_com_product_sold"=>0,
+    "selling_price_with_com_product_sold"=>0,
+])];
+    
+   }
+
+ 
+  if ($allRemining->isEmpty()==true) {
+
+    $allRemining=[new Request(['id'=>$id,
+
+    "number_remining"=>0,
+    "primery_price_with_com_product_remining"=>0,
+])];
+    
+   }
+
+   if ($machinesRemining->isEmpty()==true) {
+
+    $machinesRemining=[new Request(['id'=>$id,
+
+    "number_remining"=>0,
+    "primery_price_with_com_product_remining"=>0,
+])];
+    
+   }
+   if ($GrinderRemining->isEmpty()==true) {
+
+    $GrinderRemining=[new Request(['id'=>$id,
+
+    "number_remining"=>0,
+    "primery_price_with_com_product_remining"=>0,
+])];
+    
+   }
+   if ($smallShop->isEmpty()==true) {
+
+    $smallShop=[new Request(['id'=>$id,
+
+    "number"=>0,
+    "primery_price_with_com_productParts"=>0,
+])];
+    
+   }
+
+  
+
+  $exporter = User::where('role_id','=',1)->get();
+  $importer = User::where('role_id','=',2)->get();
+  $representative = User::where('role_id','=',3)->get();
+
+       
+  
+          return view('order.order_report',compact('allRemining','smallShop','GrinderRemining','GrinderSold',
+          'machinesSold','machinesRemining','order','exporter', 'importer','representative','allSold'));
+  
+          
+
+
+
+
+
+    }
 
     
 
