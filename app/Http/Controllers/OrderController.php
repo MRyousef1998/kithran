@@ -99,8 +99,18 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-           
-        
+        $myCarancyMull=1;
+          
+        if($request->carency==2){
+            $myCarancyMull=4.55;
+            
+            
+              }
+              else if($request->carency==3){
+                $myCarancyMull=3.99;
+                
+              }
+            
      
         $products=json_decode($request->my_hidden_input);
        
@@ -135,10 +145,10 @@ class OrderController extends Controller
              'image_name' => $fileName,
 
              'category_id' => $request->order_category,
-             'Amount_Commission' => $request->Amount_Commission,
-             'Value_VAT' => $request->Value_VAT,
+             'Amount_Commission' => ($request->Amount_Commission)*$myCarancyMull,
+             'Value_VAT' => ($request->Value_VAT)*$myCarancyMull,
 
-             'Total' => $request->Total,
+             'Total' => ($request->Total)*$myCarancyMull,
 
 
 
@@ -153,9 +163,9 @@ class OrderController extends Controller
         { for($d=0 ;$d<$product->qty;$d++ ){
             $newproduct =  Product::create([
                 'product_details_id' => $product->id,
-                'primary_price' => $product->price,
-                'price_with_comm' => $product->commission_pice+$product->price,
-                'selling_price' => ($product->commission_pice+$product->price),
+                'primary_price' =>( $product->price)*$myCarancyMull,
+                'price_with_comm' =>( $product->commission_pice+$product->price)*$myCarancyMull,
+                'selling_price' => ($product->commission_pice+$product->price)*$myCarancyMull,
                 
                 'statuses_id' =>$request->status ,
    
@@ -231,7 +241,7 @@ class OrderController extends Controller
         $productDetail = ProductDetail::all();
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
-        $status= Status::all();
+        $status= Status::where('id','<=',3)->where('id','!=',2)->get();
     
         $orders= Order::all();
 

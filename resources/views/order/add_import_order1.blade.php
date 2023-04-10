@@ -146,7 +146,7 @@
                                 <label for="inputName" class="control-label">حدد العميل </label>
                                 <select name="clint" id="clint" class="form-control SlectBox" onchange="">
                                     <!--placeholder-->
-                                    <option value="" selected disabled>حدد العميل </option>
+                                    <option value={{null}} selected >لایوجد  </option>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}"> {{ $client->name }}</option>
                                     @endforeach
@@ -203,12 +203,31 @@
 
                         <div class="row">
                             <div class="col">
+                                <label for="inputName" class="control-label">العملة</label>
+                        <select name="carency" class="form-control SlectBox" required
+                           >
+                           <!--placeholder-->
+                           <option value="1" selected >DHS</option>
+                           <option value="2"  >GBP</option>
+
+                           <option value="3"  >EURO</option>
+                          
+                       </select>
+                           
+                          
+                     
+
+
+                      
+                   </div>
+                            <div class="col">
                                 <label for="inputName" class="control-label">مبلغ العمولة</label>
                                 <input type="text" class="form-control form-control-lg" id="Amount_Commission"
                                     name="Amount_Commission" title="يرجي ادخال مبلغ العمولة "
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                     readonly value=0>
                             </div>
+                            
                             <div class="col">
                                 <label for="inputName" class="control-label" >قيمة ضريبة القيمة المضافة</label>
                                 <input type="text" class="form-control form-control-lg" id="Value_VAT" name="Value_VAT" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
@@ -230,7 +249,7 @@
 
                         <div class="col-sm-12 col-md-12">
                             <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                                data-height="70" />
+                                data-height="70" required/>
                         </div>
                       
                         

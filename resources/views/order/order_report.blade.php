@@ -112,9 +112,9 @@
 									
 									<div class="tab-pane" id="settings">
 										
-										<form role="form" action="payment_continer"  method="post" enctype="multipart/form-data">
-											{{ csrf_field() }}
-											
+										<form role="form" action="{{route('add_payment_representative.edit','test')}}"  method="post" enctype="multipart/form-data">
+											@csrf_field
+											{{ method_field('PUT') }}
 											<div class="form-group">
 												<label for="amount_payments">قيمة الدفعة</label>
 									

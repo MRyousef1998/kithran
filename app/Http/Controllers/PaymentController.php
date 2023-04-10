@@ -89,9 +89,9 @@ class PaymentController extends Controller
      * @param  \App\Models\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Payment $payment)
+    public function edit(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

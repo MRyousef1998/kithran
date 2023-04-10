@@ -127,7 +127,7 @@ Route::post('/add_shipment1', 'App\Http\Controllers\ShipmentController@store')->
 Route::get('/shipmentDeteile/{id}', 'App\Http\Controllers\ShipmentController@getShipmentDeteil');
 Route::post('addAttachmentsShipment', 'App\Http\Controllers\ShipmentController@addAttachments')->name('addAttachmentsShipment');
 Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@get_file');
-
+Route::post('payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('payment_continer');
  Route::get('View_file_sipment/{orderNumber}/{file_name}', 'App\Http\Controllers\ShipmentController@open_file');
  Route::post('delete_file_sipment', 'App\Http\Controllers\ShipmentController@destroy')->name('delete_file_sipment');
  Route::get('download_file_sipment/{orderNumber}/{file_name}', 'App\Http\Controllers\ShipmentController@get_file');
@@ -173,7 +173,7 @@ Route::post('delete_file', 'InvoicesDetailsController@destroy')->name('delete_fi
 Route::get('/edit_invoice/{id}', 'InvoicesController@edit');
 
 Route::get('/order_report/{id}', 'App\Http\Controllers\OrderController@order_report')->name('order_report');
-Route::get('payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('payment_continer');
+
 
 Route::resource('Archive', 'InvoiceAchiveController');
 
