@@ -106,7 +106,11 @@
                                                             <th scope="row">المورد</th>
                                                             <td>{{ $order->importer->name  }}</td>
                                                             <th scope="row">العميل</th>
+                                                             @if($order->representative_id!=null)
                                                             <td>{{ $order->representative->name  }}</td>
+                                                            @else
+                                                              <td>لايوجد</td>
+                                                              @endif
                                                             <th scope="row">تاريخ الطلب</th>
                                                             <td>{{ $order->order_date }}</td>
                                                             
