@@ -68,6 +68,14 @@
         <div class="col-xl-12">
             <!-- div -->
             <div class="card mg-b-20" id="tabs-style2">
+            <div class="card-header pb-0">
+                                     <div class="d-flex justify-content-between">
+
+                    <a href="add_produ_from_order/{{$order->id}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                > <i
+                                class="fas fa-plus"></i>&nbsp; اضافة إلى المستودع</a>
+                    </div>
+                     </div>
                 <div class="card-body">
                     <div class="text-wrap">
                         <div class="example">

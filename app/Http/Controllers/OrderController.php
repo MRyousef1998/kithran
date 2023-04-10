@@ -253,7 +253,23 @@ class OrderController extends Controller
 
         return view('order.add_import_order1',compact('importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
+    public function add_produ_from_order($id)
+    { 
+        
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+        $orders= Order::where('id','=',$id)->get();
+        $status=Status::all();
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('my_product.add_product',compact('productCompanies','productCatgories','orders','status','exporter', 'importer','representative','orders'));
+    }
     public function Status_Update(Request $request)
     { 
         

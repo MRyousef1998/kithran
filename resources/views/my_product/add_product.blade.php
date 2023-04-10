@@ -126,7 +126,24 @@
                         {{-- 3 --}}
 
                         <div class="row">
+ <div class="col">
+                                <label for="inputName" class="control-label">العملة</label>
+                        <select name="carency" class="form-control SlectBox" required
+                           >
+                           <!--placeholder-->
+                           <option value="1" selected >DHS</option>
+                           <option value="2"  >GBP</option>
 
+                           <option value="3"  >EURO</option>
+                          
+                       </select>
+                           
+                          
+                     
+
+
+                      
+                   </div>
                             <div class="col">
                                 <label for="inputName" class="control-label">السعر </label>
                                 <input type="text" class="form-control form-control-lg" id="primary_price"

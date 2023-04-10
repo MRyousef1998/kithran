@@ -208,8 +208,18 @@ $id=$request->productCatgory;
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+        $myCarancyMull=1;
         
+        if($request->carency==2){
+            $myCarancyMull=4.55;
+            
+            
+              }
+              else if($request->carency==3){
+                $myCarancyMull=3.99;
+                
+              }
 
             $order_id = $request->productorder;
      
@@ -217,23 +227,23 @@ $id=$request->productCatgory;
              for($i=0;$i<$request->qountity;$i++){
                    $newproduct =  Product::create([
                        'product_details_id' => $request->productClass,
-                        'primary_price' => $request->primary_price,
+                        'primary_price' => ($request->primary_price)*$myCarancyMull,
                        
                    
                        
                        'statuses_id' =>$request->status ,
                        'note' =>$request->note ,
                        
-                       'price_with_comm' => $request->primary_price+$request->Amount_Commission,
-                       'selling_price' => $request->primary_price+$request->Amount_Commission,
+                       'price_with_comm' => ($request->primary_price+$request->Amount_Commission)*$myCarancyMull,
+                       'selling_price' => ($request->primary_price+$request->Amount_Commission),
                        
           
                
                    ]);
                    $newproduct->order()->attach($order_id);
                    $order = Order::find($order_id);
-                    $order->Amount_Commission =  ($order->Amount_Commission)+$request->Amount_Commission;
-                    $order->Total =  ($order->Amount_Commission)+($order->Amount_Commission)+$request->Total;
+                    $order->Amount_Commission =  ($order->Amount_Commission)+(($request->Amount_Commission)*$myCarancyMull);
+                    $order->Total =  ($order->Total)+(($request->Amount_Commission)*$myCarancyMull)+(($request->primary_price)*$myCarancyMull);
 
                     $order->save();
            
@@ -242,7 +252,7 @@ $id=$request->productCatgory;
             
 //                
                   session()->flash('Add', 'تم اضافة المنتج بنجاح ');
-             return redirect('all_machine/'. $request->productCategory);
+             return redirect('OrderDetails/'. $order_id);
                 }
            
             

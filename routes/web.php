@@ -20,7 +20,7 @@ Auth::routes();
 // Route::resource('sections', 'App\Http\Controllers\SectionsController');
 // Route::resource('products', 'App\Http\Controllers\ProductController');
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
-
+Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
 Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@get_file');
