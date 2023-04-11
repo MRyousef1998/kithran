@@ -68,26 +68,48 @@ class InvoiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { $newInvoice=Invoice::where('orders_id',  $request->clint_id)->first();
         
- 
+ if($newInvoice!=null){
+    $newInvoice =  Invoice::create([
+        'invoice_Date' => $request->invoice_Date,
+        'orders_id' => $request->clint_id,
         
-        $newInvoice =  Invoice::create([
-            'invoice_Date' => $request->invoice_Date,
-            'orders_id' => $request->clint_id,
-            
-            'invoice_categories_id' => $request->invoice_category,
-            
-            'Amount_collection' =>$request->Amount_collection ,
-            'Discount' =>$request->Discount ,
-            'Total' =>$request->Total ,
-            'Value_Status' =>3 ,
-          
-            'note' =>$request->note ,
+        'invoice_categories_id' => $request->invoice_category,
+        
+        'Amount_collection' =>$request->Amount_collection ,
+        'Discount' =>$request->Discount ,
+        'Total' =>$request->Total ,
+        'Value_Status' =>3 ,
+      
+        'note' =>$request->note ,
 
 
+
+    ]);
+ }
+ else{
+    $newInvoice = $newInvoice->update([
+        'invoice_Date' => $request->invoice_Date,
+        'orders_id' => $request->clint_id,
+        
+        'invoice_categories_id' => $request->invoice_category,
+        
+        'Amount_collection' =>($newInvoice->Amount_collection)+($request->Amount_collection) ,
+        'Discount' =>($newInvoice->Discount+$request->Discount) ,
+        'Total' =>($newInvoice->Total+$request->Total ),
+        'Value_Status' =>$newInvoice->Value_Status ,
+      
+        'note' =>$request->note ,
+
+
+
+    ]);
+  
     
-        ]);
+ }
+        
+       
         $invoiceId = $newInvoice->id;
         
         $order = Order::where('id',  $newInvoice->orders_id)->first();

@@ -339,6 +339,15 @@
                                         </div>
                                                 <!-- -->
                                                 <div class="tab-pane " id="tab9">
+                                                    <div class="d-flex justify-content-between">
+
+                                                        <a href="{{URL::to("add_invoices/".$order->category->id."/".$order->id)}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                                                    > <i
+                                                                    class="fas fa-plus"></i>&nbsp; اضافة إلى المستودع</a>
+                                                       
+                                                                 
+                                                       
+                                                                </div>
                                                     <div class="table-responsive mt-14">
                 
                                                         <table class="table table-striped" style="text-align:center">
@@ -474,6 +483,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab10">
+
                                                     <div class="table-responsive mt-15">
                                                         <table class="table center-aligned-table mb-0 table-hover"
                                                             style="text-align:center">

@@ -68,7 +68,7 @@
 
                                 <label for="inputName" class="control-label">الصنف</label>
                                 <select name="productCategory" class="form-control SlectBox"
-                                    >
+                                   required >
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد  الصنف</option>
                                     @foreach ($productCatgories as $productCatgory)
@@ -78,11 +78,11 @@
                             </div>
                               <div class="col">
                                 <label for="inputName" class="control-label">الشركة المصنعة</label>
-                                <select name="productCompanies" class="form-control SlectBox" onclick="console.log($(this).val())"
-                                    onchange="console.log('change is firing')">
+                                <select name="productCompanies" class="form-control select2" onclick="console.log($(this).val())"
+                                    onchange="console.log('change is firing')" required>
                                     <!--placeholder-->
                                     <option value="" selected disabled>حدد الشركة المصنعة</option>
-                                    @foreach ($productCompanies as $productCompany)
+                                     @foreach ($productCompanies as $productCompany)
                                         <option value="{{ $productCompany->id }}"> {{ $productCompany->company_name }}</option>
                                     @endforeach
                                 </select>
@@ -98,14 +98,14 @@
                             <div class="col">
                                 <label for="inputName" class="control-label"  onclick="console.log($(this).val())"
                                 onchange="console.log('change is firing')">المنتج</label>
-                                <select id="product" name="product" class="form-control">
+                                <select id="product" name="product" class="form-control select2">
                                     <option value="" selected disabled>حدد  منتج</option>
                                 </select>
                             </div>
                                <div class="col">
                             <label for="inputName" class="control-label">الفئة</label>
                                 <select id="productClass" name="productClass" class="form-control"
-                                    >
+                                     required>
                                     <!--placeholder-->
                                     
                                 
@@ -152,14 +152,20 @@
                                     required>
                             </div>
 
+                            
                             <div class="col">
-                                <label for="inputName" class="control-label">سعر المبيع</label>
-                                <input type="text" class="form-control form-control-lg" id="selling_price" name="selling_price"
-                                    title="يرجي السعر "
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value=0 required>
+                                <label for="inputName" class="control-label">العمولة</label>
+                                <input type="text" class="form-control" id="Amount_Commission" name="Amount_Commission" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    value=0  required>
                             </div>
+                       
 
+                        </div>
+
+                        {{-- 4 --}}
+
+                        <div class="row">
+                            
                             <div class="col">
                                 <label for="inputName" class="control-label">الحالة   </label>
                                 <select name="status" id="status" class="form-control" onchange="myFunction()" required>
@@ -171,17 +177,6 @@
 
 
                                 </select>
-                            </div>
-
-                        </div>
-
-                        {{-- 4 --}}
-
-                        <div class="row">
-                            <div class="col">
-                                <label for="inputName" class="control-label">العمولة</label>
-                                <input type="text" class="form-control" id="Amount_Commission" name="Amount_Commission" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value=0  required>
                             </div>
                                     <div class="col">
                                 <label for="exampleTextarea">ملاحظات</label>
@@ -251,7 +246,7 @@
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
-                            alert (22);
+                          
                             $('select[name="product"]').empty();
                             $('select[name="product"]').append('<option value="" selected disabled>حدد  منتج</option>');
                             
@@ -276,7 +271,7 @@
             $('select[name="product"]').on('change', function() {
                 var productname = $(this).val();
                 var category_id=  $('select[name="productCategory"]').val();
-                alert(category_id);
+            
                 if (productname) {
                     $.ajax({
                         url: "{{URL::to('productsgroup')}}/" + productname+"/"+category_id,

@@ -82,7 +82,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 0; ?>
+                                    <?php $i = 0; 
+                                      $totalInvoice=0;?>
                                 @foreach ($machines as $x)
                                     <?php $i++; ?>
                                     <tr>
@@ -98,10 +99,12 @@
                         <td class="tx-right">{{ number_format($x->selling_price_with_comm, 2) }}</td>
                         @endif
                         @php
-                        if($invoices->invoice_categories_id == 1)
+                        if($invoices->invoice_categories_id == 1){
                         $total =  $x->price_with_comm*1 ;
+                        $totalInvoice=$totalInvoice+$x->price_with_comm;}
                         else
-                        $total =  $x->selling_price_with_comm*1 ;
+                        {$total =  $x->selling_price_with_comm*1 ;
+                        $totalInvoice=$totalInvoice+$x->selling_price_with_comm;}
                         @endphp
                                         <td class="tx-right">
                                             {{ number_format($total, 2) }}
@@ -109,7 +112,9 @@
                                     </tr>
                                     @endforeach
                                     @foreach ($grinders as $x)
-                                    <?php $i++; ?>
+                                    <?php $i++;
+                                  
+                                    ?>
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td class="tx-12">{{ $x->company_name }} {{ $x->product_name }} {{ $x->group_name }}</td>
@@ -123,9 +128,11 @@
                         @endif
                         @php
                         if($invoices->invoice_categories_id == 1)
-                        $total =  $x->price_with_comm*1 ;
-                        else
+                       { $total =  $x->price_with_comm*1 ;
+                        $totalInvoice=$totalInvoice+$x->price_with_comm;}
+                        else{
                         $total =  $x->selling_price_with_comm*1 ;
+                         $totalInvoice=$totalInvoice+$x->selling_price_with_comm;}
                         @endphp
                                         <td class="tx-right">
                                             {{ number_format($total, 2) }}
@@ -147,9 +154,11 @@
                                     @endif
                                         @php
                                         if($invoices->invoice_categories_id == 1)
-                                        $total =  $x->price_with_comm*1 ;
+                                       { $total =  $x->price_with_comm*1 ;
+                                        $totalInvoice=$totalInvoice+$x->price_with_comm;}
                                         else
-                                        $total =  $x->selling_price_with_comm*1 ;
+                                        {$total =  $x->selling_price_with_comm*1 ;
+                                        $totalInvoice=$totalInvoice+$x->selling_price_with_comm;}
                                         @endphp
                                         <td class="tx-right">
                                             {{ number_format($total, 2) }}
@@ -165,7 +174,7 @@
                                             </div><!-- invoice-notes -->
                                         </td>
                                         <td class="tx-right">الاجمالي</td>
-                                        <td class="tx-right" colspan="2"> </td>
+                                        <td class="tx-right" colspan="2">  {{ number_format($totalInvoice, 2) }}</td>
                                     </tr>
                                     <tr>
                                         <td class="tx-right">قيمة الضريبة </td>
@@ -179,7 +188,7 @@
                                     <tr>
                                         <td class="tx-right tx-uppercase tx-bold tx-inverse">الاجمالي شامل الضريبة</td>
                                         <td class="tx-right" colspan="2">
-                                            <h4 class="tx-primary tx-bold">{{ number_format($invoices->Total, 2) }}</h4>
+                                            <h4 class="tx-primary tx-bold">{{number_format($totalInvoice+$order->Value_VAT-$invoices->Discount, 2) }}</h4>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -235,7 +235,7 @@ $id=$request->productCatgory;
                        'note' =>$request->note ,
                        
                        'price_with_comm' => ($request->primary_price+$request->Amount_Commission)*$myCarancyMull,
-                       'selling_price' => ($request->primary_price+$request->Amount_Commission),
+                       'selling_price' => ($request->primary_price+$request->Amount_Commission)*$myCarancyMull,
                        
           
                

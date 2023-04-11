@@ -178,7 +178,7 @@ class OrderController extends Controller
      
           
 
-     
+      
          session()->flash('Add', ' تم اضافة الطلبية  بنجاح يرجى تحرير الفاتورة');
          return redirect('add_invoices/'.$request->order_category.'/'.$order_id);
            
