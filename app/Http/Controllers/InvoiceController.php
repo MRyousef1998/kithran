@@ -70,7 +70,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     { $newInvoice=Invoice::where('orders_id',  $request->clint_id)->first();
         
- if($newInvoice!=null){
+ if($newInvoice==null){
     $newInvoice =  Invoice::create([
         'invoice_Date' => $request->invoice_Date,
         'orders_id' => $request->clint_id,
@@ -95,9 +95,9 @@ class InvoiceController extends Controller
         
         'invoice_categories_id' => $request->invoice_category,
         
-        'Amount_collection' =>($newInvoice->Amount_collection)+($request->Amount_collection) ,
+        'Amount_collection' =>($request->Amount_collection) ,
         'Discount' =>($newInvoice->Discount+$request->Discount) ,
-        'Total' =>($newInvoice->Total+$request->Total ),
+        'Total' =>($request->Total ),
         'Value_Status' =>$newInvoice->Value_Status ,
       
         'note' =>$request->note ,
@@ -105,11 +105,11 @@ class InvoiceController extends Controller
 
 
     ]);
-  
+    $newInvoice=Invoice::where('orders_id',  $request->clint_id)->first();
     
  }
         
-       
+      
         $invoiceId = $newInvoice->id;
         
         $order = Order::where('id',  $newInvoice->orders_id)->first();

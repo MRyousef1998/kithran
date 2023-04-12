@@ -146,7 +146,7 @@
                                 <label for="inputName" class="control-label">حدد العميل </label>
                                 <select name="clint" id="clint" class="form-control SlectBox" onchange="">
                                     <!--placeholder-->
-                                    <option value={{null}} selected >لایوجد  </option>
+                                    <option value="" selected >لایوجد  </option>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}"> {{ $client->name }}</option>
                                     @endforeach
