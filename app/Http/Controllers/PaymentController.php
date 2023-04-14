@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AccountStatement;
+use App\Models\Order;
 use App\Models\Payment;
 use App\Models\User;
 use Carbon\Carbon;
@@ -118,6 +119,34 @@ class PaymentController extends Controller
     }
     public function payment_continer(Request $request)
     {
-        return $request;
+       
+        Payment::create([
+           
+            'amount' => $request->amount_payments,
+            'note' => $request->note,
+            'orders_id' =>$request->order_id,
+         
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+   
+        ]);
+        $order=Order::find($request->order_id)->importer->name;
+        AccountStatement::create([
+            'purpose' =>"مصروف کونتینر".$order,
+            'account_statement_types_id' => 1,
+            
+            'amount' => $request->amount_payments,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);
+        session()->flash('success', ' تم اضافة الدفعة  بنجاح');
+
+        return redirect("order_report/".$request->order_id);
     }
 }

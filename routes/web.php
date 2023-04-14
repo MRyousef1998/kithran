@@ -21,6 +21,7 @@ Auth::routes();
 // Route::resource('products', 'App\Http\Controllers\ProductController');
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
 Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
+
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
 Route::get('download/{orderNumber}/{file_name}', 'App\Http\Controllers\OrderDetailController@get_file');
@@ -60,6 +61,7 @@ Route::group(['middleware' => ['auth']], function() {
     });
     
     Route::resource('add_payment_representative', 'App\Http\Controllers\PaymentController'); 
+    Route::post('order_report/add_payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('add_payment_continer');
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
@@ -91,6 +93,8 @@ Route::get('add_shop_order', 'App\Http\Controllers\SmallShopController@create1')
 Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
+Route::get('/OrderDetails_not_recive_product/{id}', 'App\Http\Controllers\ProductController@OrderDetails_not_recive_product');
+
 Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
 
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');

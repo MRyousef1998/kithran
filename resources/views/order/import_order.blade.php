@@ -220,7 +220,10 @@
                                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
                                                                     تأكيد استلام
                                                                 </a>
-                                                                      
+                                                                <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
+                                                                    <i
+                                                                    class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
+                                                                    </a>   
                                                                 <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
                                                        
                                                                  

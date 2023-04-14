@@ -87,8 +87,10 @@
                                             <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
                                                     الطلبية</a></li>
                                             <li><a href="#tab5" class="nav-link" data-toggle="tab">مكنات القهوة</a></li>
+                                            
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
+                                            <li><a href="#tab13" class="nav-link" data-toggle="tab">مكنات غیر مستلمة</a></li>
                                             <li><a href="#tab8" class="nav-link" data-toggle="tab">المرفقات</a></li>
                                             <li><a href="#tab9" class="nav-link" data-toggle="tab">الفواتير</a></li>
                                             <li><a href="#tab10" class="nav-link" data-toggle="tab">الدفعات</a></li>
@@ -221,6 +223,68 @@
                                             </div>
                                         </div>
 
+                                        <div class="tab-pane" id="tab13">
+                                            <div class="table-responsive ">
+                                              
+                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الشركة</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">اسم المنتج</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">الصنف</th>
+                                    
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">بلد المنشأ</th>
+                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">العدد </th>
+
+
+             
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 0; ?>
+                                @foreach ($unAriveMAchine as $x)
+                                    <?php $i++; ?>
+                                    <tr>
+                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
+
+                                        <td style="text-align: center;vertical-align: middle;">
+                                            
+                                            <div class = "vertical"><div>
+                                                <img src="http://127.0.0.1:8000/Attachments/{{ $x->id }}/{{ $x->image_name }}"  width="180"  height="120" /></div>
+                                                <div>
+                                                    {{ $x->product_name }}</div>
+                                            </div>
+
+                                            
+                                            </td>
+                                      
+                                        <td style="text-align: center;vertical-align: middle;">{{ $x->group_name }}</td>
+
+                                        <td style="text-align: center;vertical-align: middle; color:rgb(207, 14, 14); " >{{ $x->country_of_manufacture }}</td>
+                                        
+                                      
+                                        <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
+                                            <a class="modal-effect " data-effect="effect-scale" 
+                                            data-id="{{ $x->id }}" data-order_id="{{ $id }}"
+                                            data-toggle="modal" href="#modaldemo9" >{{ $x->aggregate }}</a>
+                                    </td>
+                                       
+                                      
+
+                                      
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                  
+                                                
+
+
+                                            </div>
+                                        </div>
 
                                                      <div class="tab-pane" id="tab6">
                                             <div class="table-responsive ">

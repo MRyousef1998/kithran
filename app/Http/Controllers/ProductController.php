@@ -373,6 +373,13 @@ $id=$request->productCatgory;
        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
    //return $machines;
+
+
+   $unAriveMAchine =DB::table('products')->
+   leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+   ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.statuses_id",'!=', 2)
+   ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+   ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
        $grinders =DB::table('products')->
        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 2)
@@ -390,7 +397,32 @@ $id=$request->productCatgory;
             $importer = User::where('role_id','=',2)->get();
             $representative = User::where('role_id','=',3)->get();
 
-         return view('order.details_order',compact('order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id','smallShop'));
+         return view('order.details_order',compact('unAriveMAchine','order','machines','grinders','invoices','details','parts','exporter', 'importer','representative','id','smallShop'));
+
+    
+    }
+    
+
+
+
+
+    public function OrderDetails_not_recive_product($id)
+    { 
+
+      $order=Order::find($id); 
+     
+
+   $unAriveMAchine =DB::table('products')->
+   leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+   ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("product_details.category_id", 1)->where("products.statuses_id",'!=', 2)
+   ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+   ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+      
+       $exporter = User::where('role_id','=',1)->get();
+            $importer = User::where('role_id','=',2)->get();
+            $representative = User::where('role_id','=',3)->get();
+
+         return view('order.details_order_not_recive',compact('unAriveMAchine','id','order','exporter', 'importer','representative'));
 
         
        
@@ -660,7 +692,7 @@ $order_id=$request->order_id;
 
 
             session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.' OR'.$request->order_id.'NO'.$request->id );
-            return redirect('OrderDetails/'. $request->order_id);
+            return redirect('OrderDetails_not_recive_product/'. $request->order_id);
 
 
     }

@@ -86,17 +86,37 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="card ">
+							<div class="card-body">
+								<div class="counter-status d-flex md-mb-0">
+									
+									<div class="mr-auto">
+										<h1 class="tx-13">التکالیف</h1>
+										<h2 class="mb-0 tx-22 mb-1 mt-1">
+											{{ number_format($total_payments[0]->total)}}
+											
+										</h2>
+										<p class="text-muted mb-0 tx-11"><i class="si si-arrow-up-circle text-success mr-1"></i>{{$GrinderRemining[0]->number_remining}}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						
 						<div class="card">
+							
 							<div class="card-body">
 								<div class="tabs-menu ">
 									<!-- Tabs -->
 									<ul class="nav nav-tabs profile navtab-custom panel-tabs">
 										<li class="active">
-											<a href="#home" data-toggle="tab" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 mr-1"></i></span> <span class="hidden-xs">الطلبيات</span> </a>
+											<a href="#home" data-toggle="tab" aria-expanded="true"> <span class="visible-xs"><i class="las la-user-circle tx-16 mr-1"></i></span> <span class="hidden-xs">الدفعات</span> </a>
 										</li>
 										
 										<li class="">
-											<a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">SETTINGS</span> </a>
+											<a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="las la-cog tx-16 mr-1"></i></span> <span class="hidden-xs">اضافة دفعة</span> </a>
 										</li>
 									</ul>
 								</div>
@@ -104,7 +124,96 @@
 									<div class="tab-pane active" id="home">
 										<div class="card-body">
 											<div class="table-responsive">
-												
+												<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+													<thead>
+														<tr>
+															<th class="border-bottom-0" >رقم الدفعة</th>
+														
+															
+															
+						
+														  
+															<th class="border-bottom-0">قيمة الدفعة</th>
+															
+														
+															<th class="border-bottom-0">التاريخ</th>
+													
+						
+						
+															
+											
+															
+						
+						
+														</tr>
+													</thead>
+						
+													<tbody>
+														
+																			<?php $i = 0; ?>
+																			@foreach ($payments as $payment)
+																				<?php $i++; ?>
+																				<div class="all_row">
+																				<tr>
+																					
+																					<td  style="text-align: center;vertical-align: middle; width:0.5;" >{{ $i }}</td>
+																					<td style="text-align: center;vertical-align: middle;">{{$payment->amount}}</td>
+																				
+						
+											
+																				  
+															
+											
+																				
+																					<td style="text-align: center;vertical-align: middle;  " >{{ $payment->pay_date }}</td>
+																					
+																					
+						
+																				<td>
+																					<div class="dropdown">
+																						<button aria-expanded="false" aria-haspopup="true"
+																							class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+																							type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+																						<div class="dropdown-menu tx-13">
+																							
+																						
+										
+																					  
+																								<a class="dropdown-item" href="#" data-invoice_id="{{ $payment->id }}"
+																									data-toggle="modal" data-target="#delete_invoice"><i
+																										class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+																									الطلبية</a>
+																						 
+										
+																							
+																							   
+																						  
+										
+																						  
+																								
+																						   
+										
+																						 
+																								
+																						   
+																						</div>
+																					</div>
+										
+																				</td>
+						
+						
+																					 
+																					
+																					
+																				</tr>
+																			</div>
+																		   
+																			@endforeach
+																		
+													</tbody>
+						
+														
+												</table>
 											</div>
 										</div>
 
@@ -116,13 +225,13 @@
 									
 									<div class="tab-pane" id="settings">
 										
-										<form role="form" action="{{route('add_payment_representative.edit','test')}}"  method="post" enctype="multipart/form-data">
-											@csrf_field
-											{{ method_field('PUT') }}
+										<form role="form" action="add_payment_continer"  method="post" enctype="multipart/form-data">
+											{{ csrf_field() }}
 											<div class="form-group">
 												<label for="amount_payments">قيمة الدفعة</label>
 									
 												<input type="text" class="form-control form-control-lg" id="amount_payments" name="amount_payments" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+												<input type="hidden" class="form-control form-control-lg" id="order_id" name="order_id" value={{$order->id}} >
 												
 										   
 											</div>
@@ -130,7 +239,7 @@
 											
 											<div class="form-group">
 												<label for="note">ملاحظات</label>
-												<textarea id="note" class="form-control">
+												<textarea id="note" name='note' class="form-control form-control-lg">
 
 												</textarea>
 											</div>
@@ -280,7 +389,7 @@
 													<div class=" col-xl-6 col-lg-6 col-md-6 col-xm-12">
 														<h6 class="mb-3 tx-16 text-white">{{ number_format(($allSold[0]->selling_price_with_com_product_sold)
 														-($allSold[0]->primery_price_with_com_product_sold+
-														$smallShop[0]->primery_price_with_com_productParts))}}</h6>
+														$smallShop[0]->primery_price_with_com_productParts+$total_payments[0]->total))}}</h6>
 														
 													</div>
 												</div>	

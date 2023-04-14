@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -292,8 +293,11 @@ class OrderController extends Controller
         
 
         $order=Order::find($id); 
-        
-
+         
+        $payments=Payment::where("orders_id", $id)->where("representative_id", '=',null)->get() ; 
+        $total_payments=Payment::where("orders_id", $id)->where("representative_id", '=',null)->selectRaw('sum(amount) as total')
+        ->groupBy('orders_id')->get(); 
+       
 $allSold=DB::table('products')-> 
 Join('order_product', 'products.id', '=', 'order_product.products_id')->where("order_product.orders_id", $id)->where("products.selling_date", '!=',null)
  ->selectRaw('order_product.orders_id,count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold')
@@ -423,7 +427,7 @@ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("o
        
   
           return view('order.order_report',compact('allRemining','smallShop','GrinderRemining','GrinderSold',
-          'machinesSold','machinesRemining','order','exporter', 'importer','representative','allSold'));
+        'total_payments',  'payments','machinesSold','machinesRemining','order','exporter', 'importer','representative','allSold'));
   
           
 
