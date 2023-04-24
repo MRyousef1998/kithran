@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\User;
@@ -117,11 +118,7 @@ class OrderController extends Controller
        
          
 
-        if($products == null){
-            session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
-            //  return $request;
-              return redirect('add_order');
-        }
+       
         if($request->pic==null){
             session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الفاتورة');
             //  return $request;
@@ -159,6 +156,29 @@ class OrderController extends Controller
      $order_id = Order::latest()->first()->id;
      
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
+     if($products == null){
+
+
+        $newInvoice =  Invoice::create([
+            'invoice_Date' =>  Carbon::today(),
+            'orders_id' => $order_id,
+            
+            'invoice_categories_id' => $request->order_category,
+            
+            'Amount_collection' =>0 ,
+            'Discount' =>0 ,
+            'Total' =>0 ,
+            'Value_Status' =>3 ,
+          
+            'note' =>"" ,
+    
+    
+    
+        ]);
+        session()->flash('Add', ' تم اضافة الطلبية بنجاح قم بإضاقة المنتجات وحرر الفاتورة');
+             return redirect('OrderDetails/'. $order_id);
+    }
+    
      foreach($products as $product)
      
         { for($d=0 ;$d<$product->qty;$d++ ){
@@ -233,6 +253,50 @@ class OrderController extends Controller
     {
         //
     }
+    public function order_prodect_code($order_id)
+    {
+       
+        $productCategories = ProductCategory::all();
+  
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+
+        return view('order.order_product_code',compact("productCategories",'exporter', 'importer','representative','order_id'));
+  
+    
+    }
+
+    public function order_prodect_code_serch(Request $request)
+    {
+       
+    
+  
+
+
+        $machines =DB::table('products')->
+                leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+                leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->
+                Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+                ->get();
+                
+            
+               $productCategories=ProductCategory::where("id",'!=',$request->productCatgory)->get();
+             
+               $typeproductCatgories=ProductCategory::find($request->productCatgory);
+               $id=$request->productCatgory;
+                $exporter = User::where('role_id','=',1)->get();
+                $importer = User::where('role_id','=',2)->get();
+                $representative = User::where('role_id','=',3)->get();
+               
+               $order_id=$request->order_id;
+                return view('order.order_product_code',compact('typeproductCatgories','order_id','machines','exporter', 'importer','representative','productCategories'));
+                
+    
+    }
 
     public function create1()
     {
@@ -295,6 +359,7 @@ class OrderController extends Controller
         $order=Order::find($id); 
          
         $payments=Payment::where("orders_id", $id)->where("representative_id", '=',null)->get() ; 
+        
         $total_payments=Payment::where("orders_id", $id)->where("representative_id", '=',null)->selectRaw('sum(amount) as total')
         ->groupBy('orders_id')->get(); 
        
@@ -418,13 +483,21 @@ Join('order_product', 'products.id', '=', 'order_product.products_id')->where("o
     
    }
 
+   if ($total_payments->isEmpty()==true) {
+
+    $total_payments=[new Request([
+    "total"=>0,
+])];
+    
+   }
+
   
 
   $exporter = User::where('role_id','=',1)->get();
   $importer = User::where('role_id','=',2)->get();
   $representative = User::where('role_id','=',3)->get();
 
-       
+      
   
           return view('order.order_report',compact('allRemining','smallShop','GrinderRemining','GrinderSold',
         'total_payments',  'payments','machinesSold','machinesRemining','order','exporter', 'importer','representative','allSold'));

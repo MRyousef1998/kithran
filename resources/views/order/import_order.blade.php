@@ -233,6 +233,10 @@
                                                              التقاریر
                                                                 </a>
                 
+                                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
+                                                                    <i
+                                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
+                                                                                                                                   </a>   
                                                                     @can('حذف الفاتورة')
                                                                         <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
                                                                             data-toggle="modal" data-target="#delete_invoice"><i

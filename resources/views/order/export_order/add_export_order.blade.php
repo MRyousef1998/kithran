@@ -151,8 +151,8 @@
                               <div class="col">
                                 <label for="inputName" class="control-label">حدد العميل </label>
                                 <select name="clint" id="clint" class="form-control SlectBox" onchange="">
-                                    <!--placeholder-->
-                                    <option value="" selected disabled>حدد العميل </option>
+                                  
+                                    <option value="" selected >لایوجد</option>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}"> {{ $client->name }}</option>
                                     @endforeach
@@ -287,7 +287,7 @@
                                 <div class="tab-pane active" id="tab4">
                   <div class="table-responsive">
                                       
-                    <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                    <table id="example1" class="table key-buttons text-md-nowrap" data-page-length=''>
                         <thead>
                             <tr>
                                  <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>

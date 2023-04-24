@@ -21,6 +21,7 @@ Auth::routes();
 // Route::resource('products', 'App\Http\Controllers\ProductController');
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
 Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
+Route::get('ExportOrderDetails/add_produ_to_order/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order');
 
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
@@ -73,6 +74,10 @@ Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementRepo
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
 Route::post('machine_serch', 'App\Http\Controllers\ProductController@machine_serch')->name('machine_serch');
+Route::post('order_prodect_code_serch', 'App\Http\Controllers\OrderController@order_prodect_code_serch')->name('order_prodect_code_serch');
+
+Route::post('machine_serch_to_export_order', 'App\Http\Controllers\ProductController@machine_serch_to_export_order')->name('machine_serch_to_export_order');
+
 Route::post('broken_machine_serch', 'App\Http\Controllers\ProductController@broken_machine_serch')->name('broken_machine_serch');
 Route::post('all_product_serch', 'App\Http\Controllers\ProductDetailController@all_product_serch')->name('all_product_serch');
 
@@ -88,13 +93,13 @@ Route::post('product_remove_from_proken', 'App\Http\Controllers\ProductControlle
  
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
-
+Route::post('add_export_order_one_by_one', 'App\Http\Controllers\ExportController@store_one_by_one');
 Route::get('add_shop_order', 'App\Http\Controllers\SmallShopController@create1');
 Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/OrderDetails_not_recive_product/{id}', 'App\Http\Controllers\ProductController@OrderDetails_not_recive_product');
-
+Route::get('/order_prodect_code/{id}', 'App\Http\Controllers\OrderController@order_prodect_code');
 Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
 
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
@@ -106,11 +107,7 @@ class ExportController extends Controller
       
       
 
-        if($products == null){
-            session()->flash('Erorr', 'يرجى اختيار منتاجات هذه الطلبية');
-            //  return $request;
-              return redirect('add_export_order');
-        }
+       
         if($request->pic==null){
             session()->flash('Erorr', 'يرجى ادخال ملف يوثق هذه الطلبية ');
             //  return $request;
@@ -118,6 +115,7 @@ class ExportController extends Controller
         }
         if($request->pic!=null){
         
+          
             $imageName = $request->pic;
             $fileName = $imageName->getClientOriginalName();
         
@@ -146,6 +144,28 @@ class ExportController extends Controller
      
      $request->pic->move(public_path('Attachments/' . $order_id ), $fileName);
      ////
+     if($products == null){
+
+
+        $newInvoice =  Invoice::create([
+            'invoice_Date' =>  Carbon::today(),
+            'orders_id' => $order_id,
+            
+            'invoice_categories_id' => $request->order_category,
+            
+            'Amount_collection' =>0 ,
+            'Discount' =>0 ,
+            'Total' =>0 ,
+            'Value_Status' =>3 ,
+          
+            'note' =>"" ,
+    
+    
+    
+        ]);
+        session()->flash('Add', ' تم اضافة الطلبية بنجاح قم بإضاقة المنتجات وحرر الفاتورة');
+             return redirect('ExportOrderDetails/'. $order_id);
+    }
     
      foreach($products as $product)
      
@@ -208,6 +228,96 @@ class ExportController extends Controller
     public function show(Order $order)
     {
         //
+    }
+    public function store_one_by_one(Request $request)
+    {
+        
+      
+        $products=json_decode($request->my_hidden_input);
+       
+      
+      
+
+        if($products == null){
+            session()->flash('Erorr', 'يرجى اختيار منتاجات');
+            //  return $request;
+              return redirect('ExportOrderDetails/add_produ_to_order/'.$request->order_id);
+        }
+       
+
+        
+         
+            
+        
+            
+     // move pic
+     $order_id = $request->order_id;
+     
+
+     ////
+     $totalPrice=0;
+     $totalcom=0;
+    
+     foreach($products as $product)
+     
+     { 
+         
+         for($i=0 ;$i<$product->qty;$i++ ){
+       
+         $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->get();
+         
+         $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->first();
+         $importOrderOldProdect=$Olderproduct->order()->get();
+         $olderdate=$importOrderOldProdect[0]->order_due_date;
+         $olderProductId=$Olderproduct->id;
+    
+         foreach($allProducts as $currentProduct){
+            
+             $importOrdeForCurrentProdect=$currentProduct->order()->get();
+         $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+         if($olderdate>$currentdate)
+         {
+             $olderdate=$currentdate;
+             $Olderproduct=$currentProduct;
+             $olderProductId=$currentProduct->id;
+         }
+         
+        
+         }
+         $Olderproduct->update([
+            'selling_date' => Carbon::today(),
+            'selling_price' => $product->price,
+            'selling_price_with_comm' => $product->price+$product->commission_pice,
+
+    
+    
+            ]);
+            $totalPrice=$totalPrice+$product->price;
+            $totalcom=$totalcom+$product->commission_pice;
+
+         $Olderproduct->order()->attach($order_id);
+        
+
+       
+ 
+       }
+    
+    }
+  
+    $order = Order::find($order_id);
+    $order->Amount_Commission =  ($order->Amount_Commission)+( $totalcom);
+    $order->Total =  ($order->Total)+(( $totalcom))+(($totalPrice));
+
+    $order->save();
+
+     
+    session()->flash('Add', ' تم اضافة المنتچ  بنجاح يرجى تحرير الفاتورة');
+    return redirect('ExportOrderDetails/'.$request->order_id);
+           
+        
+     
+
+        return json_decode($request->my_hidden_input);
     }
 
     /**
@@ -313,6 +423,25 @@ class ExportController extends Controller
 
         return view('order.export_order.exports_order',compact('orders','exporter', 'importer','representative'));
     }
+    public function add_produ_to_order($order_id)
+    { $productGroupes=ProductGroup::all();
+        $productCompanies=ProductCompany::all();
+       $productCatgories=ProductCategory::all();
+       
+        
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+        $orders= Order::where('id','=',$order_id)->get();
+        $status=Status::all();
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('order.export_order.add_product_to_order',compact('order_id','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
+    }
 
 }

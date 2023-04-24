@@ -73,7 +73,7 @@
 
                     <a href="add_produ_from_order/{{$order->id}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 > <i
-                                class="fas fa-plus"></i>&nbsp; اضافة إلى المستودع</a>
+                                class="fas fa-plus"></i>&nbsp; اضافة جديد من خلال هذه الطلبية</a>
                     </div>
                      </div>
                 <div class="card-body">
@@ -407,7 +407,7 @@
 
                                                         <a href="{{URL::to("add_invoices/".$order->category->id."/".$order->id)}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                                                     > <i
-                                                                    class="fas fa-plus"></i>&nbsp; اضافة إلى المستودع</a>
+                                                                    class="fas fa-plus"></i>&nbsp; تحریر الفاتورة </a>
                                                        
                                                                  
                                                        

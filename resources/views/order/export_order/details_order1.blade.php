@@ -68,6 +68,14 @@
         <div class="col-xl-12">
             <!-- div -->
             <div class="card mg-b-20" id="tabs-style2">
+                <div class="card-header pb-0">
+                    <div class="d-flex justify-content-between">
+
+   <a href="add_produ_to_order/{{$order->id}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+               > <i
+               class="fas fa-plus"></i>&nbsp; اضافة جديد الى هذه الطلبية</a>
+   </div>
+</div>
                 <div class="card-body">
                     <div class="text-wrap">
                         <div class="example">
@@ -416,6 +424,15 @@
                                 <!--الفواتير-->
 
                                 <div class="tab-pane " id="tab9">
+                                    <div class="d-flex justify-content-between">
+
+                                        <a href="{{URL::to("add_invoices/".$order->category->id."/".$order->id)}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                                    > <i
+                                                    class="fas fa-plus"></i>&nbsp;تحریر الفاتورة</a>
+                                       
+                                                 
+                                       
+                                                </div>
                                     <div class="table-responsive mt-14">
 
                                         <table class="table table-striped" style="text-align:center">
