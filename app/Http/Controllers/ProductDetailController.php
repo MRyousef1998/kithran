@@ -21,7 +21,7 @@ class ProductDetailController extends Controller
      */
     public function index()
     {
-        $productDetail = ProductDetail::all();
+       // $productDetail = ProductDetail::all();
         $productCompany = ProductCompany::all();
         $productGroups = ProductGroup::all();
         $productCategoies = ProductCategory::all();
@@ -31,7 +31,7 @@ class ProductDetailController extends Controller
         $representative = User::where('role_id','=',3)->get();
 
 
-        return view('my_product.all_product',compact('productDetail','productCompany','productGroups',"productCategoies",'exporter', 'importer','representative'));
+        return view('my_product.all_product',compact('productCompany','productGroups',"productCategoies",'exporter', 'importer','representative'));
     }
     public function all_product_serch (Request $request)
     {
