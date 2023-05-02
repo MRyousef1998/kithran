@@ -130,7 +130,7 @@
                                 <tr>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
-                                   
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
 
                                 </tr>
                             </thead>
@@ -149,7 +149,63 @@
 
                                        
 
+                                        <td>
+                                            @if
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                <div class="dropdown-menu tx-13">
+                                                    <a class="dropdown-item" href="#update_status"
+                                                    data-order_id="{{ $x->id }}"
+                                                    data-toggle="modal"
+                                                        
+                                                        ><i
+                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                                    تأكيد استلام
+                                                </a>
+                                                <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
+                                                    <i
+                                                    class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
+                                                    </a>   
+                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
+                                       
+                                                 
+                                                        
+                                                        ><i
+                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                             التقاریر
+                                                </a>
 
+                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
+                                                    <i
+                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
+                                                                                                                   </a>   
+                                                    @can('حذف الفاتورة')
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                            data-toggle="modal" data-target="#delete_invoice"><i
+                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                            الفاتورة</a>
+                                                    @endcan
+
+                                                    
+                                                       
+                                                  
+
+                                                  
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                            الارشيف</a>
+                                                   
+
+                                                 
+                                                        
+                                                   
+                                                </div>
+                                            </div>
+
+                                        </td>
                                         
                                     </tr>
                                 @endforeach
