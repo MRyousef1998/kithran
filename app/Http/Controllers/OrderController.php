@@ -262,8 +262,8 @@ class OrderController extends Controller
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
 
-
-        return view('order.order_product_code',compact("productCategories",'exporter', 'importer','representative','order_id'));
+$order=Order::find($order_id);
+        return view('order.order_product_code',compact("productCategories",'exporter', 'importer','representative','order'));
   
     
     }
@@ -283,6 +283,7 @@ class OrderController extends Controller
                 Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
                 ->get();
                 
+                
             
                $productCategories=ProductCategory::where("id",'!=',$request->productCatgory)->get();
              
@@ -292,8 +293,8 @@ class OrderController extends Controller
                 $importer = User::where('role_id','=',2)->get();
                 $representative = User::where('role_id','=',3)->get();
                
-               $order_id=$request->order_id;
-                return view('order.order_product_code',compact('typeproductCatgories','order_id','machines','exporter', 'importer','representative','productCategories'));
+               $order=Order::find($request->order_id);
+                return view('order.order_product_code',compact('typeproductCatgories','order','machines','exporter', 'importer','representative','productCategories'));
                 
     
     }

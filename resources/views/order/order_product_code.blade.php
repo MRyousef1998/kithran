@@ -108,7 +108,7 @@
                         </div><!-- col-4 -->
 
 
-                        <input type="hidden" name="order_id" id="order_id" value="{{$order_id}}">
+                        <input type="hidden" name="order_id" id="order_id" value="{{$order->id}}">
                         
                     </div><br>
 
@@ -141,7 +141,7 @@
                                    
                                     <tr>  
                                        
-                                        <td style="text-align: center;vertical-align: middle;">P{{ $x->products_id }}OR{{$order_id}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">P{{ $x->products_id }}OR{{$order->id}}</td>
 
                              
                                       
@@ -150,7 +150,7 @@
                                        
 
                                         <td>
-                                            @if
+                                         
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
