@@ -150,7 +150,61 @@
                                        
 
                                         <td>
-                                         
+                                         @if($order->category_id=1)
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                <div class="dropdown-menu tx-13">
+                                                    <a class="dropdown-item" href="#update_status"
+                                                    data-order_id="{{ $x->id }}"
+                                                    data-toggle="modal"
+                                                        
+                                                        ><i
+                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                                    تغليف
+                                                </a>
+                                                <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
+                                                    <i
+                                                    class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
+                                                    </a>   
+                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
+                                       
+                                                 
+                                                        
+                                                        ><i
+                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                             التقاریر
+                                                </a>
+
+                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
+                                                    <i
+                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
+                                                                                                                   </a>   
+                                                    @can('حذف الفاتورة')
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                            data-toggle="modal" data-target="#delete_invoice"><i
+                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                            الفاتورة</a>
+                                                    @endcan
+
+                                                    
+                                                       
+                                                  
+
+                                                  
+                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
+                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
+                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
+                                                            الارشيف</a>
+                                                   
+
+                                                 
+                                                        
+                                                   
+                                                </div>
+                                            </div>
+                                            @else
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
@@ -204,6 +258,7 @@
                                                    
                                                 </div>
                                             </div>
+                                            @endif
 
                                         </td>
                                         
