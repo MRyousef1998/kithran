@@ -177,7 +177,7 @@
                 <div class="card-body">
                     <div class="table-responsive">
                         @if (isset($machines))
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >رقم المنتج</th>

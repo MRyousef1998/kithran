@@ -163,7 +163,7 @@
                                         <div class="tab-pane" id="tab5">
                                             <div class="table-responsive ">
                                               
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
@@ -289,7 +289,7 @@
                                                      <div class="tab-pane" id="tab6">
                                             <div class="table-responsive ">
                                               
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example2" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                      <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>
@@ -345,7 +345,7 @@
                          <div class="tab-pane" id="tab7">
                                             <div class="table-responsive ">
                                               
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example-delete" class="table key-buttons text-md-nowrap" data-page-length='50'>
                             <thead>
                                 <tr>
                               <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم المنتج</th>

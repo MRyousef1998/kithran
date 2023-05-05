@@ -187,7 +187,7 @@
                      
                                     <div class="table-responsive mt-15">
                                       
-                                        <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
                                             <thead>
                                                 <tr>
                                                      <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
@@ -251,16 +251,7 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                        
-                        
-                        
-                        
-                                                                          
-                        
-                                                    
-                                         
-                                                         
-                                                        
+      
                                                         
                                                     </tr>
                                                 </div>
@@ -486,7 +477,7 @@ $('.decrement-btn').click(function (e) {
             
             
 
-            $("#datatable input[type=checkbox]:checked").each(function() {
+            $("#example1 input[type=checkbox]:checked").each(function() {
                
                 var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
                               
@@ -587,7 +578,7 @@ else{
            
             var selected = new Array();
 
-            $("#datatable input[type=checkbox]:checked").each(function() {
+            $("#example1 input[type=checkbox]:checked").each(function() {
                
                 alert(this.find('.qty-input').val());
 

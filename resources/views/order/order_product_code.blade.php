@@ -156,11 +156,14 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    <a class="dropdown-item" href="#update_status"
-                                                    data-order_id="{{ $x->id }}"
-                                                    data-toggle="modal"
-                                                        
-                                                        ><i
+                                                    <a class="dropdown-item" 
+                                                    data-id="{{ $x->products_id }}" data-order_id="{{ $order->id }}"
+								data-toggle="modal"
+								href="#capsalation"    
+                                                     
+                                                    
+                                                    
+                                                    ><i
                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
                                                     تغليف
                                                 </a>
@@ -294,6 +297,56 @@
 
     <!-- Container closed -->
     </div>
+
+<!--CAPSALATION-->
+
+    <div class="modal fade" id="capsalation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تغليف منتج</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div> 
+            
+            <form action="{{ route('box.store') }}" method="post" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                <div class="modal-body">
+                   
+                  
+
+                  
+                    <input type="hidden" name="id" id="id" value="">
+                    <input type="hidden" name="order_id" id="order_id" value="">
+
+                        <label for="exampleInputEmail1">كود المنتج</label>
+                        <input type="text" class="form-control" id="box_code" name="box_code" required>
+                   
+                    
+                   
+                <br>
+                    
+                    <h5 class="card-title">المرفقات</h5>
+
+                    <div class="col-sm-12 col-md-12">
+                        <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
+                            data-height="70" />
+                    </div><br>
+                    <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">تاكيد</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--CAPSALATION-->
+
     <!-- main-content closed -->
 @endsection
 @section('js')
@@ -322,7 +375,21 @@
     <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
   
-
+    <script>
+        $('#capsalation').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id = button.data('id')
+            var order_id = button.data('order_id')
+    
+            
+            var modal = $(this)
+            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #order_id').val(order_id);
+           
+        })
+    
+    
+    </script>
 
 	
 
