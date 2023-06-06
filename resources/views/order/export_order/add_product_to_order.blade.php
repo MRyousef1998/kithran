@@ -121,7 +121,7 @@
                         <div class="row">
                             
                             <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
-                                <p class="mg-b-10">تحديد الصنف</p><select class="form-control select2" name="productCatgory"
+                                <p class="mg-b-10">تحديد الصنف</p><select class="form-control select" name="productCatgory"
                                    required >
                                     <option value="{{ $typeproductCatgories->id ?? null }}" selected>
                                         {{ $typeproductCatgories->category_name ?? 'يرجى اختيار الصنف' }}
@@ -137,14 +137,12 @@
     
     
                             <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
-                                <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="productCompany"
+                                <p class="mg-b-10">تحديد الشركة</p><select class="form-control select" name="productCompany"
                                     >
                                     <option value="{{ null }}" >
                                         {{ 'الکل' }}
                                     </option>
-                                    <option value="{{ $typeproductCompanies->id ?? null }}" selected>
-                                        {{ $typeproductCompanies->company_name ?? 'یرجى تحديد الشركة' }}
-                                    </option>
+                                    
                                     @foreach ($productCompanies as $productCompany)
                                     <option value="{{ $productCompany->id }}"> {{ $productCompany->company_name }}</option>
                                 @endforeach
@@ -152,17 +150,30 @@
     
                                 </select>
                             </div><!-- col-4 -->
-    
-    
                             <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
-                                <p class="mg-b-10">تحديد الصنف</p><select class="form-control select2" name="productGroup"
+                                <p class="mg-b-10">تحديد الحالة</p><select class="form-control select" name="productstatus"
                                     >
                                     <option value="{{ null }}" selected>
                                         {{  'الکل' }}
                                     </option>
-                                    <option value="{{ $typeproductGroupes->id ?? null }}" selected>
-                                        {{ $typeproductCatgories->company_name ?? 'یرجى تحديد الفئة' }}
+                                  
+                                    @foreach ($status as $statu)
+                                    <option value="{{ $statu->id }}"> {{ $statu->status_name }}</option>
+                                @endforeach
+    
+                                    
+    
+                                </select>
+                            </div><!-- col-4 -->
+    
+    
+                            <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                                <p class="mg-b-10">تحديد الصنف</p><select class="form-control select" name="productGroup"
+                                    >
+                                    <option value="{{ null }}" selected>
+                                        {{  'الکل' }}
                                     </option>
+                                
                                     @foreach ($productGroupes as $productGroup)
                                     <option value="{{ $productGroup->id }}"> {{ $productGroup->group_name }}</option>
                                 @endforeach

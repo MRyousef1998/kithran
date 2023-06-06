@@ -433,7 +433,7 @@ class ExportController extends Controller
         $productCompanies = ProductCompany::all();
         $productCatgories= ProductCategory::all();
         $orders= Order::where('id','=',$order_id)->get();
-        $status=Status::all();
+        $status=Status::where('id','>',6)->get();
 
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
