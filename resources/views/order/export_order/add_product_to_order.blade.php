@@ -203,20 +203,25 @@
             <div class="card">
                 <div class="card-body">
 
-                    <form action="/add_export_order_one_by_one" method="post" name="form"id="form"enctype="multipart/form-data"
+                    <form action="/add_export_order_one_by_one"  method="post" name="form"id="form"enctype="multipart/form-data"
                         autocomplete="off">
                         {{ csrf_field() }}
                         {{-- 1 --}}
 
                         
 
-                        
+                        <input name="typeproductCatgories" value="{{$typeproductCatgories->id ?? null}}" hidden>
+                                    <input name="typeproductGroupes" value="{{$typeproductGroupes->id ?? null}}" hidden>
+                                    <input name="typeproductCompanies" value="{{$typeproductCompanies->id ?? null}}" hidden>
+                                    <input name="typeproductStatus" value="{{$typeproductStatus->id ?? null}}" hidden>
+                                    <input name="typeproductCatgories" value="{{$typeproductCatgories->id ?? null}}" hidden>
                             
                            <input class=""type="hidden"  name="order_id" 
                                     type="text" value="{{$order_id}}" required>
                                     <input name="my_hidden_input" id="my_hidden_input" hidden
                                     >
-                        
+                                    
+                                    
                   <div class="table-responsive">
                                       
                     <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='5000'>

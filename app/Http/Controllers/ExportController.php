@@ -231,7 +231,7 @@ class ExportController extends Controller
     }
     public function store_one_by_one(Request $request)
     {
-        
+        return $request;
       
         $products=json_decode($request->my_hidden_input);
        
