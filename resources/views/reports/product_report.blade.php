@@ -32,20 +32,43 @@
 @endsection
 @section('content')
 
-@if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <button aria-label="Close" class="close" data-dismiss="alert" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>خطا</strong>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
 
+@if (session()->has('edit'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ session()->get('edit') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+@if (session()->has('delete'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>{{ session()->get('delete') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
+
+@if (session()->has('Add'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ session()->get('Add') }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 <!-- row -->
 <div class="row">
 
@@ -179,7 +202,7 @@
                                                 
                                                 
                                                 <td style="text-align: center;vertical-align: middle;">{{$products[0]->box_code}}</td>}
-                                            @endif
+                                             @endif
 
                                             @if($products[0]->shipment_id==null)
                                             {<td style="text-align: center;vertical-align: middle;">لم یتم الشحن</td>
@@ -197,43 +220,53 @@
                                                 <td style="text-align: center;vertical-align: middle;">{{$products[0]->note}}</td>
 
                                         <td style="text-align: center;vertical-align: middle;" >
-                                            @if($satatus->id!=7 && $satatus->id!=0)
-                                            <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                data-products_id="{{ $products[0]->products_id }}" 
-                                                data-status_id="{{ $satatus->id }}"
-                                                data-status_name="{{ $satatus->status_name}}"
-                                                
-
-                                           
-
-                                                
-
-                                                data-toggle="modal" href="#delete" title="نقل الى قائمة الكسر"><i
-                                                    class="las la-pentext-warning fas fa-exchange-alt"></i></a>
-                                                @elseif($satatus->id==7)
-                                                    <a class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
-                                                    data-products_id="{{ $products[0]->products_id }}" 
-                                                   
-                                  
-                                            
-                                                    data-toggle="modal" href="#unbroken" title="استعادة الى الفائمة الاساسية"><i
-                                                        class="las fa-exchange-alt"></i></a>
-                                                    
-
-
-
+                                            <div class="dropdown">
+                                                <button aria-expanded="false" aria-haspopup="true"
+                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                <div class="dropdown-menu tx-13">
+                                                    @if($satatus->id!=7 && $satatus->id!=0)
+                                                    <a class="dropdown-item" data-effect="effect-scale"
+                                                        data-products_id="{{ $products[0]->products_id }}" 
+                                                        data-status_id="{{ $satatus->id }}"
+                                                        data-status_name="{{ $satatus->status_name}}"
                                                         
-                                                
-                                                @endif
-
-                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                            data-products_id="{{ $products[0]->products_id }}" 
+        
+                                                   
+        
+                                                        
+        
+                                                        data-toggle="modal" href="#delete" title="نقل الى قائمة الكسر"><i
+                                                            class="las la-pentext-warning fas fa-exchange-alt"></i>نقل الى قائمة الكسر</a>
+                                                        @elseif($satatus->id==7)
+                                                            <a class="dropdown-item" data-effect="effect-scale"
+                                                            data-products_id="{{ $products[0]->products_id }}" 
+                                                           
                                           
-                                                data-toggle="modal" href="#delete" title="حذف"><i
-                                                    class="las la-trash"></i></a>
+                                                    
+                                                            data-toggle="modal" href="#unbroken" title="استعادة الى الفائمة الاساسية"><i
+                                                                class="las fa-exchange-alt"></i>استعادة من قائمة الکسر</a>
+                                                            
+        
+        
+        
+                                                                
+                                                        
+                                                        @endif
+        
+                                                    <a class="dropdown-item" data-effect="effect-scale"
+                                                    data-product_id="{{ $products[0]->products_id }}" 
+                                                  
+                                                        data-toggle="modal" href="#update_location" title="حذف"><i
+                                                            class="las fa-exchange-alt"></i>نقل القطعة الى فرع اخر</a>
+                                                   
 
-                                        </td>
-                                      
+                                            
+                                                   
+                                                </div>
+                                            </div>
+
+                                        
                                     </tr>
                               
                             </tbody>
@@ -308,6 +341,44 @@
         </div>
 
 
+        <div class="modal fade" id="update_location" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">تغیر حالة الطلبية</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action='update_location_product' method="post">
+                    {{ method_field('post') }}
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <input type="hidden" name="product_id" id="product_id" value="">
+    
+                        <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الرجاء تحديد الموقع </label>
+                        <select name="location_id" id="location_id" class="form-control" required>
+                            <option value="" selected disabled> --حدد الموقع--</option>
+                           
+                                <option value="1">مسنودع</option>
+                                <option value="2">محل كبير</option>
+                                <option value="3">محل صغير</option>
+                        </select>
+                       
+                        
+    
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">تعديل البيانات</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 <!-- row closed -->
 </div>
 <!-- Container closed -->
@@ -353,6 +424,20 @@
 <script src="{{ URL::asset('assets/plugins/pickerjs/picker.min.js') }}"></script>
 <!-- Internal form-elements js -->
 <script src="{{ URL::asset('assets/js/form-elements.js') }}"></script>
+
+<script>
+    $('#update_location').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+       
+       
+        var product_id = button.data('product_id')
+        var modal = $(this)
+
+        
+       
+        modal.find('.modal-body #product_id').val(product_id);
+    })
+</script>
 <script>
     var date = $('.fc-datepicker').datepicker({
         dateFormat: 'yy-mm-dd'

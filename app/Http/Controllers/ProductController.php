@@ -1123,6 +1123,24 @@ return view('order.export_order.add_product_to_order',compact('order_id','typeOr
   
 
   }
+
+
+  public function update_location_product(Request $request){
+      
+    $product = Product::findOrFail($request->product_id);
+
+  
+
+        $product->update([
+            'value_location' => $request->location_id,
+        ]);
+
+
+        session()->flash('Add','تم نقل المنتج بجاح');
+        return redirect('product_report');
+
+
+}
 }
 
 

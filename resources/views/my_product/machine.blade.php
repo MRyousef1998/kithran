@@ -171,7 +171,7 @@
                                     {{  'الکل' }}
                                 </option>
                                 <option value="{{ $typeproductGroupes->id ?? null }}" selected>
-                                    {{ $typeproductCatgories->company_name ?? 'یرجى تحديد الفئة' }}
+                                    {{ $typeproductGroupes->group_name ?? 'یرجى تحديد الفئة' }}
                                 </option>
                                 @foreach ($productGroupes as $productGroup)
                                 <option value="{{ $productGroup->id }}"> {{ $productGroup->group_name }}</option>
