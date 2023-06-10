@@ -157,7 +157,7 @@ Route::get('Invoice_Partial','App\Http\Controllers\InvoiceController@Invoice_Par
 Route::get('/{page}', 'App\Http\Controllers\AdminController@index');
 Route::get('add_invoices/{category_id}/{order_id}', 'App\Http\Controllers\InvoiceController@createInvoice');
 
-
+Route::post('invoice_serch', 'App\Http\Controllers\InvoiceController@invoice_serch')->name('invoice_serch');
 Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
 Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');

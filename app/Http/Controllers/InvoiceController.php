@@ -25,14 +25,14 @@ class InvoiceController extends Controller
     public function index()
     {
         
-        $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->get();
-        $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->get();
-
+        // $PaidFromUSInvoices = Invoice::where('invoice_categories_id',1)->get();
+        // $PaidForUSInvoices = Invoice::where('invoice_categories_id',2)->get();
+        $invoiceType = InvoiceCategory::all();
         $exporter = User::where('role_id','=',1)->get();
  $importer = User::where('role_id','=',2)->get();
  $representative = User::where('role_id','=',3)->get();
 
-        return view('invoices.invoices', compact('PaidFromUSInvoices',"PaidForUSInvoices",'exporter','importer','representative'));
+        return view('invoices.invoices', compact('invoiceType','exporter','importer','representative'));
     }
 
     /**
@@ -142,9 +142,55 @@ class InvoiceController extends Controller
 
 
     }
-    public function store1(Request $request)
-    {
-        return $request;
+    public function invoice_serch(Request $request)
+    { 
+        if($request->rdio==1){
+            
+           if($request->type!=null){
+
+
+
+                if ($request->invoice_categotry==null&&$request->start_at==null){
+                $end_at=date($request->start_at);
+
+                     $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','<=',$end_at)->get();
+return $invoices;
+                                }
+               else if($request->invoice_categotry==null&&$request->start_at!=null){
+                $start_at=date($request->start_at);
+                $end_at=date($request->start_at);
+                $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','>=',$start_at)->where('invoice_Date','<=',$end_at)->get();
+               }
+                else if($request->invoice_categotry!=null&&$request->start_at!=null){
+                    $start_at=date($request->start_at);
+                    $end_at=date($request->start_at);
+                    $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','>=',$start_at)->where('invoice_Date','<=',$end_at)
+                    ->where('Value_Status',$request->invoice_categotry)->get();
+                     }
+               
+                     else if($request->invoice_categotry!=null&&$request->start_at==null){
+                    
+                        $invoices=Invoice::where('invoice_categories_id',$request->type)->where('Value_Status',$request->invoice_categotry)->get();
+                         }
+
+
+
+
+
+           }
+        }
+        else{
+
+            $invoices=Invoice::where('id',$request->invoice_number)->get();
+        }
+        return $invoices;
+        $invoiceType = InvoiceCategory::all();
+        $exporter = User::where('role_id','=',1)->get();
+ $importer = User::where('role_id','=',2)->get();
+ $representative = User::where('role_id','=',3)->get();
+
+        return view('invoices.invoices', compact('invoiceType','exporter','importer','representative','invoices'));
+        
     }
     /**
      * Display the specified resource.

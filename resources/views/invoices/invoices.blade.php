@@ -77,42 +77,108 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    
-                        <a href="add_invoices/{1}" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
-                                class="fas fa-plus"></i>&nbsp; اضافة فاتورة</a>
-                  
+                    <div class="card-header pb-0">
 
-                   
-                        <a class="modal-effect btn btn-sm btn-primary" href="{{ url('export_invoices') }}"
-                            style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل</a>
-                
-                </div>
+                        <form action="/invoice_serch" method="POST" role="search" autocomplete="off">
+                            {{ csrf_field() }}
+        
+        
+                            <div class="col-lg-3">
+                                <label class="rdiobox">
+                                    <input checked name="rdio" type="radio" value="1" id="type_div"> <span>بحث بنوع
+                                        الفاتورة</span></label>
+                            </div>
+        
+        
+                            <div class="col-lg-3 mg-t-20 mg-lg-t-0">
+                                <label class="rdiobox"><input name="rdio" value="2" type="radio"><span>بحث برقم الفاتورة
+                                    </span></label>
+                            </div><br><br>
+        
+                            <div class="row">
+        
+                                <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
+                                    <p class="mg-b-10">تحديد نوع الفواتير</p><select class="form-control select2" name="type"
+                                        required>
+                                   
+                                       
+                                   
+                                        @foreach ($invoiceType as $myinvoiceType)
+                                        <option value="{{ $myinvoiceType->id }}" selected> {{ $myinvoiceType->category_name }}</option>
+                                    @endforeach
+        
+                                    </select>
+                                </div><!-- col-4 -->
+        
+                                <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="invoice_categotry">
+                                    <p class="mg-b-10">تحديد نوع الفواتير</p><select class="form-control select2" name="invoice_categotry"
+                                        >
+                                        <option value="{{ $invoice_categotry ?? null }}" selected>
+                                            {{ $invoice_categotry ?? 'الکل' }}
+                                        </option>
+        
+                                        <option value="1">الفواتير المدفوعة</option>
+                                        <option value="3">الفواتير الغير مدفوعة</option>
+                                        <option value="2">الفواتير المدفوعة جزئيا</option>
+        
+                                    </select>
+                                </div><!-- col-4 -->
+        
+        
+        
+                                <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="invoice_number">
+                                    <p class="mg-b-10">البحث برقم الفاتورة</p>
+                                    <input type="text" class="form-control" id="invoice_number" name="invoice_number">
+        
+                                </div><!-- col-4 -->
+        
+                                <div class="col-lg-3" id="start_at">
+                                    <label for="exampleFormControlSelect1">من تاريخ</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div><input class="form-control fc-datepicker" type="date" value="{{ $start_at ?? '' }}"
+                                            name="start_at" placeholder="YYYY-MM-DD" type="text">
+                                    </div><!-- input-group -->
+                                </div>
+        
+                                <div class="col-lg-3" id="end_at">
+                                    <label for="exampleFormControlSelect1">الي تاريخ</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </div>
+                                        </div><input class="form-control fc-datepicker" name="end_at" type="date"
+                                            value="{{ $end_at ?? date('Y-m-d') }}" placeholder="YYYY-MM-DD" type="text">
+                                    </div><!-- input-group -->
+                                </div>
+                            </div><br>
+        
+                            <div class="row">
+                                <div class="col-sm-1 col-md-1">
+                                    <button class="btn btn-primary btn-block">بحث</button>
+                                </div>
+                            </div>
+                        </form>
+        
+                    </div>
                 <div class="card-body" >
                     <div class="text-wrap">
                         <div class="example" >
-                            <div class="panel panel-primary tabs-style-2" >
-                                <div class=" tab-menu-heading">
-                                    <div class="tabs-menu1">
-                                        <!-- Tabs -->
-                                         <ul class="nav panel-tabs main-nav-line">
-                                            <li><a href="#tab1" class="nav-link" data-toggle="tab">فواتیر قبض</a></li>
-                                         
-                                            <li><a href="#tab2" class="nav-link" data-toggle="tab">فواتیر دفع</a></li>
-                                            
-
-                                        </ul>
-                                    </div>
-                                </div>
-                                 <div class="panel-body tabs-menu-body main-content-body-right border">
-                                    <div class="tab-content" >
+                            
+                               
 
 
-                                        <div class="tab-pane active" id="tab1">
+                                      
                                             <div class="table-responsive mt-15">
 
                                               
                         <table  class="table center-aligned-table mb-0 table table-hover  " id="example1" style="text-align: center">
-                            <thead>
+                       
+                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>
                                     <th class="border-bottom-0">رقم الفاتورة</th>
@@ -132,11 +198,12 @@
                                     <th class="border-bottom-0">العمليات</th>
                                 </tr>
                             </thead>
+                            @if (isset($invoices))
                             <tbody>
                                 @php
                                 $i = 0;
                                 @endphp
-                                @foreach ($PaidForUSInvoices as $invoice)
+                                @foreach ($invoices as $invoice)
                                     @php
                                     $i++
                                     @endphp
@@ -215,135 +282,19 @@
                                         </td>
                                     </tr>
                                 @endforeach
-
+                                @endif
                             </tbody>
+                           
                         </table>
                     </div>
                     
                 </div>
 
 
-                <div class="tab-pane " id="tab2">
-                    <div class="table-responsive mt-15">
-
-                      
-<table   class="table center-aligned-table mb-0 table table-hover" data-page-length='50'style="text-align: center">
-    <thead>
-        <tr>
-            <th class="border-bottom-0">#</th>
-            <th class="border-bottom-0">رقم الفاتورة</th>
-            <th class="border-bottom-0">نوع الفاتورة</th>
-            <th class="border-bottom-0">تاريخ القاتورة</th>
-            <th class="border-bottom-0">تاريخ الاستحقاق</th>
-            <th class="border-bottom-0">كود الطلبية</th>
-            <th class="border-bottom-0">العمیل</th>
-
-           
-            <th class="border-bottom-0">الخصم</th>
-            
-            <th class="border-bottom-0">قيمة الضريبة</th>
-            <th class="border-bottom-0">الاجمالي</th>
-            <th class="border-bottom-0">الحالة</th>
-            <th class="border-bottom-0">ملاحظات</th>
-            <th class="border-bottom-0">العمليات</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-        $i = 0;
-        @endphp
-        @foreach ($PaidFromUSInvoices as $invoice)
-            @php
-            $i++
-            @endphp
-            <tr>
-                <td>{{ $i }}</td>
-                <td>ORFK{{ $invoice->id }} </td>
-                <td><a
-                    href="{{ url('InvoicesDetails') }}/{{ $invoice->id }}">{{ $invoice->category->category_name }}</a>
-            </td>
-                <td>{{ $invoice->invoice_Date }}</td>
-                <td>{{ $invoice->Due_date }}</td>
-                <td>ORNO{{ $invoice->order->id }}</td>
-
-                <td>{{ $invoice->order->importer->name }}</td>
                 
-                <td>{{ $invoice->Discount }}</td>
-                
-                <td>{{ $invoice->order->Value_VAT }}</td>
-                <td>{{ $invoice->Total }}</td>
-                <td>
-                    @if ($invoice->Value_Status == 1)
-                        <span class="text-success">مدفوعة بالكامل</span>
-                    @elseif($invoice->Value_Status == 3)
-                        <span class="text-danger">{{ $invoice->Status }}</span>
-                    @else
-                        <span class="text-warning"> مدفوعة جزئياً </span>
-                    @endif
-
-                </td>
-
-                <td>{{ $invoice->note }}</td>
-                <td>
-                    <div class="dropdown">
-                        <button aria-expanded="false" aria-haspopup="true"
-                            class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                            type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
-                        <div class="dropdown-menu tx-13">
-                            @can('تعديل الفاتورة')
-                                <a class="dropdown-item"
-                                    href=" {{ url('edit_invoice') }}/{{ $invoice->id }}">تعديل
-                                    الفاتورة</a>
-                            @endcan
-
-                            @can('حذف الفاتورة')
-                                <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
-                                    data-toggle="modal" data-target="#delete_invoice"><i
-                                        class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                    الفاتورة</a>
-                            @endcan
-
-                            
-                                <a class="dropdown-item"
-                                    href="{{ URL::route('Status_show', [$invoice->id]) }}"><i
-                                        class=" text-success fas
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            fa-money-bill"></i>&nbsp;&nbsp;تغير
-                                    حالة
-                                    الدفع</a>
-                          
-
-                           ('ارشفة الفاتورة')
-                                <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
-                                    data-toggle="modal" data-target="#Transfer_invoice"><i
-                                        class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                    الارشيف</a>
-                           
-
-                         
-                                <a class="dropdown-item" href="show_invoice/{{ $invoice->id }}"><i
-                                        class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
-                                    الفاتورة
-                                </a>
-                           
-                        </div>
-                    </div>
-
-                </td>
-            </tr>
-        @endforeach
-
-    </tbody>
-</table>
-</div>
-
-</div>
             </div>
 
         </div>
-
-    </div>
-</div>
-</div>
 
         </div>
 
@@ -463,6 +414,7 @@
         })
 
     </script>
+   
 
     <script>
         $('#Transfer_invoice').on('show.bs.modal', function(event) {
@@ -478,6 +430,29 @@
 
 
 
+<script>
+    $(document).ready(function() {
+
+        $('#invoice_number').hide();
+
+        $('input[type="radio"]').click(function() {
+            if ($(this).attr('id') == 'type_div') {
+                $('#invoice_number').hide();
+                $('#type').show();
+                $('#invoice_categotry').show();
+                $('#start_at').show();
+                $('#end_at').show();
+            } else {
+                $('#invoice_number').show();
+                $('#type').hide();
+                $('#start_at').hide();
+                $('#invoice_categotry').hide();
+                $('#end_at').hide();
+            }
+        });
+    });
+
+</script>
 
 
 @endsection
