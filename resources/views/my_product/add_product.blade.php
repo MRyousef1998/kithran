@@ -178,6 +178,31 @@
 
                                 </select>
                             </div>
+
+                            <div class="col">
+                                <label for="inputName" class="control-label">مكان التواجد   </label>
+                                <select name="product_location" id="product_location" class="form-control" required>
+                                    <!--placeholder-->
+                                    <option value="1" >
+                                    الافنراضي
+                                </option>
+                                <option value="1" >
+                                    المستودع
+                                </option>
+                                <option value="2" >
+                                   محل كبير 
+                                </option>
+                                <option value="3" >
+                                    محل صغير
+                                </option>
+
+
+
+                                </select>
+                            </div>
+
+
+
                                     <div class="col">
                                 <label for="exampleTextarea">ملاحظات</label>
                                 <textarea class="form-control" id="exampleTextarea" name="note" rows="1"></textarea>

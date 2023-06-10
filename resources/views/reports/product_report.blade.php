@@ -59,34 +59,17 @@
                     {{ csrf_field() }}
 
 
-                    <div class="col-lg-3">
-                        <label class="rdiobox">
-                            <input checked name="rdio" type="radio" value="1" id="type_div"> <span>بحث بنوع
-                                الدفعات</span></label>
-                    </div>
+                   
 
 
                     <div class="col-lg-3 mg-t-20 mg-lg-t-0">
-                        <label class="rdiobox"><input name="rdio" value="2" type="radio"><span>بحث برقم الدفعة
+                        <label class="rdiobox"><input checked name="rdio" value="2" type="radio" ><span>بحث برقم الدفعة
                             </span></label>
                     </div><br><br>
 
                     <div class="row">
 
-                        <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
-                            <p class="mg-b-10">تحديد نوع الدفعة</p><select class="form-control select2" name="type"
-                                required>
-                                <option value="{{ $type ?? 'حدد نوع الدفعات' }}" selected>
-                                    {{ $type ?? 'حدد نوع الدفعات' }}
-                                </option>
-
-                                <option value="1">مدفوعات</option>
-                                <option value="2">مقبوضات</option>
-                                <option value="3">مصاريف خارجية</option>
-
-                            </select>
-                        </div><!-- col-4 -->
-
+                       
 
                         <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="invoice_number">
                             <p class="mg-b-10">البحث برقم الدفعة</p>
@@ -94,29 +77,8 @@
 
                         </div><!-- col-4 -->
 
-                        <div class="col-lg-3" id="start_at">
-                            <label for="exampleFormControlSelect1">من تاريخ</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                </div><input class="form-control fc-datepicker" value="{{ $start_at ?? '' }}"
-                                    name="start_at" placeholder="YYYY-MM-DD" type="text">
-                            </div><!-- input-group -->
-                        </div>
+                   
 
-                        <div class="col-lg-3" id="end_at">
-                            <label for="exampleFormControlSelect1">الي تاريخ</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="fas fa-calendar-alt"></i>
-                                    </div>
-                                </div><input class="form-control fc-datepicker" name="end_at"
-                                    value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD" type="text">
-                            </div><!-- input-group -->
-                        </div>
                     </div><br>
 
                     <div class="row">
@@ -399,24 +361,7 @@
 </script>
 
 <script>
-    $(document).ready(function() {
-
-        $('#invoice_number').hide();
-
-        $('input[type="radio"]').click(function() {
-            if ($(this).attr('id') == 'type_div') {
-                $('#invoice_number').hide();
-                $('#type').show();
-                $('#start_at').show();
-                $('#end_at').show();
-            } else {
-                $('#invoice_number').show();
-                $('#type').hide();
-                $('#start_at').hide();
-                $('#end_at').hide();
-            }
-        });
-    });
+    
 
 </script>
 <script>

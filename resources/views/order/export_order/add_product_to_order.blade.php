@@ -183,7 +183,21 @@
                                 </select>
                             </div><!-- col-4 -->
     
-                            
+                            <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                                <p class="mg-b-10">تحديد طلبية الاستيراد</p><select class="form-control select" name="importOrder"
+                                    >
+                                    <option value="{{ null }}" selected>
+                                        {{  'الکل' }}
+                                    </option>
+                                
+                                    @foreach ($importOrder as $myImportOrder)
+                                    <option value="{{ $myImportOrder->id }}"> {{ $myImportOrder->order_date }} {{$myImportOrder->importer->name}}</option>
+                                @endforeach
+    
+                                    
+    
+                                </select>
+                            </div>
                         </div><br>
     
                         <div class="row">
@@ -215,7 +229,7 @@
                                     <input name="typeproductCompanies" value="{{$typeproductCompanies->id ?? null}}" hidden>
                                     <input name="typeproductStatus" value="{{$typeproductStatus->id ?? null}}" hidden>
                                     <input name="typeproductCatgories" value="{{$typeproductCatgories->id ?? null}}" hidden>
-                            
+                                    <input name="typeproductOrder" value="{{$typeOrder->id ?? null}}" hidden>
                            <input class=""type="hidden"  name="order_id" 
                                     type="text" value="{{$order_id}}" required>
                                     <input name="my_hidden_input" id="my_hidden_input" hidden

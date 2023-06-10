@@ -231,7 +231,7 @@ class ExportController extends Controller
     }
     public function store_one_by_one(Request $request)
     {
-        return $request;
+    
       
         $products=json_decode($request->my_hidden_input);
        
@@ -257,33 +257,46 @@ class ExportController extends Controller
      ////
      $totalPrice=0;
      $totalcom=0;
-    
-     foreach($products as $product)
+     if($request->typeproductOrder!=null){
+        
+        $importOrder = $request->typeproductOrder;
+  foreach($products as $product)
      
-     { 
+     {  
          
          for($i=0 ;$i<$product->qty;$i++ ){
        
-         $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->get();
+        //  $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null)->with(["order" => function ($query)use ($importOrder){
+        //     $query->where('orders_id', $importOrder);   
+        // }])->get();
          
-         $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->first();
-         $importOrderOldProdect=$Olderproduct->order()->get();
-         $olderdate=$importOrderOldProdect[0]->order_due_date;
-         $olderProductId=$Olderproduct->id;
+        $Olderproduct=Product::with(['order' => function($query) use ($importOrder) { $query->where('orders_id',$importOrder);}])
+ ->whereHas('order', function ($query) use ($importOrder) { 
+ $query->where('orders_id',$importOrder);}
+ )
+ ->where("product_details_id", $product->id)->where("selling_date", null)->first();
+        //  $Olderproduct=Product::with('order')->whereHas(["order" => function ($query)use ($importOrder){
+        //     $query->where('orders_id', $importOrder);   
+        // }])->where("product_details_id", $product->id)->where("selling_date", null)->first();
+     
+        //  $importOrderOldProdect=$Olderproduct->order()->get();
+        //  $olderdate=$importOrderOldProdect[0]->order_due_date;
+        //  $olderProductId=$Olderproduct->id;
     
-         foreach($allProducts as $currentProduct){
+        //  foreach($allProducts as $currentProduct){
             
-             $importOrdeForCurrentProdect=$currentProduct->order()->get();
-         $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
-         if($olderdate>$currentdate)
-         {
-             $olderdate=$currentdate;
-             $Olderproduct=$currentProduct;
-             $olderProductId=$currentProduct->id;
-         }
+        //      $importOrdeForCurrentProdect=$currentProduct->order()->get();
+        //  $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+        //  if($olderdate>$currentdate)
+        //  {
+        //      $olderdate=$currentdate;
+        //      $Olderproduct=$currentProduct;
+        //      $olderProductId=$currentProduct->id;
+        //  }
          
-        
-         }
+       
+        //  }
+     
          $Olderproduct->update([
             'selling_date' => Carbon::today(),
             'selling_price' => $product->price,
@@ -303,6 +316,62 @@ class ExportController extends Controller
        }
     
     }
+
+     }
+
+     else{
+       
+        foreach($products as $product)
+     
+        {  
+            
+            for($i=0 ;$i<$product->qty;$i++ ){
+          
+            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->get();
+            
+            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->first();
+            $importOrderOldProdect=$Olderproduct->order()->get();
+            $olderdate=$importOrderOldProdect[0]->order_due_date;
+            $olderProductId=$Olderproduct->id;
+       
+            foreach($allProducts as $currentProduct){
+               
+                $importOrdeForCurrentProdect=$currentProduct->order()->get();
+            $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+            if($olderdate>$currentdate)
+            {
+                $olderdate=$currentdate;
+                $Olderproduct=$currentProduct;
+                $olderProductId=$currentProduct->id;
+            }
+            
+           
+            }
+            return 3;
+            $Olderproduct->update([
+               'selling_date' => Carbon::today(),
+               'selling_price' => $product->price,
+               'selling_price_with_comm' => $product->price+$product->commission_pice,
+   
+       
+       
+               ]);
+               $totalPrice=$totalPrice+$product->price;
+               $totalcom=$totalcom+$product->commission_pice;
+   
+            $Olderproduct->order()->attach($order_id);
+           
+   
+          
+    
+          }
+       
+       }
+
+
+     }
+    
+   
   
     $order = Order::find($order_id);
     $order->Amount_Commission =  ($order->Amount_Commission)+( $totalcom);
@@ -424,7 +493,11 @@ class ExportController extends Controller
         return view('order.export_order.exports_order',compact('orders','exporter', 'importer','representative'));
     }
     public function add_produ_to_order($order_id)
-    { $productGroupes=ProductGroup::all();
+    {
+        $importOrder =Order::where("category_id",'=',1)->get();
+
+       // return $importOrder;
+        $productGroupes=ProductGroup::all();
         $productCompanies=ProductCompany::all();
        $productCatgories=ProductCategory::all();
        
@@ -441,7 +514,7 @@ class ExportController extends Controller
 
        
 
-        return view('order.export_order.add_product_to_order',compact('order_id','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
+        return view('order.export_order.add_product_to_order',compact('order_id','importOrder','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
     }
 
 }

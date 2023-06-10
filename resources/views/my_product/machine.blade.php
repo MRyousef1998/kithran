@@ -126,6 +126,27 @@
 
 
                         <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                            <p class="mg-b-10">تحديد مكان التواجد</p><select class="form-control select2" name="product_location"
+                                >
+                                <option value="{{null}}" selected>
+                                    الكل 
+                                </option>
+                                <option value="1" >
+                                    المستودع
+                                </option>
+                                <option value="2" >
+                                   محل كبير 
+                                </option>
+                                <option value="3" >
+                                    محل صغير
+                                </option>
+                               
+                                
+
+                            </select>
+                        </div>
+
+                        <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
                             <p class="mg-b-10">تحديد الشركة</p><select class="form-control select2" name="productCompany"
                                 >
                                 <option value="{{ null }}" >
