@@ -124,16 +124,21 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        @if (isset($machines))
+                       
                         <table id="example" class="table key-buttons text-md-nowrap" >
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">مكان التواجد</th>
+                                    
+                                    
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">العمليات</th>
+
 
                                 </tr>
                             </thead>
+                            @if (isset($machines))
                             <tbody>
                                 
                              <?php $i = 0; ?>
@@ -146,8 +151,20 @@
                              
                                       
                                         <td style="text-align: center;vertical-align: middle;">{{$x->company_name}} {{$x->product_name}} {{ $x->group_name }}</td>
+                                        @if($x->value_location=1){
+                                      <td style="text-align: center;vertical-align: middle;">المستودع</td>
 
-                                       
+                                        }
+                                        @elseif ($x->value_location=2){
+                                      <td style="text-align: center;vertical-align: middle;">محل كبير</td>
+                                            
+                                        }
+                                        @else{
+                                      <td style="text-align: center;vertical-align: middle;">محل صغير</td>
+
+                                        }
+                                        @endif
+
 
                                         <td>
                                          @if($order->category_id=1)
