@@ -22,12 +22,16 @@
 							</div>
 						</div>
 						<div>
-							<label class="tx-13">Online Sales</label>
-							<h5>563,275</h5>
+							<label class="tx-13">صافي المتبقي اليومي</label>
+							<h5>{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h5>
 						</div>
 						<div>
-							<label class="tx-13">Offline Sales</label>
-							<h5>783,675</h5>
+							<label class="tx-13">صافي المتبقي الشهري</label>
+							<h5>{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h5>
 						</div>
 					</div>
 				</div>
@@ -40,17 +44,19 @@
 						<div class="card overflow-hidden sales-card bg-primary-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TODAY ORDERS</h6>
+									<h6 class="mb-3 tx-12 text-white">وارد الشهر الجاري</h6>
 								</div>
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$5,74.12</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
+											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h4>
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-up text-white"></i>
-											<span class="text-white op-7"> +427</span>
+											<span class="text-white op-7">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}} </span>
 										</span>
 									</div>
 								</div>
@@ -62,17 +68,19 @@
 						<div class="card overflow-hidden sales-card bg-danger-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TODAY EARNINGS</h6>
+									<h6 class="mb-3 tx-12 text-white">مصاريف الشهر الجاري</h6>
 								</div>
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$1,230.17</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
+											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h4>
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
-											<span class="text-white op-7"> -23.09%</span>
+											<span class="text-white op-7"> {{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</span>
 										</span>
 									</div>
 								</div>
@@ -84,13 +92,14 @@
 						<div class="card overflow-hidden sales-card bg-success-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">TOTAL EARNINGS</h6>
+									<h6 class="mb-3 tx-12 text-white">وارد اليوم</h6>
 								</div>
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$7,125.70</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
+											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h4>
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-up text-white"></i>
@@ -106,13 +115,14 @@
 						<div class="card overflow-hidden sales-card bg-warning-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
-									<h6 class="mb-3 tx-12 text-white">PRODUCT SOLD</h6>
+									<h6 class="mb-3 tx-12 text-white">مصاريف اليوم</h6>
 								</div>
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
-											<h4 class="tx-20 font-weight-bold mb-1 text-white">$4,820.50</h4>
-											<p class="mb-0 tx-12 text-white op-7">Compared to last week</p>
+											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h4>
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
