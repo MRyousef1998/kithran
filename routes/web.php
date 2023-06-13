@@ -22,6 +22,7 @@ Auth::routes();
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
 Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
 Route::get('ExportOrderDetails/add_produ_to_order/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order');
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
 
