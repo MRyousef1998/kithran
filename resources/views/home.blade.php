@@ -151,22 +151,11 @@
 								<p class="tx-12 text-muted mb-0">Order Status and Tracking. Track your order from ship date to arrival. To begin, enter your order number.</p>
 							</div>
 							<div class="card-body">
-								<div class="total-revenue">
-									<div>
-									  <h4>120,750</h4>
-									  <label><span class="bg-primary"></span>success</label>
-									</div>
-									<div>
-									  <h4>56,108</h4>
-									  <label><span class="bg-danger"></span>Pending</label>
-									</div>
-									<div>
-									  <h4>32,895</h4>
-									  <label><span class="bg-warning"></span>Failed</label>
-									</div>
-								  </div>
-								  <h1>Google Bar Chart Example - ItSolutionStuff.com</h1>
-								  <div id="barchart_material" style="width: 900px; height: 500px;"></div>
+								
+							
+								  <div style="width:75%;">
+    {!! $chartjs->render() !!}
+</div>
 							</div>
 						</div>
 					</div>
@@ -320,23 +309,4 @@
 <script src="{{URL::asset('assets/js/jquery.vmap.sampledata.js')}}"></script>	
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script type="text/javascript">
-  google.charts.load('current', {'packages':['bar']});
-  google.charts.setOnLoadCallback(drawChart);
-
-  function drawChart() {
-	var data = google.visualization.arrayToDataTable({{ $result }});
-
-	var options = {
-	  chart: {
-		title: 'Website Performance',
-		subtitle: 'Click and Views',
-	  },
-	};
-
-	var chart = new google.charts.Bar(document.getElementById('barchart_material'));
-
-	chart.draw(data, google.charts.Bar.convertOptions(options));
-  }
-</script>
 @endsection
