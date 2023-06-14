@@ -28,40 +28,72 @@ class HomeController extends Controller
      */
     public function index()
     {
- $macineSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',1)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)
-->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
-->groupBy('year','month')->get();
-
-$grinderSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',2)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)
-->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
-->groupBy('year','month')->get();
-    
-
-$PartsSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',3)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)
-->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
-->groupBy('year','month')->get();
-    
+        $machinesRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        where("product_details.category_id", 1)->where("products.selling_date", '=',null)
+         ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+        ->get();
+       
          
-    
+       $GrinderRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+       where("product_details.category_id", 2)->where("products.selling_date", '=',null)
+        ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+       ->get();
+       
+       
+        $partsReminig = DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+        where("product_details.category_id", 3)->where("products.selling_date", '=',null)
+         ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+        ->get();
+
+for($i=1;$i<=12;$i++){
+
+    $erning_from_machine[$i]=0;
+    $erning_from_grinder[$i]=0;
+    $costForMachineParMonth[$i]=0;
+}
+
+
+ $macineSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
+Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',1)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
+->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
+->groupBy('year','month')->get();
+$grinderSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
+Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',2)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
+->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
+->groupBy('year','month')->get();
+$costForMachineParMonth=DB::table('payments')->whereMonth("pay_date", '>=',Carbon::now()->month-5)
+->selectRaw('sum(amount) as cost_amount,YEAR(pay_date) year, MONTH(pay_date) month')
+->groupBy('year','month')->get();
+foreach ($costForMachineParMonth as $cost) {
+    $cost_array[$cost->month] =$cost->cost_amount;
+}   
+foreach ($macineSoldParMonth as $machine) {
+    $erning_from_machine[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold-$cost_array[$machine->month];
+}
+
+foreach ($grinderSoldParMonth as $machine) {
+    $erning_from_grinder[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold-$cost_array[$machine->month]/2 ;
+    $erning_from_machine[$machine->month] = $erning_from_machine[$machine->month]+$cost_array[$machine->month];
+}       
+
+ 
 
 
 $PartsSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',3)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)
+Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',3)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
 ->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
 ->groupBy('year','month')->get();
 
 $paymentsthismonth = DB::table('account_statements')->where("account_statements.account_statement_types_id", 1)
-->selectRaw('count(id) as number ,sum(amount) as payments')->whereMonth("account_statements.pay_date", Carbon::now()->month)
-->groupBy('account_statements.pay_date')->get();
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
 $erningthismonth = DB::table('account_statements')->where("account_statements.account_statement_types_id", '=',2)
-->selectRaw('count(id) as number ,sum(amount) as payments')->whereMonth("account_statements.pay_date", Carbon::now()->month)
-->groupBy('account_statements.pay_date')->get();
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
+
 $parsonalpaymentthismonth = DB::table('account_statements')->where("account_statements.account_statement_types_id", '=',3)
-->selectRaw('count(id) as number ,sum(amount) as payments')->whereMonth("account_statements.pay_date", Carbon::now()->month)
-->groupBy('account_statements.pay_date')->get();
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
 
 if ($paymentsthismonth->isEmpty()==true) {
 
@@ -90,8 +122,34 @@ if ($paymentsthismonth->isEmpty()==true) {
 ])];
     
    }
+   if ($machinesRemining->isEmpty()==true) {
+
+    $machinesRemining=[new Request(['number_remining'=>0,
+
+   
+   
+])];
+    
+   }
+   if ($partsReminig->isEmpty()==true) {
+
+    $partsReminig=[new Request(['number_remining'=>0,
+
+   
+])];
+    
+   }
+   if ($GrinderRemining->isEmpty()==true) {
+
+    $GrinderRemining=[new Request(['number_remining'=>0,
+
+   
+   
+])];
+    
+   }
  
-        $chartjs = app()->chartjs
+        $chartjs1 = app()->chartjs
         ->name('pieChartTest')
         ->type('pie')
         ->size(['width' => 300 , 'height' => 200])
@@ -104,40 +162,52 @@ if ($paymentsthismonth->isEmpty()==true) {
             ]
         ])
         ->options([]);
-        $exporter = User::where('role_id','=',1)->get();
- $importer = User::where('role_id','=',2)->get();
- $representative = User::where('role_id','=',3)->get();
-
-
-
-        foreach ($macineSoldParMonth as $key => $value) {
-            $result[++$key] = [$value->year.'-'.$value->month, (int)$value->selling_price_with_com_product_sold, (int)$value->selling_price_with_com_product_sold];
-        }
-    
-        
-        $chartjs = app()->chartjs
-        ->name('barChartTest')
-        ->type('bar')
-        ->size(['width' => 400, 'height' => 200])
-        ->labels(['Label x', 'Label y'])
+  
+        $Reminingchartjs = app()->chartjs
+        ->name('pieChartTest1')
+        ->type('doughnut')
+        ->size(['width' => 300 , 'height' => 200])
+        ->labels(['متبقي مکنات', 'متبقي مطاحن','متبقي قطع تبديل'])
         ->datasets([
             [
-                "label" => "My First dataset",
-               
-                'backgroundColor' => ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
-                'data' => [69, 59]
-            ],
-            [
-                "label" => "My First dataset",
-                'backgroundColor' => ['rgba(255, 99, 132, 0.3)', 'rgba(54, 162, 235, 0.3)'],
-                'data' => [65, 12]
+                'backgroundColor' => ['#36A2EB', '#FF6384','#Fa672e'],
+                'hoverBackgroundColor' => ['#36A2EB', '##FF6384','#Fa672e'],
+                'data' => [$machinesRemining[0]->primery_price_with_com_product_remining, $GrinderRemining[0]->primery_price_with_com_product_remining,$partsReminig[0]->primery_price_with_com_product_remining]
             ]
         ])
-        ->options([ "groupWidth"=> 2]);
+        ->options([]);
+
+        $BarChart = app()->chartjs
+        ->name('barChartTest')
+        ->type('bar')
+        ->size(['width' => 800, 'height' => 200])
+        ->labels([Carbon::now()->format('Y-m'),Carbon::now()->subMonths(1)->format('Y-m'),Carbon::now()->subMonths(2)->format('Y-m'),
+        Carbon::now()->subMonths(3)->format('Y-m'),Carbon::now()->subMonths(4)->format('Y-m'),Carbon::now()->subMonths(5)->format('Y-m')])
+        ->datasets([
+            [
+                "label" => "مکائن القهوة",
+               
+                'backgroundColor' => ['#36A2EB'],
+                'data' => [$erning_from_machine[(int)Carbon::now()->format('m')],$erning_from_machine[(int)Carbon::now()->subMonths(1)->format('m')],$erning_from_machine[(int)Carbon::now()->subMonths(2)->format('m')],
+                $erning_from_machine[ (int) Carbon::now()->subMonths(3)->format('m')],$erning_from_machine[(int)Carbon::now()->subMonths(4)->format('m')],$erning_from_machine[(int)Carbon::now()->subMonths(5)->format('m')]]
+            ],
+            [
+                "label" => "مطاحن",
+                'backgroundColor' => [ '#FF6384'],
+                'data' =>[$erning_from_grinder[(int)Carbon::now()->format('m')],$erning_from_grinder[(int)Carbon::now()->subMonths(1)->format('m')],$erning_from_grinder[(int)Carbon::now()->subMonths(2)->format('m')],
+                $erning_from_grinder[ (int) Carbon::now()->subMonths(3)->format('m')],$erning_from_grinder[(int)Carbon::now()->subMonths(4)->format('m')],$erning_from_grinder[(int)Carbon::now()->subMonths(5)->format('m')]]
+           
+            ]
+        ])
+        ->options([]);
+        $GrinderReminingNumber=$GrinderRemining[0]->number_remining;
+        $machineReminingNumber=$machinesRemining[0]->number_remining;
 
 
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
 
-        
-        return view('home',compact('chartjs','exporter','importer','representative','result'));
+        return view('home',compact('chartjs1','exporter','importer','representative','BarChart','Reminingchartjs','GrinderReminingNumber','machineReminingNumber'));
     }
 }

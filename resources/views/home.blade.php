@@ -23,17 +23,20 @@
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
-							<h5>{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
-												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
-												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',3)->
-												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h5>
+							<h5>''.{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+
+								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+					
+								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
+					
+								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')),2)}}</h5>
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي الشهري</label>
-							<h5>{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
-												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
-												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)-number_format(\App\Models\AccountStatement::where('account_statement_types_id',3)->
-												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h5>
+							<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')),2)}}</h5>
 						</div>
 					</div>
 				</div>
@@ -145,23 +148,23 @@
 						<div class="card">
 							<div class="card-header bg-transparent pd-b-0 pd-t-20 bd-b-0">
 								<div class="d-flex justify-content-between">
-									<h4 class="card-title mb-0">Order status</h4>
+									<h4 class="card-title mb-0">ارباح الاشهر الستة الماضية</h4>
 									<i class="mdi mdi-dots-horizontal text-gray"></i>
 								</div>
-								<p class="tx-12 text-muted mb-0">Order Status and Tracking. Track your order from ship date to arrival. To begin, enter your order number.</p>
+								<p class="tx-12 text-muted mb-0">.</p>
 							</div>
 							<div class="card-body">
 								
 							
-								  <div style="width:75%;">
-    {!! $chartjs->render() !!}
+								  <div style="width:100%;">
+    {!! $BarChart->render() !!}
 </div>
 							</div>
 						</div>
 					</div>
 					
 					<div style="width:40%;">
-						{!! $chartjs->render() !!}
+						{!! $chartjs1->render() !!}
 					</div>
 				</div>
 				<!-- row closed -->
@@ -169,53 +172,33 @@
 				<!-- row opened -->
 				<div class="row row-sm">
 					
-					<div class="col-xl-4 col-md-12 col-lg-6">
-						<div class="card">
-							<div class="card-header pb-0">
-								<h3 class="card-title mb-2">Recent Orders</h3>
-								<p class="tx-12 mb-0 text-muted">An order is an investor's instructions to a broker or brokerage firm to purchase or sell</p>
-							</div>
-							<div class="card-body sales-info ot-0 pt-0 pb-0">
-								<div id="chart" class="ht-150"></div>
-								<div class="row sales-infomation pb-0 mb-0 mx-auto wd-100p">
-									<div class="col-md-6 col">
-										<p class="mb-0 d-flex"><span class="legend bg-primary brround"></span>Delivered</p>
-										<h3 class="mb-1">5238</h3>
-										<div class="d-flex">
-											<p class="text-muted ">Last 6 months</p>
-										</div>
-									</div>
-									<div class="col-md-6 col">
-										<p class="mb-0 d-flex"><span class="legend bg-info brround"></span>Cancelled</p>
-											<h3 class="mb-1">3467</h3>
-										<div class="d-flex">
-											<p class="text-muted">Last 6 months</p>
-										</div>
-									</div>
-								</div>
-							</div>
+					<div class="col-xl-6 col-md-6 col-lg-2">
+						
+							
+						<div id="dlk" name="dd" style="width:100%;">
+							{!! $Reminingchartjs->render() !!}
 						</div>
 						<div class="card ">
 							<div class="card-body">
 								<div class="row">
 									<div class="col-md-6">
 										<div class="d-flex align-items-center pb-2">
-											<p class="mb-0">Total Sales</p>
+											<p class="mb-0">عدد المكنات المتبقية</p>
 										</div>
-										<h4 class="font-weight-bold mb-2">$7,590</h4>
+										<h4 class="font-weight-bold mb-2">{{$machineReminingNumber}}</h4>
 										<div class="progress progress-style progress-sm">
 											<div class="progress-bar bg-primary-gradient wd-80p" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="78"></div>
 										</div>
 									</div>
 									<div class="col-md-6 mt-4 mt-md-0">
 										<div class="d-flex align-items-center pb-2">
-											<p class="mb-0">Active Users</p>
+											<p class="mb-0">عدد المطاحن المتبقي</p>
 										</div>
-										<h4 class="font-weight-bold mb-2">$5,460</h4>
+										<h4 class="font-weight-bold mb-2">{{$GrinderReminingNumber}}</h4>
 										<div class="progress progress-style progress-sm">
-											<div class="progress-bar bg-danger-gradient wd-75" role="progressbar"  aria-valuenow="45" aria-valuemin="0" aria-valuemax="45"></div>
+											<div class="progress-bar bg-danger-gradient wd-75" role="progressbar"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
 										</div>
-									</div>
+							
 								</div>
 							</div>
 						</div>
@@ -226,7 +209,7 @@
 				<!-- row opened -->
 				<div class="row row-sm row-deck">
 				
-					<div class="col-md-12 col-lg-8 col-xl-8">
+					<div class="col-xl-12 col-md-6 col-lg-2">
 						<div class="card card-table-two">
 							<div class="d-flex justify-content-between">
 								<h4 class="card-title mb-1">Your Most Recent Earnings</h4>
@@ -276,6 +259,7 @@
 										</tr>
 									</tbody>
 								</table>
+								
 							</div>
 						</div>
 					</div>

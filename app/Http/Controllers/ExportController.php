@@ -347,7 +347,7 @@ class ExportController extends Controller
             
            
             }
-            return 3;
+           
             $Olderproduct->update([
                'selling_date' => Carbon::today(),
                'selling_price' => $product->price,
