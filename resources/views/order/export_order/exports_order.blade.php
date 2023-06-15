@@ -192,7 +192,7 @@
                                                             @if ($x->status->id==1)
                                                                 <span class="text-danger">{{ $x->status->status_name }}</span>
                                                             
-                                                            @elseif ($x->status->id==2)
+                                                            @elseif ($x->status->id==6)
                                                                 <span class="text-success">{{ $x->status->status_name }}</span>
                                                             @else
                                                             
@@ -213,20 +213,20 @@
                                                                         
                                                                         ><i
                                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
-                                                                    تأكيد استلام
+                                                                     تغير الحالة
                                                                 </a>
                                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
                                                                     <i
                                                                      class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
                                                                                                                                    </a> 
                                                                 
+            
                 
-                                                              
-                                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                                            data-toggle="modal" data-target="#delete_invoice"><i
-                                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                                                            الطلبية</a>
-                                                                 
+                                                                       <a class="dropdown-item" href="#" data-order_id="{{ $x->id }}"
+                                                                        data-toggle="modal" data-target="#delete"><i
+                                                                            class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                                        الطلبية</a>
+                
                 
                                                                     
                                                                        
@@ -283,6 +283,69 @@
 
     <!-- Container closed -->
     </div>
+    <div class="modal fade" id="update_status" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تغیر حالة الطلبية</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action='update_status_order' method="post">
+                {{ method_field('post') }}
+                {{ csrf_field() }}
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" id="order_id" value="">
+
+                    <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الرجاء تحديد الحالة </label>
+                    <select name="status_id" id="status_id" class="form-control" required>
+                        <option value="" selected disabled> --حدد الحالة--</option>
+                        @foreach ($Statuses as $Status)
+                            <option value="{{ $Status->id }}">{{ $Status->status_name  }}</option>
+                        @endforeach
+                    </select>
+                   
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">تعديل البيانات</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</div>
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">حذف الطلبية</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="import_order/destroy" method="post">
+                        {{ method_field('delete') }}
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+                            <p>هل انت متاكد من عملية الحذف ؟</p><br>
+                            <input type="hidden" name="order_id" id="order_id" value="">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                            <button type="submit" class="btn btn-danger">تاكيد</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     <!-- main-content closed -->
 @endsection
 @section('js')
@@ -325,6 +388,26 @@
 
 </script>
 
-	
+<script>
+    $('#update_status').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget)
+       
+       
+        var order_id = button.data('order_id')
+        var modal = $(this)
+
+        
+       
+        modal.find('.modal-body #order_id').val(order_id);
+    })
+
+    $('#delete').on('show.bs.modal', function(event) {
+    var button = $(event.relatedTarget)
+    var order_id = button.data('order_id')
+    var modal = $(this)
+    modal.find('.modal-body #order_id').val(order_id);
+  
+})
+</script>
 
 @endsection

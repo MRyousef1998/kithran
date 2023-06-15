@@ -234,8 +234,7 @@
                                   
 
 
-                                    
-                                    <th class="border-bottom-0">الحالة</th>
+                                   
                                      <th class="border-bottom-0">المرفق</th>
 										</tr>
 									</thead>
@@ -265,18 +264,7 @@
                                                             <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
                                                 
                                                             
-                                                            <td>
-                                                            @if ($x->status->id==1)
-                                                                <span class="text-danger">{{ $x->status->status_name }}</span>
-                                                            
-                                                            @elseif ($x->status->id==2)
-                                                                <span class="text-success">{{ $x->status->status_name }}</span>
-                                                            @else
-                                                            
-                                                                <span class="text-warning">{{ $x->status->status_name }}</span>
-                                                                
-                                                            @endif
-                                                        </td>
+                                                          
 
 
 

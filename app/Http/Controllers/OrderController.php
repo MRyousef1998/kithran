@@ -292,7 +292,7 @@ class OrderController extends Controller
            foreach($products as $product){
             $productforDelete=Product::find($product->id);
             $productforDelete->order()->detach($order_id);
-            $productforDelete-delete();
+            $productforDelete->delete();
            
            }
 
@@ -396,7 +396,7 @@ $order=Order::find($order_id);
 
 
         session()->flash('Add', 'تم تحديث الحالة بنجاح');
-        return redirect('import_order');
+        return redirect('home');
     
     }
     public function order_report($id)

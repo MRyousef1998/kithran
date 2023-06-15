@@ -37,10 +37,10 @@ class ExportController extends Controller
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
-
+        $Statuses  = Status::whereBetween('id',[5,6])->get();
        
 
-        return view('order.export_order.exports_order',compact('exporter', 'importer','representative'));
+        return view('order.export_order.exports_order',compact('exporter','Statuses', 'importer','representative'));
     }
 
 
@@ -48,6 +48,8 @@ class ExportController extends Controller
     {
         $start_at = date($request->start_at);
         $end_at = date($request->end_at);
+        $Statuses  = Status::whereBetween('id',[5,6])->get();
+
         if($start_at==null){
 
             $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',2)->get();
@@ -67,7 +69,7 @@ class ExportController extends Controller
 
        
 
-        return view('order.export_order.exports_order',compact('start_at','end_at','orders','exporter', 'importer','representative'));
+        return view('order.export_order.exports_order',compact('start_at','Statuses','end_at','orders','exporter', 'importer','representative'));
     }
     /**
      * Show the form for creating a new resource.
