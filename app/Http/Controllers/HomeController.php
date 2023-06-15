@@ -27,7 +27,8 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {  $orders = Order::where('category_id','=',1)->whereMonth("order_date",Carbon::now()->month)->get();
+       
         $machinesRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
         where("product_details.category_id", 1)->where("products.selling_date", '=',null)
          ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
@@ -50,6 +51,7 @@ for($i=1;$i<=12;$i++){
     $erning_from_machine[$i]=0;
     $erning_from_grinder[$i]=0;
     $costForMachineParMonth[$i]=0;
+     $cost_array[$i]=0;
 }
 
 
@@ -73,7 +75,7 @@ foreach ($macineSoldParMonth as $machine) {
 
 foreach ($grinderSoldParMonth as $machine) {
     $erning_from_grinder[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold-$cost_array[$machine->month]/2 ;
-    $erning_from_machine[$machine->month] = $erning_from_machine[$machine->month]+$cost_array[$machine->month];
+    $erning_from_machine[$machine->month] = $erning_from_machine[$machine->month]+$cost_array[$machine->month]/2;
 }       
 
  
@@ -94,6 +96,8 @@ $erningthismonth = DB::table('account_statements')->where("account_statements.ac
 $parsonalpaymentthismonth = DB::table('account_statements')->where("account_statements.account_statement_types_id", '=',3)
 ->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
 ->groupBy('month')->get();
+
+
 
 if ($paymentsthismonth->isEmpty()==true) {
 
@@ -208,6 +212,6 @@ if ($paymentsthismonth->isEmpty()==true) {
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
 
-        return view('home',compact('chartjs1','exporter','importer','representative','BarChart','Reminingchartjs','GrinderReminingNumber','machineReminingNumber'));
+        return view('home',compact('chartjs1','orders','exporter','importer','representative','BarChart','Reminingchartjs','GrinderReminingNumber','machineReminingNumber'));
     }
 }

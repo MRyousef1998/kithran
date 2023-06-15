@@ -12,8 +12,9 @@ use App\Models\ProductCompany;
 use App\Models\ProductGroup;
 use App\Models\ProductCategory;
 use App\Models\Product;
+use App\Models\InvoicesDetails;
 
-
+use App\Models\OrderDetail;
 use App\Models\ProductDetail;
 use App\Models\Status;
 use Carbon\Carbon;
@@ -249,9 +250,54 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request)
     {
-        //
+        $order_id=$request->order_id;
+        $order=Order::findOrFail($request->order_id)->first();
+        $order_invoice=Invoice::where('orders_id',$order_id)->first();
+        
+       // $order_attechment=OrderAttachment::where('orders_id',$order_id);
+        $order_detail=OrderDetail::where('orders_id',$order_id)->first();
+        $order_payment=Payment::where('orders_id',$order_id)->first();
+        $products =DB::table('products')->
+       Join('order_product', 'products.id', '=', 'order_product.products_id')-> where('order_product.orders_id',$order_id)
+       ->selectRaw('products.id')-> get();
+       
+    
+
+        if ($order_invoice!=null) {
+            $invoice_detail=InvoicesDetails::where('invoices_id',$order_invoice->id)->first();
+            if ($invoice_detail!=null) {
+        
+                $invoice_detail->delete();                    
+                                        
+                                       }
+            $order_invoice->delete();   
+                        
+                       }
+      
+         if ($order_detail!=null) {
+        
+            $order_detail->delete();                
+                                    
+                                   }                         
+
+        if ($order_payment!=null) {
+            $order_payment->delete();
+          
+            
+           }
+
+
+           foreach($products as $product){
+            $productforDelete=Product::find($product->id);
+            $productforDelete->order()->detach($order_id);
+            $productforDelete-delete();
+           
+           }
+
+           session()->flash('Add', 'تم تحديث الحالة بنجاح');
+           return redirect('import_order');
     }
     public function order_prodect_code($order_id)
     {

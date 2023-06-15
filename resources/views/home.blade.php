@@ -23,7 +23,7 @@
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
-							<h5>''.{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+							<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
 
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 					
@@ -220,44 +220,111 @@
 								<table class="table table-striped table-bordered mb-0 text-sm-nowrap text-lg-nowrap text-xl-nowrap">
 									<thead>
 										<tr>
-											<th class="wd-lg-25p">Date</th>
-											<th class="wd-lg-25p tx-right">Sales Count</th>
-											<th class="wd-lg-25p tx-right">Earnings</th>
-											<th class="wd-lg-25p tx-right">Tax Witheld</th>
+										
+                                    <th class="border-bottom-0"> الشركة الموردة</th>
+
+                                  
+                                    <th class="border-bottom-0">عدد المكنات </th>
+                                    
+                                   
+
+
+                                    <th class="border-bottom-0">تاريخ الوصول</th>
+                                  
+                                  
+
+
+                                    
+                                    <th class="border-bottom-0">الحالة</th>
+                                     <th class="border-bottom-0">المرفق</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>05 Dec 2019</td>
-											<td class="tx-right tx-medium tx-inverse">34</td>
-											<td class="tx-right tx-medium tx-inverse">$658.20</td>
-											<td class="tx-right tx-medium tx-danger">-$45.10</td>
-										</tr>
-										<tr>
-											<td>06 Dec 2019</td>
-											<td class="tx-right tx-medium tx-inverse">26</td>
-											<td class="tx-right tx-medium tx-inverse">$453.25</td>
-											<td class="tx-right tx-medium tx-danger">-$15.02</td>
-										</tr>
-										<tr>
-											<td>07 Dec 2019</td>
-											<td class="tx-right tx-medium tx-inverse">34</td>
-											<td class="tx-right tx-medium tx-inverse">$653.12</td>
-											<td class="tx-right tx-medium tx-danger">-$13.45</td>
-										</tr>
-										<tr>
-											<td>08 Dec 2019</td>
-											<td class="tx-right tx-medium tx-inverse">45</td>
-											<td class="tx-right tx-medium tx-inverse">$546.47</td>
-											<td class="tx-right tx-medium tx-danger">-$24.22</td>
-										</tr>
-										<tr>
-											<td>09 Dec 2019</td>
-											<td class="tx-right tx-medium tx-inverse">31</td>
-											<td class="tx-right tx-medium tx-inverse">$425.72</td>
-											<td class="tx-right tx-medium tx-danger">-$25.01</td>
-										</tr>
-									</tbody>
+                                                    
+                                                    <?php $i = 0; ?>
+                                                    @foreach ($orders as $x)
+                                                        <?php $i++; ?>
+                                                        <div class="all_row">
+                                                        <tr>
+                                                            
+                                                            
+                                                            <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
+                                                        
+
+                    
+                                                          
+                                                            <td >
+                                                            <a href="{{url('OrderDetails')}}/{{$x->id}}"style="text-align: center;vertical-align: middle;">
+                                                            {{ $x->countAllItem()}}
+                                                            </a>
+                                                            
+                                                            
+                                                            </td>
+                    
+                                                            
+                                                            <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
+                                                
+                                                            
+                                                            <td>
+                                                            @if ($x->status->id==1)
+                                                                <span class="text-danger">{{ $x->status->status_name }}</span>
+                                                            
+                                                            @elseif ($x->status->id==2)
+                                                                <span class="text-success">{{ $x->status->status_name }}</span>
+                                                            @else
+                                                            
+                                                                <span class="text-warning">{{ $x->status->status_name }}</span>
+                                                                
+                                                            @endif
+                                                        </td>
+
+
+
+                                                            
+                                                           
+
+
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <button aria-expanded="false" aria-haspopup="true"
+                                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
+                                                                <div class="dropdown-menu tx-13">
+                                                                     
+                                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
+                                                       
+                                                                 
+                                                                        
+                                                                        ><i
+                                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
+                                                             التقاریر
+                                                                </a>
+                
+                                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
+                                                                    <i
+                                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
+                                                                                                                                   </a>   
+                                                                   
+                                                                       
+                                                                   
+                
+                                                                 
+                                                                        
+                                                                   
+                                                                </div>
+                                                            </div>
+                
+                                                        </td>
+
+
+                                                             
+                                                            
+                                                            
+                                                        </tr>
+                                                    </div>
+                                                   
+                                                    @endforeach
+                            </tbody>
 								</table>
 								
 							</div>
