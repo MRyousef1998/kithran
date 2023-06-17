@@ -102,12 +102,42 @@
                                 @foreach ($productCategories as $productCatgory)
                                 <option value="{{ $productCatgory->id }}"> {{ $productCatgory->category_name }}</option>
                             @endforeach
-                                
+                                  
 
                             </select>
                         </div><!-- col-4 -->
+                        <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                            <p class="mg-b-10">حالة التغليف</p><select class="form-control select2" name="selling_status"
+                                >
+                                <option value="{{ $typeSeleingId ?? null }}" selected>
+                                {{ $typeSeleingName ?? 'الكل' }} 
+                                </option>
+                 
+                                <option value="1" >
+                                غیر مباع 
+                                </option>
+                                
+                                <option value="2" >
+                               مباع
+                                </option>
+                                
 
+                            </select>
+                        </div>
+                        <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
+                            <p class="mg-b-10">تحديد الحالة</p><select class="form-control select2" name="status"
+                                >
+                                <option value="{{ $typeStatus->id ?? null }}" selected>
+                                    {{ $typeStatus->status_name ?? 'الكل' }}
+                                </option>
+                 
+                                @foreach ($statuses as $status)
+                                <option value="{{ $status->id }}"> {{ $status->status_name }}</option>
+                            @endforeach
+                                  
 
+                            </select>
+                        </div>
                         <input type="hidden" name="order_id" id="order_id" value="{{$order->id}}">
                         
                     </div><br>
@@ -131,9 +161,11 @@
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">مكان التواجد</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء</th>
-
-                              
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الحالة</th>
+                                    
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء بدون عمولة</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  "> عمولة</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  "> سعر الشراء مع العمولة</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر المبيع</th>
 
                                     
@@ -173,122 +205,49 @@
 
                                         }
                                         @endif
-
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->status_name}}</td>
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->primary_price}}</td>
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm-$x->primary_price}}</td>
                                         <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm?? "غير مخصص"}}</td>
                                         <td>
-                                         @if($order->category_id=1)
+                                     
                                             <div class="dropdown">
                                                 <button aria-expanded="false" aria-haspopup="true"
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    <a class="dropdown-item" 
-                                                    data-id="{{ $x->products_id }}" data-order_id="{{ $order->id }}"
+                                                    <a class="dropdown-item"
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
+								data-id="{{ $x->products_id }}" data-product_name="{{ $x->product_name }}"
+
+                                                data-company_name="{{ $x->company_name }}"
+                                               
+                                                data-product_g="{{ $x->group_name }}"
+                                                {{-- data-group_id="{{ $x->group_id }}" --}}
+                                              
+                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
+                                                data-product_category_id ="{{ $x->category->id}}" --}}
+
+
+
 								data-toggle="modal"
-								href="#capsalation"    
-                                                     
-                                                    
-                                                    
-                                                    ><i
-                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
-                                                    تغليف
-                                                </a>
-                                                <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
-                                                    <i
-                                                    class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
-                                                    </a>   
-                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
-                                       
-                                                 
-                                                        
-                                                        ><i
-                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
-                                             التقاریر
-                                                </a>
-
-                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
-                                                    <i
-                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
-                                                                                                                   </a>   
-                                                    @can('حذف الفاتورة')
-                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                            data-toggle="modal" data-target="#delete_invoice"><i
-                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                                            الفاتورة</a>
-                                                    @endcan
-
-                                                    
-                                                       
-                                                  
-
-                                                  
-                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                                            الارشيف</a>
-                                                   
-
-                                                 
-                                                        
-                                                   
+								href="#submit1" class="btn btn-success"><i
+                                class="text-success fas fa-check"></i>&nbsp;&nbsp; تأكيد </a>
+                                <a class="dropdown-item"
+                                data-order_id="{{ $x->orders_id }}"
+                                data-id="{{ $x->products_id }}"
+                                data-toggle="modal"
+                                data-primary_price="{{ $x->primary_price }}"
+                                data-comation="{{$x->price_with_comm-$x->primary_price}}"
+                                href="#editProdect">
+                                    <i
+                                    class="text-success las la-pen"></i>&nbsp;&nbsp;تعديل سعر 
+                                    </a>  
+                                               
                                                 </div>
                                             </div>
-                                            @else
-                                            <div class="dropdown">
-                                                <button aria-expanded="false" aria-haspopup="true"
-                                                    class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
-                                                    type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
-                                                <div class="dropdown-menu tx-13">
-                                                    <a class="dropdown-item" href="#update_status"
-                                                    data-order_id="{{ $x->id }}"
-                                                    data-toggle="modal"
-                                                        
-                                                        ><i
-                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
-                                                    تأكيد استلام
-                                                </a>
-                                                <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
-                                                    <i
-                                                    class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
-                                                    </a>   
-                                                <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
-                                       
-                                                 
-                                                        
-                                                        ><i
-                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp;
-                                             التقاریر
-                                                </a>
-
-                                                 <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
-                                                    <i
-                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
-                                                                                                                   </a>   
-                                                    @can('حذف الفاتورة')
-                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                            data-toggle="modal" data-target="#delete_invoice"><i
-                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                                            الفاتورة</a>
-                                                    @endcan
-
-                                                    
-                                                       
-                                                  
-
-                                                  
-                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                                            الارشيف</a>
-                                                   
-
-                                                 
-                                                        
-                                                   
-                                                </div>
-                                            </div>
-                                            @endif
+                                           
 
                                         </td>
                                         
@@ -315,8 +274,94 @@
 
            
 
+<div class="modal fade" id="editProdect" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">تعديل سعر  منتج</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{route("edit_price_product_import")}}" method="post" enctype="multipart/form-data">
+                    {{ csrf_field() }}
+                        <div class="modal-body">
+                            
+                            
+
+                           
+                        <input type="hidden" name="id" id="id" value="">
+                            <input type="hidden" name="order_id" id="order_id" value="">
+                            <input type="hidden" name="old_price" id="old_price" value="">
+                            <input type="hidden" name="old_comation" id="old_comation" value="">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">السعر بدون عمولة</label>
+                            <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">  عمولة</label>
+                            <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="comation"  name ="comation" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
 
 
+                       
+                            
+                            
+
+                           
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">تعديل البيانات</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+<div class="modal fade" id="submit1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">تأكبد استلام منتج</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form action='{{ route('submit_product') }}' method="post" enctype="multipart/form-data">
+           
+            {{ csrf_field() }}
+            <div class="modal-body">
+
+
+                <input type="hidden" class="form-control" name="company_id" id="company_id" value="">
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
+                <input type="text" class="form-control" name="company_name" id="company_name" readonly required>
+
+                <div class="form-group">
+                    <label for="title">اسم المنتج :</label>
+
+                    <input type="hidden" class="form-control" name="id" id="id" value="">
+                    <input type="hidden" class="form-control" name="order_id" id="order_id" value="">
+                    <input type="text" class="form-control" name="product_name" id="product_name" readonly required>
+                </div>
+                <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الفئة</label>
+                <input type="text" class="form-control" name="group_name" id="group_name" value="" readonly>
+                <input type="hidden" class="form-control" name="supmit_from" id="supmit_from" value="2">
+                
+               
+
+               
+
+               
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"> تأكبد</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 
     <!-- row closed -->
     </div>
@@ -327,51 +372,7 @@
 
 <!--CAPSALATION-->
 
-    <div class="modal fade" id="capsalation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">تغليف منتج</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div> 
-            
-            <form action="{{ route('box.store') }}" method="post" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                <div class="modal-body">
-                   
-                  
-
-                  
-                    <input type="hidden" name="id" id="id" value="">
-                    <input type="hidden" name="order_id" id="order_id" value="">
-
-                        <label for="exampleInputEmail1">كود المنتج</label>
-                        <input type="text" class="form-control" id="box_code" name="box_code" required>
-                   
-                    
-                   
-                <br>
-                    
-                    <h5 class="card-title">المرفقات</h5>
-
-                    <div class="col-sm-12 col-md-12">
-                        <input type="file" name="pic" class="dropify" accept=".pdf,.jpg, .png, image/jpeg, image/png"
-                            data-height="70" />
-                    </div><br>
-                    <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">تاكيد</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+   
 <!--CAPSALATION-->
 
     <!-- main-content closed -->
@@ -403,18 +404,49 @@
 
   
     <script>
-        $('#capsalation').on('show.bs.modal', function(event) {
+        $('#submit1').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
-            var id = button.data('id')
+            var product_name = button.data('product_name')
+            var company_name = button.data('company_name')
             var order_id = button.data('order_id')
-    
+            
+            var id = button.data('id')
+            
+            var productG = button.data('product_g')
+            
+            
+
+        
             
             var modal = $(this)
-            modal.find('.modal-body #id').val(id);
+            modal.find('.modal-body #product_name').val(product_name);
+            modal.find('.modal-body #company_name').val(company_name);
+            modal.find('.modal-body #group_name').val(productG);
             modal.find('.modal-body #order_id').val(order_id);
            
+            
+
+
+            modal.find('.modal-body #id').val(id);
         })
-    
+        $('#editProdect').on('show.bs.modal', function(event) {
+   
+   var button = $(event.relatedTarget)
+   var id = button.data('id')
+   var order_id = button.data('order_id')
+   var product_price = button.data('primary_price')
+
+   var comation = button.data('comation')
+   
+   var modal = $(this)
+   modal.find('.modal-body #id').val(id);
+   modal.find('.modal-body #order_id').val(order_id);
+   modal.find('.modal-body #price').val(product_price);
+   modal.find('.modal-body #old_price').val(product_price);
+   modal.find('.modal-body #comation').val(comation);
+   modal.find('.modal-body #old_comation').val(comation);
+   })
+
     
     </script>
 

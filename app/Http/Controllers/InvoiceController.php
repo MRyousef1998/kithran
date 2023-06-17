@@ -51,6 +51,7 @@ class InvoiceController extends Controller
        $invoice_category=InvoiceCategory::find($category_id);
        $order=Order::find($order_id);
        
+$invoice=Invoice::where('orders_id',$order_id)->first();
 
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
@@ -58,7 +59,7 @@ class InvoiceController extends Controller
 
        
 
-        return view('invoices.add_invoice',compact('invoice_category','order','exporter', 'importer','representative'));
+        return view('invoices.add_invoice',compact('invoice_category','invoice','order','exporter', 'importer','representative'));
 
     }
     /**
@@ -96,7 +97,7 @@ class InvoiceController extends Controller
         'invoice_categories_id' => $request->invoice_category,
         
         'Amount_collection' =>($request->Amount_collection) ,
-        'Discount' =>($newInvoice->Discount+$request->Discount) ,
+        'Discount' =>($request->Discount) ,
         'Total' =>($request->Total ),
         'Value_Status' =>$newInvoice->Value_Status ,
       

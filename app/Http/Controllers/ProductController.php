@@ -19,6 +19,7 @@ use App\Models\ProductCompany;
 use App\Models\ProductGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Return_;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class ProductController extends Controller
@@ -729,7 +730,11 @@ $order_id=$request->order_id;
             $product->update([
                 'statuses_id' => 2,
             ]);
+            if($request->supmit_from==2){
+                session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.' OR'.$request->order_id.'NO'.$request->id );
 
+                          return redirect('export_order_prodect_code/'. $request->order_id);
+              }
 
             session()->flash('Add', '     :تم تأكيد المنتج بنجاح يرجى اعطاءه الكود التالي:'.' OR'.$request->order_id.'NO'.$request->id );
             return redirect('OrderDetails_not_recive_product/'. $request->order_id);
@@ -883,20 +888,22 @@ $myInvoice=Invoice::findOrFail($invoice->id);
 $newValueForInvoice=$invoice->Amount_collection -$request->old_price+ $request->price;
 $newTotalForInvoice=$invoice->Total -$request->old_price+ $request->price;
 $newTotalForOrder=$order->Total -$request->old_price+ $request->price;
-//$newAmountComtion=$order->Amount_Commission - ($product->selling_price_with_comm-$product->selling_price);
+$newAmountComtion=$order->Amount_Commission - $request->old_comation+$request->comation;
 }
+$order ->update([
+    'Total' => $newTotalForOrder,
+   'Amount_Commission'=>$newAmountComtion
+]);
 
 $product->update([
     'selling_price_with_comm' => $request->price,
+    'selling_price'=> $request->price-$request->comation,
+
     
 ]);
 $myInvoice ->update([
     'Amount_collection' =>$newValueForInvoice ,
     'Total' =>$newTotalForInvoice ,
-]);
-$order ->update([
-    'Total' => $newTotalForOrder,
-  
 ]);
 
   session()->flash('Add', 'تم تعديل سعر المنتج مع تعديل الفاتورة واجمال الطلبية');
@@ -905,6 +912,43 @@ $order ->update([
 
     }
 
+    public function edit_price_product_import(Request $request)
+    { 
+        $product=Product::find($request->id);
+    
+$order=Order::find($request->order_id);
+
+
+                    $order->Total =  ($order->Total)-$request->old_price-$request->old_comation+$request->price+$request->comation;
+                    $order->Amount_Commission =  ($order->Amount_Commission)-$request->old_comation+$request->comation;
+
+                    $order->save();
+$invoice=Invoice::where('orders_id',$request->order_id)->first();
+if($invoice !=null){
+
+$myInvoice=Invoice::findOrFail($invoice->id);
+
+$newValueForInvoice=$order->Total;
+$newTotalForInvoice=$order->Total;
+//$newTotalForOrder=$order->Total -$request->old_price+ $request->price;
+//$newAmountComtion=$order->Amount_Commission - ($product->selling_price_with_comm-$product->selling_price);
+}
+
+$product->update([
+    'primary_price' => $request->price,
+    'price_with_comm' => $request->price+$request->comation,
+]);
+$myInvoice ->update([
+    'Amount_collection' =>$newValueForInvoice ,
+    'Total' =>$newTotalForInvoice ,
+]);
+
+
+  session()->flash('Add', 'تم تعديل سعر المنتج مع تعديل الفاتورة واجمال الطلبية');
+            return redirect('order_prodect_code/'. $request->order_id);
+
+
+    }
 
 
     public function product_report_view(){

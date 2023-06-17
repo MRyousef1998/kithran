@@ -166,14 +166,14 @@
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">مكان التواجد</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء</th>
-
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر المبيع</th>
+                                    
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">كود التغليف</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">تاريخ الشحن</th>
 
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء</th>
                                     
-                                    
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر المبيع</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">عمولة عميل التوزيع</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">العمليات</th>
 
 
@@ -210,8 +210,7 @@
                                         }
                                         @endif
 
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
+                                       
                                         @if($x->box_id!=null)
                                         <td>
                                            
@@ -245,6 +244,10 @@
                                            </span>                                       
                                          </td>
                                          @endif
+                                         <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
+                                         
+                                         <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
+                                         <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm-$x->selling_price}}</td>
                                         <td>
                                         
                                             <div class="dropdown">
@@ -296,6 +299,7 @@
                                                 data-id="{{ $x->products_id }}"
                                                 data-toggle="modal"
                                                 data-product_price="{{ $x->selling_price_with_comm }}"
+                                                data-comation="{{ $x->selling_price_with_comm-$x->selling_price }}"
                                                 href="#editProdect">
                                                     <i
                                                     class="text-success las la-pen"></i>&nbsp;&nbsp;تعديل سعر المبيع
@@ -402,7 +406,12 @@
                         <input type="hidden" name="id" id="id" value="">
                             <input type="hidden" name="order_id" id="order_id" value="">
                             <input type="hidden" name="old_price" id="old_price" value="">
+                            <input type="hidden" name="old_comation" id="old_comation" value="">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> السعر : يرجى الانتباه سيتم اقتطاع عمولة العميل من هذه القيمة </label>
+
                             <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="price"  name ="price" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref"> العمولة : يرجى الانتباه هذه القيمة جزء من السعر الكلي </label>
+                            <input type="text" class="price form-control" style="text-align: center;vertical-align: middle;"id="comation"  name ="comation" onchange="priceChange('price',this)"  maxlength="5"  value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" >
 
 
                        
@@ -612,7 +621,7 @@
         var id = button.data('id')
         var order_id = button.data('order_id')
         var product_price = button.data('product_price')
-     
+        var comation = button.data('comation')
        
         
         var modal = $(this)
@@ -620,6 +629,8 @@
         modal.find('.modal-body #order_id').val(order_id);
         modal.find('.modal-body #price').val(product_price);
         modal.find('.modal-body #old_price').val(product_price);
+        modal.find('.modal-body #comation').val(comation);
+   modal.find('.modal-body #old_comation').val(comation);
         })
 
     </script>

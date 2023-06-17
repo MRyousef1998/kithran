@@ -63,7 +63,7 @@ class OrderController extends Controller
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
-        $Statuses =Status::all();
+        $Statuses =Status::where('id','<',4)->get();
        
 
         return view('order.import_order',compact('start_at','Statuses','end_at','orders','exporter', 'importer','representative'));
@@ -307,25 +307,88 @@ class OrderController extends Controller
     {
        
         $productCategories = ProductCategory::all();
-  
+        $statuses = Status::where('id','1=',5)->where('id','1=',6)->get();
         $exporter = User::where('role_id','=',1)->get();
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
 
 $order=Order::find($order_id);
-        return view('order.order_product_code',compact("productCategories",'exporter', 'importer','representative','order'));
+
+        return view('order.order_product_code',compact('statuses',"productCategories",'exporter', 'importer','representative','order'));
   
     
     }
 
     public function order_prodect_code_serch(Request $request)
     {
+        
+        $typeSeleingId=null;
+        $typeSeleingName=null;
        
     
-  
+        $statuses = Status::where('id','!=',5)->where('id','!=',6)->get();
 
-
-        $machines =DB::table('products')->
+        if($request->selling_status==null&& $request->status==null){
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+            ->get();
+           
+            
+        }
+      else if($request->selling_status!=null&& $request->status==null){
+        if($request->selling_status==1){
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+            ->where("products.selling_date", '=',null)->get();
+           
+            $typeSeleingId=1;
+                $typeSeleingName='غیر مباع';
+        }
+        else{
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+            ->where("products.selling_date", '!=',null)->get();
+           
+            $typeSeleingId=2;
+                $typeSeleingName=' مباع';
+        }
+        
+    }
+    else if($request->selling_status==null&& $request->status!=null){
+      
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+            ->where("statuses.id", '=',$request->status)->get();
+           
+            
+        }  
+        else if($request->selling_status!=null&& $request->status!=null){
+            if($request->selling_status==1){
+                $machines =DB::table('products')->
                 leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
                 leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
                 leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
@@ -333,22 +396,47 @@ $order=Order::find($order_id);
                 ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
               
                 Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
-                ->get();
-               
+                ->where("products.selling_date", '=',null)->where("statuses.id", '=',$request->status)->get();
+                $typeSeleingId=1;
+                $typeSeleingName='غیر مباع';
                 
+            }
+            else{
+                $machines =DB::table('products')->
+                leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+                leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+                ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+              
+                Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
+                ->where("products.selling_date", '!=',null)->where("statuses.id", '=',$request->status)->get();
+                $typeSeleingId=2;
+                $typeSeleingName=' مباع';
+                
+            }
+           
             
+        }
+    
+        
+
+
+
+
                $productCategories=ProductCategory::where("id",'!=',$request->productCatgory)->get();
              
                $typeproductCatgories=ProductCategory::find($request->productCatgory);
+               $typeStatus=Status::find($request->status);
                $id=$request->productCatgory;
                 $exporter = User::where('role_id','=',1)->get();
                 $importer = User::where('role_id','=',2)->get();
                 $representative = User::where('role_id','=',3)->get();
                
                $order=Order::find($request->order_id);
-                return view('order.order_product_code',compact('typeproductCatgories','order','machines','exporter', 'importer','representative','productCategories'));
+                return view('order.order_product_code',compact('typeSeleingId','typeSeleingName','statuses','typeStatus','typeproductCatgories','order','machines','exporter', 'importer','representative','productCategories'));
                 
-    
+
     }
 
     public function create1()

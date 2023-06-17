@@ -99,7 +99,7 @@
                             <div class="col">
                                 <label for="inputName" class="control-label">خصم</label>
                                 <input type="text" class="form-control form-control-lg" id="Discount"
-                                    name="Discount" value="0"
+                                    name="Discount" value="{{$invoice->Discount}}"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" onchange="myFunction()"
                                     required>
                             </div>

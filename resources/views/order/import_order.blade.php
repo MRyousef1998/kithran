@@ -238,22 +238,7 @@
                                                                      class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
                                                                                                                                    </a>   
                                                                    
-                                                                        <a class="dropdown-item" href="#" data-order_id="{{ $x->id }}"
-                                                                            data-toggle="modal" data-target="#delete"><i
-                                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
-                                                                            الطلبية</a>
-                                                                  
-                
-                                                                    
                                                                        
-                                                                  
-                
-                                                                  
-                                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                                                            الارشيف</a>
-                                                                   
                 
                                                                  
                                                                         

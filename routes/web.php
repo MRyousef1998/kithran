@@ -167,7 +167,7 @@ Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
 Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');
 Route::post('edit_price_product', 'App\Http\Controllers\ProductController@edit_price_product')->name('edit_price_product');
-
+Route::post('edit_price_product_import', 'App\Http\Controllers\ProductController@edit_price_product_import')->name('edit_price_product_import');
 Route::post('rechoce_product_confirm', 'App\Http\Controllers\ProductController@rechoce_product_confirm')->name('rechoce_product_confirm');
 Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
 Route::post('submit_all_product', 'App\Http\Controllers\ProductController@submit_all_product')->name('submit_all_product');
