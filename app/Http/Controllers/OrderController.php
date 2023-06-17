@@ -252,8 +252,9 @@ class OrderController extends Controller
      */
     public function destroy(Request $request)
     {
+        
         $order_id=$request->order_id;
-        $order=Order::findOrFail($request->order_id)->first();
+        $order=Order::findOrFail($request->order_id);
         $order_invoice=Invoice::where('orders_id',$order_id)->first();
         
        // $order_attechment=OrderAttachment::where('orders_id',$order_id);
@@ -262,8 +263,7 @@ class OrderController extends Controller
         $products =DB::table('products')->
        Join('order_product', 'products.id', '=', 'order_product.products_id')-> where('order_product.orders_id',$order_id)
        ->selectRaw('products.id')-> get();
-       
-    
+   
 
         if ($order_invoice!=null) {
             $invoice_detail=InvoicesDetails::where('invoices_id',$order_invoice->id)->first();
@@ -292,12 +292,16 @@ class OrderController extends Controller
            foreach($products as $product){
             $productforDelete=Product::find($product->id);
             $productforDelete->order()->detach($order_id);
-            $productforDelete->delete();
+            $productforDelete ->update([
+                'selling_date' => null,
+                'box_id' => null,
+            ]);
            
            }
+           $order->delete();
 
-           session()->flash('Add', 'تم تحديث الحالة بنجاح');
-           return redirect('import_order');
+           session()->flash('Add', 'تم تحديث الحذف  بنجاح');
+           return redirect('export_order');
     }
     public function order_prodect_code($order_id)
     {
@@ -325,10 +329,12 @@ $order=Order::find($order_id);
                 leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
                 leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
                 leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
-                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->
+                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+                ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+              
                 Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("order_product.orders_id", $request->order_id)
                 ->get();
-                
+               
                 
             
                $productCategories=ProductCategory::where("id",'!=',$request->productCatgory)->get();

@@ -834,7 +834,9 @@ $order_id=$request->order_id;
 
     public function removeProductFomOrder(Request $request)
     {
+      
         $product=Product::find($request->id);
+      
 $order=Order::find($request->order_id);
 $invoice=Invoice::where('orders_id',$request->order_id)->first();
 if($invoice !=null){
@@ -858,8 +860,48 @@ $order ->update([
     'Total' => $newTotalForOrder,
     'Amount_Commission' =>$newAmountComtion ,
 ]);
+if($request->place_delete==2){
+  session()->flash('Add', ' تم ازالة المنتج من الطلبية');
+            return redirect('export_order_prodect_code/'. $request->order_id);
+}
 session()->flash('Add', ' تم ازالة المنتج من الطلبية');
             return redirect('ExportOrderDetails/'. $request->order_id);
+
+    }
+
+
+    public function edit_price_product(Request $request)
+    { 
+        $product=Product::find($request->id);
+    
+$order=Order::find($request->order_id);
+$invoice=Invoice::where('orders_id',$request->order_id)->first();
+if($invoice !=null){
+
+$myInvoice=Invoice::findOrFail($invoice->id);
+
+$newValueForInvoice=$invoice->Amount_collection -$request->old_price+ $request->price;
+$newTotalForInvoice=$invoice->Total -$request->old_price+ $request->price;
+$newTotalForOrder=$order->Total -$request->old_price+ $request->price;
+//$newAmountComtion=$order->Amount_Commission - ($product->selling_price_with_comm-$product->selling_price);
+}
+
+$product->update([
+    'selling_price_with_comm' => $request->price,
+    
+]);
+$myInvoice ->update([
+    'Amount_collection' =>$newValueForInvoice ,
+    'Total' =>$newTotalForInvoice ,
+]);
+$order ->update([
+    'Total' => $newTotalForOrder,
+  
+]);
+
+  session()->flash('Add', 'تم تعديل سعر المنتج مع تعديل الفاتورة واجمال الطلبية');
+            return redirect('export_order_prodect_code/'. $request->order_id);
+
 
     }
 

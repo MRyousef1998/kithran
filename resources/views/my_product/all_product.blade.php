@@ -548,7 +548,7 @@
             var product_category_name = button.data('product_category_name')
             var product_category_id = button.data('product_category_id')
 
-            window.alert(product_category_name);
+          alert(productG);
             
             var modal = $(this)
             modal.find('.modal-body #product_name').val(product_name);
@@ -556,7 +556,7 @@
             modal.find('.modal-body #productG').val(productG);
             modal.find('.modal-body #group_id').val(group_id);
             modal.find('.modal-body #company_id').val(company_id);
-            modal.find('.modal-body #product_category_name').val("ايخسيحتيخ");
+            modal.find('.modal-body #product_category_name').val(product_category_name);
            
             
 

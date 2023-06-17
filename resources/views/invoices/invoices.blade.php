@@ -241,11 +241,11 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                    @can('تعديل الفاتورة')
+                                                 
                                                         <a class="dropdown-item"
-                                                            href=" {{ url('edit_invoice') }}/{{ $invoice->id }}">تعديل
+                                                            href="{{url('add_invoices')}}/{{$invoice->category->id}}/{{$invoice->order->id}}">تعديل
                                                             الفاتورة</a>
-                                                    @endcan
+                                                
 
                                                     @can('حذف الفاتورة')
                                                         <a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"

@@ -151,19 +151,19 @@ class InvoiceController extends Controller
 
 
                 if ($request->invoice_categotry==null&&$request->start_at==null){
-                $end_at=date($request->start_at);
+                $end_at=date($request->end_at);
 
                      $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','<=',$end_at)->get();
-return $invoices;
-                                }
+                     
+                          }
                else if($request->invoice_categotry==null&&$request->start_at!=null){
                 $start_at=date($request->start_at);
-                $end_at=date($request->start_at);
+                $end_at=date($request->end_at);
                 $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','>=',$start_at)->where('invoice_Date','<=',$end_at)->get();
                }
                 else if($request->invoice_categotry!=null&&$request->start_at!=null){
                     $start_at=date($request->start_at);
-                    $end_at=date($request->start_at);
+                    $end_at=date($request->end_at);
                     $invoices=Invoice::where('invoice_categories_id',$request->type)->where('invoice_Date','>=',$start_at)->where('invoice_Date','<=',$end_at)
                     ->where('Value_Status',$request->invoice_categotry)->get();
                      }
@@ -183,7 +183,7 @@ return $invoices;
 
             $invoices=Invoice::where('id',$request->invoice_number)->get();
         }
-        return $invoices;
+        
         $invoiceType = InvoiceCategory::all();
         $exporter = User::where('role_id','=',1)->get();
  $importer = User::where('role_id','=',2)->get();

@@ -76,6 +76,8 @@ Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatem
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
 Route::post('machine_serch', 'App\Http\Controllers\ProductController@machine_serch')->name('machine_serch');
 Route::post('order_prodect_code_serch', 'App\Http\Controllers\OrderController@order_prodect_code_serch')->name('order_prodect_code_serch');
+Route::post('export_order_prodect_code_serch', 'App\Http\Controllers\ExportController@export_order_prodect_code_serch')->name('export_order_prodect_code_serch');
+
 
 Route::post('machine_serch_to_export_order', 'App\Http\Controllers\ProductController@machine_serch_to_export_order')->name('machine_serch_to_export_order');
 
@@ -103,6 +105,8 @@ Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/OrderDetails_not_recive_product/{id}', 'App\Http\Controllers\ProductController@OrderDetails_not_recive_product');
 Route::get('/order_prodect_code/{id}', 'App\Http\Controllers\OrderController@order_prodect_code');
+Route::get('/export_order_prodect_code/{id}', 'App\Http\Controllers\ExportController@export_order_prodect_code');
+
 Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
 
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');
@@ -162,6 +166,8 @@ Route::post('invoice_serch', 'App\Http\Controllers\InvoiceController@invoice_ser
 Route::resource('box', 'App\Http\Controllers\BoxController');
 Route::post('sharbox', 'App\Http\Controllers\BoxController@create')->name('sharbox');
 Route::post('remove_product_fom_order', 'App\Http\Controllers\ProductController@removeProductFomOrder')->name('remove_product_fom_order');
+Route::post('edit_price_product', 'App\Http\Controllers\ProductController@edit_price_product')->name('edit_price_product');
+
 Route::post('rechoce_product_confirm', 'App\Http\Controllers\ProductController@rechoce_product_confirm')->name('rechoce_product_confirm');
 Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_product')->name('submit_product');
 Route::post('submit_all_product', 'App\Http\Controllers\ProductController@submit_all_product')->name('submit_all_product');

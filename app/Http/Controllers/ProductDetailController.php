@@ -228,7 +228,7 @@ session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
         ]);
  
         session()->flash('Edit', 'بدون تعديل صورة تم تعديل المنتج بنجاح' );
-        return back();
+        return redirect('/all_product');
     }
 
 

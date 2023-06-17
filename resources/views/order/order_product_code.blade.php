@@ -131,6 +131,11 @@
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">مكان التواجد</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء</th>
+
+                              
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر المبيع</th>
+
                                     
                                     
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">العمليات</th>
@@ -151,6 +156,10 @@
                              
                                       
                                         <td style="text-align: center;vertical-align: middle;">{{$x->company_name}} {{$x->product_name}} {{ $x->group_name }}</td>
+                                        
+                                        
+                                        
+                                        
                                         @if($x->value_location=1){
                                       <td style="text-align: center;vertical-align: middle;">المستودع</td>
 
@@ -165,7 +174,8 @@
                                         }
                                         @endif
 
-
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
                                         <td>
                                          @if($order->category_id=1)
                                             <div class="dropdown">

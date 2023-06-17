@@ -215,7 +215,7 @@
                                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
                                                                      تغير الحالة
                                                                 </a>
-                                                                <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
+                                                                <a class="dropdown-item" href="{{url('export_order_prodect_code')}}/{{$x->id}}">
                                                                     <i
                                                                      class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
                                                                                                                                    </a> 

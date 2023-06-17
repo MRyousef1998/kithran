@@ -28,6 +28,7 @@ class BoxController extends Controller
      */
     public function create(Request $request)
     {
+
      
         $prouct=Product::find($request->id);
         $box_id =$request->box_id;
@@ -35,7 +36,11 @@ class BoxController extends Controller
             'box_id' => $box_id,
     
             ]);
-        
+            if($request->capsalation_from==2){
+                session()->flash('Add', 'تم التغليف بنجاح ');
+                return redirect('export_order_prodect_code/'. $request->order_id);
+            }
+    
              session()->flash('Add', 'تم التغليف بنجاح ');
              return redirect('ExportOrderDetails/'. $request->order_id);
              
@@ -81,6 +86,11 @@ class BoxController extends Controller
             'statuses_id' => 5,
     
             ]);
+
+            if($request->capsalation_from==2){
+                session()->flash('Add', 'تم التغليف بنجاح ');
+                return redirect('export_order_prodect_code/'. $request->order_id);
+            }
     
          session()->flash('Add', 'تم التغليف بنجاح ');
          return redirect('ExportOrderDetails/'. $request->order_id);
