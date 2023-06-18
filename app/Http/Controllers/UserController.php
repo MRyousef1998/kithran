@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Hash as Hash;
+use PhpParser\Node\Stmt\Return_;
 
 class UserController extends Controller
 {
@@ -63,12 +64,13 @@ $user = User::create([
     'mobile' => $request->mopail_number,
  'name' => $request->name,
 'email' =>  $request->email,
-'role_id' => 1,
+'role_id' => $request->role_id,
 'password' =>  $input['password'],
 
 
 
 ]);
+$user->assignRole([$request->role_id]);
 
 return redirect()->route('users.index')
 ->with('success','User created successfully');

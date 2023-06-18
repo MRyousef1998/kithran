@@ -23,13 +23,14 @@
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
-							<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+						<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
 
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 					
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
 					
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')),2)}}</h5>
+							
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي الشهري</label>

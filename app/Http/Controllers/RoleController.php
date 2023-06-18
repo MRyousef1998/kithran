@@ -66,7 +66,7 @@ return view('roles.create',compact('permission','exporter', 'importer','represen
 */
 public function store(Request $request)
 {
-$this->validate($request, [
+$this->validate($request, [ 
 'name' => 'required|unique:roles,name',
 'permission' => 'required',
 ]);
@@ -75,6 +75,7 @@ $role->syncPermissions($request->input('permission'));
 return redirect()->route('roles.index')
 ->with('success','Role created successfully');
 }
+
 /**
 * Display the specified resource.
 *
