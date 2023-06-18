@@ -167,7 +167,7 @@
                                                         <div class="all_row">
                                                         <tr>
                                                             
-                                                            <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:0.5;" >{{ $i }}</td>
+                                                            <td  style="text-align: center; color:rgb(250, 246, 246);vertical-align: middle; background-color:rgb(36, 111, 182);width:0.5;" >{{ $i }}</td>
                                                             <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
                                                         
 
@@ -183,9 +183,17 @@
                     
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
                                                             <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
+
+                                                            <td style="text-align: center;vertical-align: middle;  " >@can('الارباح') 
+                                                                {{ $x->Amount_Commission }}
+                                                            @endcan</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >
+                                                                @can('الارباح') {{ $x->Value_VAT }}
+                                                            @endcan</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >
+                                                                @can('الارباح') 
+                                                                {{ $x->Total }}
+                                                            @endcan</td>
                                                             
                                                             <td>
                                                             @if ($x->status->id==1)
@@ -223,7 +231,8 @@
                                                                 <a class="dropdown-item" href="{{url('OrderDetails_not_recive_product')}}/{{$x->id}}">
                                                                     <i
                                                                     class="text-success fas fa-check"></i>&nbsp;&nbsp;الجرد و الاستلام
-                                                                    </a>   
+                                                                    </a>  
+                                                                    @can('الارباح')  
                                                                 <a class="dropdown-item" href= "{{ URL::route('order_report', [$x->id]) }}"
                                                        
                                                                  
@@ -232,6 +241,7 @@
                                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
                                                              التقاریر
                                                                 </a>
+                                                                @endcan
                 
                                                                  <a class="dropdown-item" href="{{url('order_prodect_code')}}/{{$x->id}}">
                                                                     <i

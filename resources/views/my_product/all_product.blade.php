@@ -198,7 +198,7 @@
                                 @foreach ($productDetail as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle;color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->companies->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">

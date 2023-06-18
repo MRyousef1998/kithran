@@ -179,9 +179,9 @@
 
                                 </tr>
                             </thead>
-                            @if (isset($machines))
+                           
                             <tbody>
-                                
+                                 @if (isset($machines))
                              <?php $i = 0; ?>
                                 @foreach ($machines as $x)
                                    
@@ -244,10 +244,10 @@
                                            </span>                                       
                                          </td>
                                          @endif
-                                         <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
+                                         <td style="text-align: center;vertical-align: middle;"> @can('الجرودات'){{$x->price_with_comm}}@endcan</td>
                                          
-                                         <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
-                                         <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm-$x->selling_price}}</td>
+                                         <td style="text-align: center;vertical-align: middle;"> @can('الجرودات'){{$x->selling_price_with_comm}}@endcan</td>
+                                         <td style="text-align: center;vertical-align: middle;">@can('الجرودات') {{$x->selling_price_with_comm-$x->selling_price}}@endcan</td>
                                         <td>
                                         
                                             <div class="dropdown">
@@ -294,7 +294,7 @@
                                                     class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp; حذف المنتج </a>
 
 
-                                                <a class="dropdown-item"
+                                                    @can('الارباح')  <a class="dropdown-item"
                                                 data-order_id="{{ $x->orders_id }}"
                                                 data-id="{{ $x->products_id }}"
                                                 data-toggle="modal"
@@ -304,7 +304,7 @@
                                                     <i
                                                     class="text-success las la-pen"></i>&nbsp;&nbsp;تعديل سعر المبيع
                                                     </a> 
-                                                    
+                                                    @endcan
                                                     
 
                                                 

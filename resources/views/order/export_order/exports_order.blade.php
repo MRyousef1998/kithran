@@ -168,7 +168,7 @@
                                                         <div class="all_row">
                                                         <tr>
                                                             
-                                                            <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:0.5;" >{{ $i }}</td>
+                                                            <td  style="text-align: center;vertical-align: middle; color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:0.5;" >{{ $i }}</td>
                                                             <td style="text-align: center;vertical-align: middle;">{{$x->importer->name}}</td>
                                                         
 
@@ -184,9 +184,9 @@
                     
                                                             <td style="text-align: center;vertical-align: middle;  " >{{ $x->order_date }}</td>
                                                             <td style="text-align: center;vertical-align: middle; " >{{ $x->order_due_date }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Amount_Commission }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Value_VAT }}</td>
-                                                            <td style="text-align: center;vertical-align: middle;  " >{{ $x->Total }}</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >@can('الارباح') {{ $x->Amount_Commission }}@endcan</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >@can('الارباح') {{ $x->Value_VAT }}@endcan</td>
+                                                            <td style="text-align: center;vertical-align: middle;  " >@can('الارباح') {{ $x->Total }}@endcan</td>
                                                             
                                                             <td>
                                                             @if ($x->status->id==1)
@@ -220,23 +220,20 @@
                                                                      class="text-success fas fa-check"></i>&nbsp;&nbsp;تفاصيل المنتجات  
                                                                                                                                    </a> 
                                                                 
-            
+                                                                                                                                   @can('الارباح') 
                 
                                                                        <a class="dropdown-item" href="#" data-order_id="{{ $x->id }}"
                                                                         data-toggle="modal" data-target="#delete"><i
                                                                             class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
                                                                         الطلبية</a>
-                
+                @endcan
                 
                                                                     
                                                                        
                                                                   
                 
                                                                   
-                                                                        <a class="dropdown-item" href="#" data-invoice_id="{{ $x->id }}"
-                                                                            data-toggle="modal" data-target="#Transfer_invoice"><i
-                                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
-                                                                            الارشيف</a>
+                                                                      
                                                                    
                 
                                                                  

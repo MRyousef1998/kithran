@@ -11,18 +11,19 @@
 					<div class="left-content">
 						<div>
 						  <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-						  <p class="mg-b-0">Sales monitoring dashboard template.</p>
+						  <p class="mg-b-0">khaizran al thahabi</p>
 						</div>
 					</div>
 					<div class="main-dashboard-header-right">
 						<div>
 							<label class="tx-13">Customer Ratings</label>
 							<div class="main-star">
-								<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span>(14,873)</span>
+								<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span></span>
 							</div>
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
+						@can('الصندوق')
 						<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
 
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
@@ -30,15 +31,17 @@
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
 					
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')),2)}}</h5>
-							
+							@endcan
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي الشهري</label>
+							@can('الصندوق')
 							<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')),2)}}</h5>
-						</div>
+					@endcan	
+					</div>
 					</div>
 				</div>
 				<!-- /breadcrumb -->
@@ -50,20 +53,25 @@
 						<div class="card overflow-hidden sales-card bg-primary-gradient">
 							<div class="pl-3 pt-3 pr-3 pb-2 pt-0">
 								<div class="">
+									
 									<h6 class="mb-3 tx-12 text-white">وارد الشهر الجاري</h6>
 								</div>
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
+											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h4>
 											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
+											@endcan
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-up text-white"></i>
+											@can('الصندوق')
 											<span class="text-white op-7">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}} </span>
 										</span>
+										@endcan
 									</div>
 								</div>
 							</div>
@@ -79,15 +87,19 @@
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
+											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h4>
 											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
+											@endcan
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
+											@can('الصندوق')
 											<span class="text-white op-7"> {{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</span>
 										</span>
+										@endcan
 									</div>
 								</div>
 							</div>
@@ -103,9 +115,11 @@
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
+											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',2)->
 												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h4>
-											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
+												
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>@endcan
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-up text-white"></i>
@@ -126,9 +140,11 @@
 								<div class="pb-0 mt-0">
 									<div class="d-flex">
 										<div class="">
+											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h4>
-											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
+												
+											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>@endcan
 										</div>
 										<span class="float-right my-auto mr-auto">
 											<i class="fas fa-arrow-circle-down text-white"></i>
@@ -158,14 +174,18 @@
 								
 							
 								  <div style="width:100%;">
+									@can('الارباح')
     {!! $BarChart->render() !!}
+	@endcan
 </div>
 							</div>
 						</div>
 					</div>
 					
 					<div style="width:40%;">
+						@can('الصندوق')
 						{!! $chartjs1->render() !!}
+						@endcan
 					</div>
 				</div>
 				<!-- row closed -->
@@ -177,7 +197,9 @@
 						
 							
 						<div id="dlk" name="dd" style="width:100%;">
+							@can('الارباح')
 							{!! $Reminingchartjs->render() !!}
+							@endcan
 						</div>
 						<div class="card ">
 							<div class="card-body">
@@ -186,7 +208,9 @@
 										<div class="d-flex align-items-center pb-2">
 											<p class="mb-0">عدد المكنات المتبقية</p>
 										</div>
+										@can('الجرودات')
 										<h4 class="font-weight-bold mb-2">{{$machineReminingNumber}}</h4>
+										@endcan
 										<div class="progress progress-style progress-sm">
 											<div class="progress-bar bg-primary-gradient wd-80p" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="78"></div>
 										</div>
@@ -195,7 +219,9 @@
 										<div class="d-flex align-items-center pb-2">
 											<p class="mb-0">عدد المطاحن المتبقي</p>
 										</div>
+										@can('الجرودات')
 										<h4 class="font-weight-bold mb-2">{{$GrinderReminingNumber}}</h4>
+										@endcan
 										<div class="progress progress-style progress-sm">
 											<div class="progress-bar bg-danger-gradient wd-75" role="progressbar"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="0"></div>
 										</div>
@@ -213,11 +239,12 @@
 					<div class="col-xl-12 col-md-6 col-lg-2">
 						<div class="card card-table-two">
 							<div class="d-flex justify-content-between">
-								<h4 class="card-title mb-1">Your Most Recent Earnings</h4>
+								<h4 class="card-title mb-1">طلبيات توريد </h4>
 								<i class="mdi mdi-dots-horizontal text-gray"></i>
 							</div>
-							<span class="tx-12 tx-muted mb-3 ">This is your most recent earnings for today's date.</span>
+							<span class="tx-12 tx-muted mb-3 ">الطلبيات المتوقع وصولها في هذا الشهر</span>
 							<div class="table-responsive country-table">
+								@can('الجرودات')
 								<table class="table table-striped table-bordered mb-0 text-sm-nowrap text-lg-nowrap text-xl-nowrap">
 									<thead>
 										<tr>
@@ -315,7 +342,7 @@
                                                     @endforeach
                             </tbody>
 								</table>
-								
+								@endcan
 							</div>
 						</div>
 					</div>

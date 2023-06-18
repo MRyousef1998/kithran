@@ -84,16 +84,17 @@
                                     <div class="tabs-menu1">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs main-nav-line">
+                                            @can('الارباح') 
                                             <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
-                                                    الطلبية</a></li>
-                                            <li><a href="#tab5" class="nav-link" data-toggle="tab">مكنات القهوة</a></li>
+                                                    الطلبية</a></li>@endcan
+                                            <li><a href="#tab5" class="nav-link active" data-toggle="tab">مكنات القهوة</a></li>
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
-                                            
+                                            @can('الارباح') 
                                             <li><a href="#tab8" class="nav-link" data-toggle="tab">المرفقات</a></li>
                                             <li><a href="#tab9" class="nav-link" data-toggle="tab">الفواتير</a></li>
                                             <li><a href="#tab10" class="nav-link" data-toggle="tab">الدفعات</a></li>
-                                            <li><a href="#tab11" class="nav-link" data-toggle="tab">مرفقات الفواتير</a></li>
+                                            <li><a href="#tab11" class="nav-link" data-toggle="tab">مرفقات الفواتير</a></li>@endcan
                                         </ul>
                                     </div>
                                 </div>
@@ -184,7 +185,7 @@
                                 @foreach ($machines as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle; color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">
@@ -260,7 +261,7 @@
                                 @foreach ($grinders as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle; color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">
@@ -332,7 +333,7 @@
                                 @foreach ($parts as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle; color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">

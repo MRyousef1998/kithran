@@ -84,17 +84,19 @@
                                     <div class="tabs-menu1">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs main-nav-line">
-                                            <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
-                                                    الطلبية</a></li>
-                                            <li><a href="#tab5" class="nav-link" data-toggle="tab">مكنات القهوة</a></li>
+                                            @can('الارباح')  <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
+                                                    الطلبية</a></li>@endcan
+                                            <li><a href="#tab5" class="nav-link active" data-toggle="tab">مكنات القهوة</a></li>
                                             
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">قطع تبديل</a></li>
                                             <li><a href="#tab13" class="nav-link" data-toggle="tab">مكنات غیر مستلمة</a></li>
+                                            @can('الارباح') 
                                             <li><a href="#tab8" class="nav-link" data-toggle="tab">المرفقات</a></li>
+                                            
                                             <li><a href="#tab9" class="nav-link" data-toggle="tab">الفواتير</a></li>
                                             <li><a href="#tab10" class="nav-link" data-toggle="tab">الدفعات</a></li>
-                                            <li><a href="#tab11" class="nav-link" data-toggle="tab">مرفقات الفواتير</a></li>
+                                            <li><a href="#tab11" class="nav-link" data-toggle="tab">مرفقات الفواتير</a></li>@endcan
                                             <li><a href="#tab12" class="nav-link" data-toggle="tab">القطع المضافة من المحل</a></li>
                                         </ul>
                                     </div>
@@ -103,7 +105,7 @@
                                     <div class="tab-content">
 
 
-                                        <div class="tab-pane active" id="tab4">
+                                        <div class="tab-pane " id="tab4">
                                             <div class="table-responsive mt-15">
 
                                                 <table class="table table-striped" style="text-align:center">
@@ -160,7 +162,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tab5">
+                                        <div class="tab-pane active" id="tab5">
                                             <div class="table-responsive ">
                                               
                         <table id="example" class="table key-buttons text-md-nowrap" data-page-length='50'>
@@ -184,7 +186,7 @@
                                 @foreach ($machines as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle;color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">
@@ -247,7 +249,7 @@
                                 @foreach ($unAriveMAchine as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle; color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">
@@ -310,7 +312,7 @@
                                 @foreach ($grinders as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                        <td  style="text-align: center;vertical-align: middle;color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);width:5" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">

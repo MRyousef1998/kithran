@@ -79,10 +79,7 @@
       <div class="col-xl-12">
 						<div class="card mg-b-20" >
 							<div class="card-header pb-0">
-                                     <div class="d-flex justify-content-between">
-
-                    
-                    </div>
+                                   
 
                       <form action="/order_prodect_code_serch" method="POST" role="search" autocomplete="off">
                     {{ csrf_field() }}
@@ -175,9 +172,9 @@
 
                                 </tr>
                             </thead>
-                            @if (isset($machines))
+                        
                             <tbody>
-                                
+                                    @if (isset($machines))
                              <?php $i = 0; ?>
                                 @foreach ($machines as $x)
                                    
@@ -206,10 +203,11 @@
                                         }
                                         @endif
                                         <td style="text-align: center;vertical-align: middle;"> {{$x->status_name}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->primary_price}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm-$x->primary_price}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->price_with_comm}}</td>
-                                        <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm?? "غير مخصص"}}</td>
+
+                                        <td style="text-align: center;vertical-align: middle;">@can('الارباح')  {{$x->primary_price}}@endcan</td>
+                                        <td style="text-align: center;vertical-align: middle;">@can('الارباح')  {{$x->price_with_comm-$x->primary_price}}@endcan</td>
+                                        <td style="text-align: center;vertical-align: middle;">@can('الارباح')  {{$x->price_with_comm}}@endcan</td>
+                                        <td style="text-align: center;vertical-align: middle;">@can('الارباح')  {{$x->selling_price_with_comm?? "غير مخصص"}}@endcan</td>
                                         <td>
                                      
                                             <div class="dropdown">
@@ -253,7 +251,7 @@
 
 								href="#unsubmit" ><i
                                 class="text-success fas fa-error"></i>&nbsp;&nbsp;  عدم وصول</a>
-                                <a class="dropdown-item"
+                                @can('الارباح')    <a class="dropdown-item"
                                 data-order_id="{{ $x->orders_id }}"
                                 data-id="{{ $x->products_id }}"
                                 data-toggle="modal"
@@ -262,7 +260,7 @@
                                 href="#editProdect">
                                     <i
                                     class="text-success las la-pen"></i>&nbsp;&nbsp;تعديل سعر 
-                                    </a>  
+                                    </a>  @endcan
                                                
                                                 </div>
                                             </div>
@@ -272,13 +270,14 @@
                                         
                                     </tr>
                                 @endforeach
+                                @endif
+
                                 </tbody>
-
-
+ 
 
 
                         </table>
-                        @endif
+                       
                     </div>
                 </div>
             </div>

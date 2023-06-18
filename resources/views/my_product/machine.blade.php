@@ -216,7 +216,7 @@
                                 @foreach ($machines as $x)
                                     <?php $i++; ?>
                                     <tr>
-                                        <td  >{{ $i }}</td>
+                                        <td style="text-align: center;vertical-align: middle;color:rgb(250, 246, 246);background-color:rgb(36, 111, 182);" >{{ $i }}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{ $x->company_name }}</td>
 
                                         <td style="text-align: center;vertical-align: middle;">

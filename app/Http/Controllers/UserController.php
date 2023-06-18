@@ -23,7 +23,7 @@ public function index(Request $request)
 { $exporter = User::where('role_id','=',1)->get();
     $importer = User::where('role_id','=',2)->get();
     $representative = User::where('role_id','=',3)->get();
-$data = User::orderBy('id','DESC')->paginate(5);
+$data = User::orderBy('id','DESC')->get();
 return view('users.show_users',compact('data','exporter', 'importer','representative'))
 ->with('i', ($request->input('page', 1) - 1) * 5);
 }
@@ -68,10 +68,10 @@ $user = User::create([
 'password' =>  $input['password'],
 
 
-
+ 
 ]);
 $user->assignRole([$request->role_id]);
-
+$user->save();
 return redirect()->route('users.index')
 ->with('success','User created successfully');
 }
