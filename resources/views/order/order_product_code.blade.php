@@ -234,6 +234,25 @@
 								data-toggle="modal"
 								href="#submit1" class="btn btn-success"><i
                                 class="text-success fas fa-check"></i>&nbsp;&nbsp; تأكيد </a>
+
+                                <a class="dropdown-item"
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}"
+								data-id="{{ $x->products_id }}" data-product_name="{{ $x->product_name }}"
+
+                                                data-company_name="{{ $x->company_name }}"
+                                               
+                                                data-product_g="{{ $x->group_name }}"
+                                                {{-- data-group_id="{{ $x->group_id }}" --}}
+                                                data-image-name ="{{ $x->image_name}}"
+                                                {{-- data-product_category_name ="{{ $x->category->category_name}}"
+                                                data-product_category_id ="{{ $x->category->id}}" --}}
+
+
+
+								data-toggle="modal"
+
+								href="#unsubmit" ><i
+                                class="text-success fas fa-error"></i>&nbsp;&nbsp;  عدم وصول</a>
                                 <a class="dropdown-item"
                                 data-order_id="{{ $x->orders_id }}"
                                 data-id="{{ $x->products_id }}"
@@ -363,6 +382,57 @@ aria-hidden="true">
 </div>
 </div>
 
+
+<div class="modal fade" id="unsubmit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> منتج لم یصل </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action='{{ route('unsubmit_product') }}' method="post" enctype="multipart/form-data">
+                       
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+
+
+                            <input type="hidden" class="form-control" name="company_id" id="company_id" value="">
+                            <input type="hidden" class="form-control" name="unsubmit_from" id="unsubmit_from" value="2">
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الشركة المصنعة</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name" readonly required>
+
+                            <div class="form-group">
+                                <label for="title">اسم المنتج :</label>
+
+                                <input type="hidden" class="form-control" name="id" id="id" value="">
+                                <input type="hidden" class="form-control" name="order_id" id="order_id" value="">
+                                <input type="text" class="form-control" name="product_name" id="product_name" readonly required>
+                            </div>
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">الفئة</label>
+                            <input type="text" class="form-control" name="group_name" id="group_name" value="" readonly>
+
+                            
+                            <label class="my-1 mr-2" for="inlineFormCustomSelectPref">سيتم حذف المنتج من قائمة المحل دون حذف قيمته من الفاتورة</label>
+
+                           
+                            
+                            
+
+                           
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"> تأكبد</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
     <!-- row closed -->
     </div>
 
@@ -447,7 +517,31 @@ aria-hidden="true">
    modal.find('.modal-body #old_comation').val(comation);
    })
 
-    
+   $('#unsubmit').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var product_name = button.data('product_name')
+            var company_name = button.data('company_name')
+            var order_id = button.data('order_id')
+            
+            var id = button.data('id')
+            
+            var productG = button.data('product_g')
+            
+            
+
+        
+            
+            var modal = $(this)
+            modal.find('.modal-body #product_name').val(product_name);
+            modal.find('.modal-body #company_name').val(company_name);
+            modal.find('.modal-body #group_name').val(productG);
+            modal.find('.modal-body #order_id').val(order_id);
+           
+            
+
+
+            modal.find('.modal-body #id').val(id);
+        })
     </script>
 
 	

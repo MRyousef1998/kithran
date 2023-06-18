@@ -548,7 +548,7 @@
             var product_category_name = button.data('product_category_name')
             var product_category_id = button.data('product_category_id')
 
-          alert(productG);
+       
             
             var modal = $(this)
             modal.find('.modal-body #product_name').val(product_name);

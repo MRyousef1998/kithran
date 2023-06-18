@@ -34,8 +34,8 @@
                     <div class="card-body">
                         <div class="invoice-header">
                             <div>
-                            <h1 class="invoice-title" style=" color:rgb(97, 134, 255);" >KITHRAN AL THAHBI</h1>
-                            <h6 class="invoice-title" style=" color:rgb(97, 134, 255);" >       KITCHENS & REST. EUIP. TR</h6>
+                            <h1 class="invoice-title"  style="font-size:70px; color:rgb(97, 134, 255);" >KITHRAN AL THAHBI</h1>
+                            <h3 class="invoice-title" style=" color:rgb(97, 134, 255);" >       KITCHENS & REST. EUIP. TR</h3>
                         </div>
                             <div class="billed-from">
                                 <h6>KITHRAN AL THAHBI</h6>
@@ -50,7 +50,11 @@
                         </div><!-- invoice-header -->
                         <div class="row mg-t-20">
                             <div class="col-md">
+                                @if($order->importer->role_id=2)
+                                <label class="tx-gray-600">Billed from</label>
+                                @else
                                 <label class="tx-gray-600">Billed To</label>
+                                @endif
                                 <div class="billed-to">
                                     <h6>{{$order->importer->name}}</h6>
                                     <p>{{$order->importer->address}}<br>
@@ -200,6 +204,8 @@
 
                         <button class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" onclick="printDiv()"> <i
                                 class="mdi mdi-printer ml-1"></i>طباعة</button>
+                                <a class="btn btn-primary  float-left mt-3 mr-2" id="print_Button" href="{{url('home')}}"> <i
+                                class="mdi mdi-printer ml-1"></i>عودة الى الرئيسية</a>
                     </div>
                 </div>
             </div>

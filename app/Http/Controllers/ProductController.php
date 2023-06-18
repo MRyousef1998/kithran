@@ -779,6 +779,11 @@ $order_id=$request->order_id;
                 'statuses_id' => 4,
             ]);
 
+                
+if($request->unsubmit_from==2){
+    session()->flash('Add', ' تم تحديد المنتج كانقص في الطلبية');
+                   return redirect('order_prodect_code/'. $request->order_id);
+       }
 
             session()->flash('Add', 'تم تحديد المنتج كنقص');
             return redirect('OrderDetails/'. $request->order_id);

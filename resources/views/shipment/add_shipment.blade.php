@@ -129,11 +129,11 @@
                             </div>
                             <div class="col">
                                 <label for="inputName" class="control-label" >مارك</label>
-                                <input type="text" class="form-control form-control-lg" id="Mark" name="Mark" value=0 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"onchange="finalTotal('total1')" onchange="calTotal()">
+                                <input type="text" class="form-control form-control-lg" id="Mark" name="Mark" value="">
                             </div>
                             <div class="col">
                                 <label>التاريخ  </label>
-                                <input class="form-control appearance-none block w-full" type="date" name="sipment_date" placeholder="YYYY-MM-DD"
+                                <input class="form-control appearance-none block w-full" type="date" name="sipment_date" value="{{ date('Y-m-d') }}" placeholder="YYYY-MM-DD"
                                     type="text" required>
                             </div>
                          
@@ -224,10 +224,10 @@
                                 <div class="card-body">
                                    
                                     <div class="table-responsive">
-                                        <table id="datatable" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length='50'>
                                             <thead>
                                                 <tr>
-                                                     <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" /></th>
+                                                     <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" hidden/></th>
                                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم </th>
                                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">كود الصندوق</th>
                                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">عدد المحتوى</th>
@@ -335,6 +335,24 @@
  @endsection
 @section('js')
      <!-- Internal Select2 js-->
+     <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.dataTables.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.bootstrap4.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/jszip.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/pdfmake.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/vfs_fonts.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.print.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/buttons.colVis.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/plugins/datatable/js/responsive.bootstrap4.min.js') }}"></script>
+    <!--Internal  Datatable js -->
+    <script src="{{ URL::asset('assets/js/table-data.js') }}"></script>
     <script src="{{ URL::asset('assets/plugins/select2/js/select2.min.js') }}"></script>
     <!--Internal Fileuploads js-->
     <script src="{{ URL::asset('assets/plugins/fileuploads/js/fileupload.js') }}"></script>
@@ -432,7 +450,7 @@ else{
         
         
 
-        $("#datatable input[type=checkbox]:checked").each(function() {
+        $("#example input[type=checkbox]:checked").each(function() {
             
             var item = { id:this.value
                                 

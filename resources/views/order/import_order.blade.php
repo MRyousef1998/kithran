@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                                 <input class="form-control "type="date"  name="end_at" placeholder="YYYY-MM-DD"
-                                    type="text" value="{{ $start_at ?? date('Y-m-d') }}" required>
+                                    type="text" value="{{ $end_at ?? date('Y-m-d') }}" required>
                                 
                                
                             </div><!-- input-group -->

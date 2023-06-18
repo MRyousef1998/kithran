@@ -138,6 +138,8 @@ Route::get('user_profile/{id}', 'App\Http\Controllers\UserController@show_profil
 
 
 Route::resource('shipmentes', 'App\Http\Controllers\ShipmentController');
+Route::post('shipment_serch', 'App\Http\Controllers\ShipmentController@shipment_serch')->name('shipment_serch');
+
 Route::get('add_shipment', 'App\Http\Controllers\ShipmentController@create1');
 Route::post('/add_shipment1', 'App\Http\Controllers\ShipmentController@store')->name('add_shipment1');
 Route::get('/shipmentDeteile/{id}', 'App\Http\Controllers\ShipmentController@getShipmentDeteil');

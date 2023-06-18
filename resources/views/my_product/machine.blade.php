@@ -96,7 +96,7 @@
 							<div class="card-header pb-0">
                                      <div class="d-flex justify-content-between">
 
-                    <a href="add_machine/create" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                    <a href="{{url('all_machine/add_machine/create')}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
                                 > <i
                                 class="fas fa-plus"></i>&nbsp; اضافة {{$s}} إلى المستودع</a>
                     </div>

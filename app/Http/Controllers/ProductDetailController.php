@@ -276,6 +276,6 @@ session()->flash('Erorr', 'حدث خطأ غير متوقع  ');
     {
         
         session()->flash('delete', 'لايمكن حذف هذه المنتجات ');
-        return back();
+        return redirect('all_product');
     }
 }

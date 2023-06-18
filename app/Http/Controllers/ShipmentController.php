@@ -195,11 +195,45 @@ foreach($boxes as $box)
      * @param  \App\Models\Shipment  $shipment
      * @return \Illuminate\Http\Response
      */
-    public function show(Shipment $shipment)
+    public function show(Request $re)
     {
-        //
+        return $request;
     }
 
+    public function shipment_serch(Request $request)
+    {
+
+        $start_at = date($request->start_at);
+        $end_at = date($request->end_at);
+       
+
+        if($start_at==null){
+
+           
+            $shipments = Shipment::where('client_id','=',$request->importClint)->where('shiping_date','<=',[$end_at])->get();
+
+        }
+        else
+        {
+
+        $shipments = Shipment::where('client_id','=',$request->importClint)->whereBetween('shiping_date',[$start_at,$end_at])->get();
+
+        }
+        $importClints = User::where('role_id','=',1)->get();
+      
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+        $typeimportClint=User::find($request->importClint);
+
+       
+
+       
+       
+
+        return view('shipment.shipmentes',compact('shipments','start_at','end_at','typeimportClint','exporter', 'importer','representative','importClints'));
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
