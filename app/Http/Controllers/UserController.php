@@ -19,6 +19,17 @@ class UserController extends Controller
 *
 * @return \Illuminate\Http\Response
 */
+
+
+function __construct()
+{
+
+$this->middleware('permission:قائمة المستخدمين', ['only' => ['index']]);
+$this->middleware('permission:المستخدمين', ['only' => ['create','store']]);
+$this->middleware('permission:المستخدمين', ['only' => ['edit','update']]);
+$this->middleware('permission:المستخدمين', ['only' => ['destroy']]);
+
+}
 public function index(Request $request)
 { $exporter = User::where('role_id','=',1)->get();
     $importer = User::where('role_id','=',2)->get();

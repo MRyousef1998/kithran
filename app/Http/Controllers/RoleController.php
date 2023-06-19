@@ -13,7 +13,7 @@ class RoleController extends Controller
 *
 * @return \Illuminate\Http\Response
 */
-/*
+
 
 function __construct()
 {
@@ -24,7 +24,7 @@ $this->middleware('permission:تعديل صلاحية', ['only' => ['edit','upda
 $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 
 }
-*/
+
 
 
 
