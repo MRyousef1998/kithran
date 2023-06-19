@@ -85,7 +85,7 @@
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs main-nav-line">
                                             @can('الارباح') 
-                                            <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
+                                            <li><a href="#tab4" class="nav-link " data-toggle="tab">معلومات
                                                     الطلبية</a></li>@endcan
                                             <li><a href="#tab5" class="nav-link active" data-toggle="tab">مكنات القهوة</a></li>
                                             <li><a href="#tab6" class="nav-link" data-toggle="tab">المطاحن</a></li>

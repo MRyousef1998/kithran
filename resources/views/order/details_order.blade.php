@@ -84,7 +84,7 @@
                                     <div class="tabs-menu1">
                                         <!-- Tabs -->
                                         <ul class="nav panel-tabs main-nav-line">
-                                            @can('الارباح')  <li><a href="#tab4" class="nav-link active" data-toggle="tab">معلومات
+                                            @can('الارباح')  <li><a href="#tab4" class="nav-link " data-toggle="tab">معلومات
                                                     الطلبية</a></li>@endcan
                                             <li><a href="#tab5" class="nav-link active" data-toggle="tab">مكنات القهوة</a></li>
                                             

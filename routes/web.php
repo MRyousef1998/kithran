@@ -175,6 +175,8 @@ Route::post('submit_product', 'App\Http\Controllers\ProductController@submit_pro
 Route::post('submit_all_product', 'App\Http\Controllers\ProductController@submit_all_product')->name('submit_all_product');
 
 Route::post('unsubmit_product', 'App\Http\Controllers\ProductController@unsubmit_product')->name('unsubmit_product');
+Route::post('delete_product', 'App\Http\Controllers\ProductController@delete_product')->name('delete_product');
+
 Route::get('show_invoice/{id}','App\Http\Controllers\InvoiceController@show_invoice')->name('show_invoice');
 Route::get('all_invoice', 'App\Http\Controllers\InvoiceController@index');
 Route::resource('/all_invoice/add', 'App\Http\Controllers\InvoiceController');

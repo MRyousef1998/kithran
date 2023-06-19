@@ -790,6 +790,45 @@ if($request->unsubmit_from==2){
 
 
     }
+
+    public function delete_product(Request $request){
+     
+        $product = Product::findOrFail($request->id);
+
+      
+
+            $product->update([
+                'statuses_id' => 4,
+            ]);
+            $order=Order::find($request->order_id);
+            $invoice=Invoice::where('orders_id',$request->order_id)->first();
+            if($invoice !=null){
+            $myInvoice=Invoice::findOrFail($invoice->id);
+            
+            $newValueForInvoice=$invoice->Amount_collection - $product->primary_price;
+            $newTotalForInvoice=$invoice->Total - $product->primary_price;
+            $newTotalForOrder=$order->Total - $product->primary_price;
+            $newAmountComtion=$order->Amount_Commission - ($product->price_with_comm-$product->primary_price);
+            }
+            $myInvoice ->update([
+                'Amount_collection' =>$newValueForInvoice ,
+                'Total' =>$newTotalForInvoice ,
+            ]);
+            $order ->update([
+                'Total' => $newTotalForOrder,
+                'Amount_Commission' =>$newAmountComtion ,
+            ]);
+                
+if($request->unsubmit_from==2){
+    session()->flash('Add', ' تم تحديد المنتج كانقص في الطلبية');
+                   return redirect('order_prodect_code/'. $request->order_id);
+       }
+
+            session()->flash('Add', 'تم تحديد المنتج كنقص');
+            return redirect('OrderDetails/'. $request->order_id);
+
+
+    }
     public function getimport_order_productDetails(Request $request)
     { 
         $surproduct =DB::table('products')->

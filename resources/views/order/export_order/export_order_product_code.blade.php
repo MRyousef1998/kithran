@@ -166,6 +166,7 @@
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">مكان التواجد</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الحالة</th>
                                     
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">كود التغليف</th>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">تاريخ الشحن</th>
@@ -179,9 +180,9 @@
 
                                 </tr>
                             </thead>
-                           
+                            @if (isset($machines))
                             <tbody>
-                                 @if (isset($machines))
+                                
                              <?php $i = 0; ?>
                                 @foreach ($machines as $x)
                                    
@@ -209,7 +210,7 @@
 
                                         }
                                         @endif
-
+                                        <td style="text-align: center;vertical-align: middle;"> {{$x->status_name}}</td>
                                        
                                         @if($x->box_id!=null)
                                         <td>
@@ -255,6 +256,7 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
+                                                @if($x->statuses_id!=4)     
                                                 @if($x->box_id==null)
                                                     <a class="dropdown-item" 
                                                     data-id="{{ $x->products_id }}" data-order_id="{{ $order->id }}"
@@ -274,12 +276,19 @@
 							                            	data-toggle="modal"
 							                            	href="#capsalation"    
                                                      
-                                                    
+                                                     
                                                     
                                                     ><i
                                                         class="text-success fas fa-check"></i>&nbsp;&nbsp;
                                                       
                                                     تعديل كود
+                                                </a>
+                                                @endif
+                                             @else    
+                                             <a class="dropdown-item" 
+                                                    >
+                                                      
+                                                هذا المنتج محذوف
                                                 </a>
                                                 @endif
                                                 <a class="dropdown-item" 
@@ -315,11 +324,11 @@
                                 @endforeach
                                 </tbody>
 
-
+@endif
 
 
                         </table>
-                        @endif
+                        
                     </div>
                 </div>
             </div>
