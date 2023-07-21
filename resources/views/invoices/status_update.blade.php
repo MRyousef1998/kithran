@@ -87,7 +87,7 @@
                                 <label for="inputName" class="control-label">قيمة الفاتورة الاجمالية بدون دفعات</label>
                                 <input type="text" class="form-control form-control-lg" id="primery_total"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value="{{ $invoices->Total }}" required readonly>
+                                    value="{{ $invoices->Total -$invoices->Discount }}" required readonly>
                             </div>
                         </div>
 
@@ -114,7 +114,7 @@
                             <div class="col">
                                 @php
                                 
-                                $amount_payment_remining =  $invoices->Total-$payment_pefor ;
+                                $amount_payment_remining =  $invoices->Total-$invoices->Discount-$payment_pefor ;
                               
                                 @endphp
                                 <label for="inputName" class="control-label">المبلغ المتبقي </label>
