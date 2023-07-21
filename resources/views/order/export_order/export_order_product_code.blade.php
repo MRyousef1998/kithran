@@ -197,11 +197,11 @@
                                         
                                         
                                         
-                                        @if($x->value_location=1){
+                                        @if($x->value_location==1){
                                       <td style="text-align: center;vertical-align: middle;">المستودع</td>
 
                                         }
-                                        @elseif ($x->value_location=2){
+                                        @elseif ($x->value_location==2){
                                       <td style="text-align: center;vertical-align: middle;">محل كبير</td>
                                             
                                         }
@@ -256,7 +256,9 @@
                                                     class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
                                                     type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
                                                 <div class="dropdown-menu tx-13">
-                                                @if($x->statuses_id!=4)     
+                                                
+                                                @if($x->statuses_id!=4) 
+                                                @if($order->category_id!=4)  
                                                 @if($x->box_id==null)
                                                     <a class="dropdown-item" 
                                                     data-id="{{ $x->products_id }}" data-order_id="{{ $order->id }}"
@@ -284,6 +286,18 @@
                                                     تعديل كود
                                                 </a>
                                                 @endif
+                                                <a class="dropdown-item" 
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" 
+								data-toggle="modal"
+								href="#sharcapsalation" > <i
+                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp; تغليف مشترك</a>
+                                                
+                                                    @endif
+                                                    <a class="dropdown-item"
+								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" 
+								data-toggle="modal"
+								href="#removeProdect" > <i
+                                                    class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp; حذف المنتج </a>
                                              @else    
                                              <a class="dropdown-item" 
                                                     >
@@ -291,17 +305,7 @@
                                                 هذا المنتج محذوف
                                                 </a>
                                                 @endif
-                                                <a class="dropdown-item" 
-								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" 
-								data-toggle="modal"
-								href="#sharcapsalation" > <i
-                                                        class="text-success fas fa-check"></i>&nbsp;&nbsp; تغليف مشترك</a>
-                                                <a class="dropdown-item"
-								data-id="{{ $x->products_id }}" data-order_id="{{ $x->orders_id }}" data-product_price="{{ $x->selling_price_with_comm }}" 
-								data-toggle="modal"
-								href="#removeProdect" > <i
-                                                    class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp; حذف المنتج </a>
-
+                                                
 
                                                     @can('الارباح')  <a class="dropdown-item"
                                                 data-order_id="{{ $x->orders_id }}"

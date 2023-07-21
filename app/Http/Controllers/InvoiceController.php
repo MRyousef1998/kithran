@@ -48,6 +48,7 @@ class InvoiceController extends Controller
 
     public function createInvoice($category_id,$order_id)
     {
+       // return $category_id;
        $invoice_category=InvoiceCategory::find($category_id);
        $order=Order::find($order_id);
        

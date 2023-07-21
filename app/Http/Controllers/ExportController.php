@@ -234,11 +234,11 @@ class ExportController extends Controller
     public function store_one_by_one(Request $request)
     {
     
-      
+
         $products=json_decode($request->my_hidden_input);
        
       
-      
+      //return $request;
 
         if($products == null){
             session()->flash('Erorr', 'يرجى اختيار منتاجات');
@@ -260,8 +260,8 @@ class ExportController extends Controller
      $totalPrice=0;
      $totalcom=0;
      if($request->typeproductOrder!=null){
-        
-        $importOrder = $request->typeproductOrder;
+      if($request->typeproductStatus!=8||$$request->typeproductStatus!=7){
+           $importOrder = $request->typeproductOrder;
   foreach($products as $product)
      
      {  
@@ -276,7 +276,7 @@ class ExportController extends Controller
  ->whereHas('order', function ($query) use ($importOrder) { 
  $query->where('orders_id',$importOrder);}
  )
- ->where("product_details_id", $product->id)->where("selling_date", null)->first();
+ ->where("product_details_id", $product->id)->where("selling_date", null)->where("statuses_id", '!=',4)->where("statuses_id", '!=',8)->where("statuses_id", '!=',7)->first();
         //  $Olderproduct=Product::with('order')->whereHas(["order" => function ($query)use ($importOrder){
         //     $query->where('orders_id', $importOrder);   
         // }])->where("product_details_id", $product->id)->where("selling_date", null)->first();
@@ -313,26 +313,88 @@ class ExportController extends Controller
          $Olderproduct->order()->attach($order_id);
         
 
+          
+      }
+       
        
  
        }
     
+    }else{
+        
+        
+         $importOrder = $request->typeproductOrder;
+  foreach($products as $product)
+     
+     {  
+         
+         for($i=0 ;$i<$product->qty;$i++ ){
+       
+        //  $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null)->with(["order" => function ($query)use ($importOrder){
+        //     $query->where('orders_id', $importOrder);   
+        // }])->get();
+         
+        $Olderproduct=Product::with(['order' => function($query) use ($importOrder) { $query->where('orders_id',$importOrder);}])
+ ->whereHas('order', function ($query) use ($importOrder) { 
+ $query->where('orders_id',$importOrder);}
+ )
+ ->where("product_details_id", $product->id)->where("selling_date", null)->where("statuses_id", '!=',$request->typeproductStatus)->first();
+        //  $Olderproduct=Product::with('order')->whereHas(["order" => function ($query)use ($importOrder){
+        //     $query->where('orders_id', $importOrder);   
+        // }])->where("product_details_id", $product->id)->where("selling_date", null)->first();
+     
+        //  $importOrderOldProdect=$Olderproduct->order()->get();
+        //  $olderdate=$importOrderOldProdect[0]->order_due_date;
+        //  $olderProductId=$Olderproduct->id;
+    
+        //  foreach($allProducts as $currentProduct){
+            
+        //      $importOrdeForCurrentProdect=$currentProduct->order()->get();
+        //  $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+        //  if($olderdate>$currentdate)
+        //  {
+        //      $olderdate=$currentdate;
+        //      $Olderproduct=$currentProduct;
+        //      $olderProductId=$currentProduct->id;
+        //  }
+         
+       
+        //  }
+     
+         $Olderproduct->update([
+            'selling_date' => Carbon::today(),
+            'selling_price' => $product->price,
+            'selling_price_with_comm' => $product->price+$product->commission_pice,
+
+    
+    
+            ]);
+            $totalPrice=$totalPrice+$product->price;
+            $totalcom=$totalcom+$product->commission_pice;
+
+         $Olderproduct->order()->attach($order_id);
+        
+
     }
 
      }
-
+}}
      else{
-       
-        foreach($products as $product)
+         
+          if($request->typeproductStatus!=8||$request->typeproductStatus!=7){
+              
+              foreach($products as $product)
      
         {  
             
             for($i=0 ;$i<$product->qty;$i++ ){
           
-            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->get();
+            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',4)->where("statuses_id", '!=',7)->where("statuses_id", '!=',8)->get();
             
-            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->first();
+            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',4)->where("statuses_id", '!=',7)->where("statuses_id", '!=',8)->first();
+           
             $importOrderOldProdect=$Olderproduct->order()->get();
+          
             $olderdate=$importOrderOldProdect[0]->order_due_date;
             $olderProductId=$Olderproduct->id;
        
@@ -349,6 +411,7 @@ class ExportController extends Controller
             
            
             }
+           
            
             $Olderproduct->update([
                'selling_date' => Carbon::today(),
@@ -369,6 +432,59 @@ class ExportController extends Controller
           }
        
        }
+          }
+        else{
+            
+            foreach($products as $product)
+     
+        {  
+            
+            for($i=0 ;$i<$product->qty;$i++ ){
+          
+            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',$request->typeproductStatus)->get();
+            
+            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',$request->typeproductStatus)->first();
+      
+            $importOrderOldProdect=$Olderproduct->order()->get();
+         
+            $olderdate=$importOrderOldProdect[0]->order_due_date;
+            $olderProductId=$Olderproduct->id;
+       
+            foreach($allProducts as $currentProduct){
+               
+                $importOrdeForCurrentProdect=$currentProduct->order()->get();
+            $currentdate=$importOrdeForCurrentProdect[0]->order_due_date;
+            if($olderdate>$currentdate)
+            {
+                $olderdate=$currentdate;
+                $Olderproduct=$currentProduct;
+                $olderProductId=$currentProduct->id;
+            }
+            
+           
+            }
+ 
+           
+            $Olderproduct->update([
+               'selling_date' => Carbon::today(),
+               'selling_price' => $product->price,
+               'selling_price_with_comm' => $product->price+$product->commission_pice,
+   
+       
+       
+               ]);
+               $totalPrice=$totalPrice+$product->price;
+               $totalcom=$totalcom+$product->commission_pice;
+   
+            $Olderproduct->order()->attach($order_id);
+           
+   
+          
+    
+          }
+       
+       }
+        }
 
 
      }
@@ -380,7 +496,11 @@ class ExportController extends Controller
     $order->Total =  ($order->Total)+(( $totalcom))+(($totalPrice));
 
     $order->save();
+if($order->category_id==4){
+    session()->flash('Add', ' تم اضافة المنتچ  بنجاح يرجى تحرير الفاتورة');
+    return redirect('insaid_order');
 
+}
      
     session()->flash('Add', ' تم اضافة المنتچ  بنجاح يرجى تحرير الفاتورة');
     return redirect('ExportOrderDetails/'.$request->order_id);
@@ -445,7 +565,7 @@ class ExportController extends Controller
         $machines =DB::table('products')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
         ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
-         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 1)->where("products.selling_date", null)->where("products.statuses_id",'!=',7)
+         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 1)->where("products.selling_date", null)->where("products.statuses_id",'!=',7)->where("products.statuses_id",'!=',8)->where("products.statuses_id",'!=',4)
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
        
@@ -483,9 +603,16 @@ class ExportController extends Controller
         ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
         ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
        
+        $grindersRenew =DB::table('products')->
+        leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+        ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+         ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id", 2)->where("products.selling_date", null)->where("products.statuses_id",'=',8)
+        ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+        ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+       
        
 
-        return view('order.export_order.add_export_order',compact('grinder','parts','machines','machinesRenew','broken_machines','broken_grinder','importClints','clients','productDetail','status','exporter', 'importer','representative'));
+        return view('order.export_order.add_export_order',compact('grinder','grindersRenew','parts','machines','machinesRenew','broken_machines','broken_grinder','importClints','clients','productDetail','status','exporter', 'importer','representative'));
     }
 
     public function exporterOrders($id)

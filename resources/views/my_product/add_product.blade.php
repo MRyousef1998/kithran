@@ -131,10 +131,10 @@
                         <select name="carency" class="form-control SlectBox" required
                            >
                            <!--placeholder-->
-                           <option value="1" selected >DHS</option>
+                           <option value="1"  >DHS</option>
                            <option value="2"  >GBP</option>
 
-                           <option value="3"  >EURO</option>
+                           <option value="3" selected >EURO</option>
                           
                        </select>
                            

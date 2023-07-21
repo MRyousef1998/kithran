@@ -266,34 +266,34 @@
         }
 
     </script>
-     <script>
-        function new_payment_change() {
+    <!-- <script>-->
+    <!--    function new_payment_change() {-->
 
 
-            var new_payment=parseFloat(document.getElementById("new_payment").value);
+    <!--        var new_payment=parseFloat(document.getElementById("new_payment").value);-->
 
-            var amount_payment_remining=parseFloat(document.getElementById("amount_payment_remining").value);
-            alert(new_payment);
-            alert(amount_payment_remining);
-            if(new_payment>amount_payment_remining){
+    <!--        var amount_payment_remining=parseFloat(document.getElementById("amount_payment_remining").value);-->
+    <!--        alert(new_payment);-->
+    <!--        alert(amount_payment_remining);-->
+    <!--        if(new_payment>amount_payment_remining){-->
 
-                alert("المبلغ المدفوع اكبر من المبلغ المطلوب ");
-                document.getElementById("new_payment").value=0;
-                document.getElementById("Total_after_new_payment").value=amount_payment_remining-0;
-            }
-            else if(new_payment==amount_payment_remining){
-                alert("الفاتورة سوف تكون مدفوعة بشكل كامل");
-                document.getElementById("Status").value=1;
-                document.getElementById("new_payment").setAttribute('readonly',true);
-                document.getElementById("Total_after_new_payment").value=0;
-            }
-            else  document.getElementById("Total_after_new_payment").value=amount_payment_remining-new_payment;
+    <!--            alert("المبلغ المدفوع اكبر من المبلغ المطلوب ");-->
+    <!--            document.getElementById("new_payment").value=0;-->
+    <!--            document.getElementById("Total_after_new_payment").value=amount_payment_remining-0;-->
+    <!--        }-->
+    <!--        else if(new_payment==amount_payment_remining){-->
+    <!--            alert("الفاتورة سوف تكون مدفوعة بشكل كامل");-->
+    <!--            document.getElementById("Status").value=1;-->
+    <!--            document.getElementById("new_payment").setAttribute('readonly',true);-->
+    <!--            document.getElementById("Total_after_new_payment").value=0;-->
+    <!--        }-->
+    <!--        else  document.getElementById("Total_after_new_payment").value=amount_payment_remining-new_payment;-->
           
             
            
             
-        }
+    <!--    }-->
 
-    </script>
+    <!--</script>-->
 @endsection
 

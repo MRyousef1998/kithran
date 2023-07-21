@@ -92,7 +92,7 @@ Route::post('product_report_serch', 'App\Http\Controllers\ProductController@prod
 Route::get('add_order', 'App\Http\Controllers\OrderController@create1');
 Route::post('add_order', 'App\Http\Controllers\OrderController@store');
 Route::post('update_status_order', 'App\Http\Controllers\OrderController@Status_Update')->name('update_status_order');
-
+Route::post('update_status_product', 'App\Http\Controllers\ProductController@update_status_product')->name('update_status_product');
 Route::post('product_set_proken', 'App\Http\Controllers\ProductController@product_set_proken')->name('product_set_proken');
 Route::post('product_remove_from_proken', 'App\Http\Controllers\ProductController@product_remove_from_proken')->name('product_remove_from_proken');
  
@@ -155,6 +155,20 @@ Route::get('/box_order/{id}', 'App\Http\Controllers\ShipmentController@getboxesO
 // ]);
 
 // Route::get('/import_order/{id}', 'App\Http\Controllers\OrderController@index');
+
+
+//Route::get('InsaidOrderDetails/add_produ_to_order/{id}', 'App\Http\Controllers\InsaidOrderController@add_produ_to_order');
+//Route::post('insaid_order_prodect_code_serch', 'App\Http\Controllers\InsaidOrderController@insaid_order_prodect_code_serch')->name('insaid_order_prodect_code_serch');
+//Route::post('machine_serch_to_insaid_order', 'App\Http\Controllers\ProductController@machine_serch_to_insaid_order')->name('machine_serch_to_insaid_order');
+Route::get('add_insaid_order', 'App\Http\Controllers\InsaidOrderController@create1');
+Route::post('add_insaid_order', 'App\Http\Controllers\InsaidOrderController@store');
+Route::post('add_insaid_order_one_by_one', 'App\Http\Controllers\InsaidOrderController@store_one_by_one');
+//Route::get('/insaid_order_prodect_code/{id}', 'App\Http\Controllers\InsaidOrderController@export_order_prodect_code');
+
+Route::resource('insaid_order', 'App\Http\Controllers\InsaidOrderController');
+Route::post('insaid_order_serch', 'App\Http\Controllers\InsaidOrderController@insaid_order_serch')->name('insaid_order_serch');
+//Route::get('order_file/{id}', 'App\Http\Controllers\InsaidOrderController@exporterOrders');
+//////////////////////
 Route::resource('invoices', 'App\Http\Controllers\InvoiceController');
 Route::get('Invoice_Paid','App\Http\Controllers\InvoiceController@Invoice_Paid')->name('Invoice_Paid');
 Route::get('Invoice_UnPaid','App\Http\Controllers\InvoiceController@Invoice_UnPaid')->name('Invoice_UnPaid');

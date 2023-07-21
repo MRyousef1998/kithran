@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AccountStatement;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use App\Models\AccountStatementType;
 class AccountStatementReport extends Controller
 {
     public function index(){
@@ -24,8 +24,8 @@ class AccountStatementReport extends Controller
         $representative = User::where('role_id','=',3)->get();
 
        $rdio = $request->rdio;
-   
-   
+       $type =AccountStatementType::find( $request->type);
+ 
     // في حالة البحث بنوع الفاتورة
        
        if ($rdio == 1) {
@@ -35,7 +35,7 @@ class AccountStatementReport extends Controller
            if ($request->type && $request->start_at =='' && $request->end_at =='') {
                
               $details = AccountStatement::select('*')->where('account_statement_types_id','=',$request->type)->get();
-              $type = $request->type;
+            
               return view('reports.account_statment_report',compact('exporter', 'importer','representative','type','details'));
            }
            
@@ -44,9 +44,9 @@ class AccountStatementReport extends Controller
               
              $start_at = date($request->start_at);
              $end_at = date($request->end_at);
-             $type = $request->type;
              
-             $details = AccountStatement::whereBetween('pay_date',[$start_at,$end_at])->where('account_statement_types_id','=',$request->type)->get();
+            
+             $details = AccountStatement::whereBetween('pay_date',[$start_at,$end_at])->where('account_statement_types_id','=',$request->type)->orderBy('pay_date',)->get();
              return view('reports.account_statment_report',compact('exporter', 'importer','representative','type','start_at','end_at','details'));
              
            }

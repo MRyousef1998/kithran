@@ -16,10 +16,20 @@
 					</div>
 					<div class="main-dashboard-header-right">
 						<div>
-							<label class="tx-13">Customer Ratings</label>
-							<div class="main-star">
-								<i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star active"></i> <i class="typcn typcn-star"></i> <span></span>
-							</div>
+							<label class="tx-13">اغلاق الصندوق</label>
+								<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+
+								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+					
+								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
+					
+								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',4)->
+					
+					where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',5)->
+					
+					where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',6)->
+					
+					where('pay_date','>', '2023-6-22')->sum('amount')),2)}}</h5>
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
@@ -30,7 +40,13 @@
 					
 								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
 					
-								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')),2)}}</h5>
+								where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',4)->
+					
+					where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',5)->
+					
+					where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',6)->
+					
+					where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')),2)}}</h5>
 							@endcan
 						</div>
 						<div>
@@ -39,6 +55,9 @@
 							<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',4)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',5)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',6)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')),2)}}</h5>
 					@endcan	
 					</div>
@@ -69,6 +88,13 @@
 											<i class="fas fa-arrow-circle-up text-white"></i>
 											@can('الصندوق')
 											<span class="text-white op-7">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',3)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',4)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',5)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-\App\Models\AccountStatement::where('account_statement_types_id',6)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}} </span>
 										</span>
 										@endcan
@@ -89,6 +115,13 @@
 										<div class="">
 											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',3)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',4)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',5)->
+												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount')-\App\Models\AccountStatement::where('account_statement_types_id',6)->
 												whereBetween('pay_date', [Illuminate\Support\Carbon::now()->startOfMonth(),Illuminate\Support\Carbon::now()->endOfMonth()])->sum('amount'),2)}}</h4>
 											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>
 											@endcan
@@ -142,6 +175,11 @@
 										<div class="">
 											@can('الصندوق')
 											<h4 class="tx-20 font-weight-bold mb-1 text-white">{{number_format(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')-
+												\App\Models\AccountStatement::where('account_statement_types_id',3)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')-\App\Models\AccountStatement::where('account_statement_types_id',4)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')-\App\Models\AccountStatement::where('account_statement_types_id',5)->
+												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount')-\App\Models\AccountStatement::where('account_statement_types_id',5)->
 												where('pay_date','=', Illuminate\Support\Carbon::today())->sum('amount'),2)}}</h4>
 												
 											<p class="mb-0 tx-12 text-white op-7">درهم امارتي</p>@endcan
@@ -164,8 +202,8 @@
 					<div class="col-md-12 col-lg-12 col-xl-7">
 						<div class="card">
 							<div class="card-header bg-transparent pd-b-0 pd-t-20 bd-b-0">
-								<div class="d-flex justify-content-between">
-									<h4 class="card-title mb-0">ارباح الاشهر الستة الماضية</h4>
+								<div class="d-flex justify-content">
+									<h4 class="card-title mb-0">ارباح الاشهر الست الماضية</h4>
 									<i class="mdi mdi-dots-horizontal text-gray"></i>
 								</div>
 								<p class="tx-12 text-muted mb-0">.</p>

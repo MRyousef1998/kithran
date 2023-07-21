@@ -189,11 +189,11 @@
                                         
                                         
                                         
-                                        @if($x->value_location=1){
+                                        @if($x->value_location==1){
                                       <td style="text-align: center;vertical-align: middle;">المستودع</td>
 
                                         }
-                                        @elseif ($x->value_location=2){
+                                        @elseif ($x->value_location==2){
                                       <td style="text-align: center;vertical-align: middle;">محل كبير</td>
                                             
                                         }

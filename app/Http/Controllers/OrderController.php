@@ -110,7 +110,7 @@ class OrderController extends Controller
             
               }
               else if($request->carency==3){
-                $myCarancyMull=3.99;
+                $myCarancyMull=4.1;
                 
               }
             

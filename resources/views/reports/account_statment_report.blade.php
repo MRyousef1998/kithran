@@ -76,13 +76,16 @@
                         <div class="col-lg-3 mg-t-20 mg-lg-t-0" id="type">
                             <p class="mg-b-10">تحديد نوع الدفعة</p><select class="form-control select2" name="type"
                                 required>
-                                <option value="{{ $type ?? 'حدد نوع الدفعات' }}" selected>
-                                    {{ $type ?? 'حدد نوع الدفعات' }}
+                                <option value="{{ $type->id ?? 'حدد نوع الدفعات' }}" selected>
+                                    {{ $type->type_name ?? 'حدد نوع الدفعات' }}
                                 </option>
 
                                 <option value="1">مدفوعات</option>
                                 <option value="2">مقبوضات</option>
                                 <option value="3">مصاريف خارجية</option>
+                                <option value="4">السيد زهير </option>
+                                <option value="5">السيد غياث</option>
+                                <option value="6">السيد زكريا</option>
 
                             </select>
                         </div><!-- col-4 -->
@@ -146,8 +149,10 @@
                             </thead>
                             <tbody>
                                 <?php $i = 0; ?>
+                                <?php $count = 0; ?>
                                 @foreach ($details as $event)
                                     <?php $i++; ?>
+                                    
                                     <tr>
                                         <td>{{ ++$i }}</td>
                                         <td>
@@ -162,6 +167,7 @@
                                     <td>{{ $event->pay_date }}</td>
                                         <td>{{ $event->purpose }}</td>
                                         <td>{{ $event->amount }}</td> 
+                                          <?php $count=$count+$event->amount; ?>
                                         <td>{{ $event->user->name }}</td>
                                         <td>{{ $event->note }}</td>
                                        
@@ -173,11 +179,19 @@
                                 @endforeach
                             </tbody>
                         </table>
-
-                    @endif
+                        
                 </div>
             </div>
+            
         </div>
+        	<div class="d-flex justify-content-between">
+                        
+							<label class="tx-13">مجموع هذا التقرير</label>
+					<h5>
+					    {{$count}}
+					</h5>
+					</div>
+                    @endif
     </div>
 </div>
 <!-- row closed -->

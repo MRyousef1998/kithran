@@ -55,12 +55,12 @@ for($i=1;$i<=12;$i++){
 }
 
 
- $macineSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',1)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
+$macineSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
+Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',1)->where("orders.category_id", '!=',1)->where("orders.category_id", '!=',3)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
 ->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
 ->groupBy('year','month')->get();
 $grinderSoldParMonth=DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')-> 
-Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',2)->where("orders.category_id", '=',2)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
+Join('order_product', 'products.id', '=', 'order_product.products_id')->leftJoin('orders', 'order_product.orders_id', '=', 'orders.id')->where("product_details.category_id", '=',2)->where("orders.category_id", '!=',1)->where("orders.category_id", '!=',3)->where("products.selling_date", '!=',null)->whereMonth("order_date", '>=',Carbon::now()->month-5)
 ->selectRaw('count(products.id) as number_sold ,sum(products.price_with_comm) as primery_price_with_com_product_sold,sum(products.selling_price) as selling_price_without_com_product_sold,sum(products.selling_price_with_comm) as selling_price_with_com_product_sold,YEAR(order_date) year, MONTH(order_date) month')
 ->groupBy('year','month')->get();
 $costForMachineParMonth=DB::table('payments')->whereMonth("pay_date", '>=',Carbon::now()->month-5)
@@ -74,8 +74,9 @@ foreach ($macineSoldParMonth as $machine) {
 }
 
 foreach ($grinderSoldParMonth as $machine) {
-    $erning_from_grinder[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold-$cost_array[$machine->month]/2 ;
-    $erning_from_machine[$machine->month] = $erning_from_machine[$machine->month]+$cost_array[$machine->month]/2;
+     $erning_from_grinder[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold;
+   // $erning_from_grinder[$machine->month] =$machine->selling_price_with_com_product_sold-$machine->primery_price_with_com_product_sold-$cost_array[$machine->month]/2 ;
+  //  $erning_from_machine[$machine->month] = $erning_from_machine[$machine->month]+$cost_array[$machine->month]/2;
 }       
 
  
@@ -97,6 +98,16 @@ $parsonalpaymentthismonth = DB::table('account_statements')->where("account_stat
 ->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
 ->groupBy('month')->get();
 
+$zuhair = DB::table('account_statements')->where("account_statements.account_statement_types_id", 4)
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
+$giass = DB::table('account_statements')->where("account_statements.account_statement_types_id", '=',5)
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
+
+$zakria = DB::table('account_statements')->where("account_statements.account_statement_types_id", '=',6)
+->selectRaw('count(id) as number ,sum(amount) as payments, MONTH(pay_date) month')->whereMonth("account_statements.pay_date", Carbon::now()->month)
+->groupBy('month')->get();
 
 
 if ($paymentsthismonth->isEmpty()==true) {
@@ -120,6 +131,34 @@ if ($paymentsthismonth->isEmpty()==true) {
    if ($parsonalpaymentthismonth->isEmpty()==true) {
 
     $parsonalpaymentthismonth=[new Request(['count'=>0,
+
+    "payments"=>0,
+   
+])];
+    
+   }
+
+   if ($zuhair->isEmpty()==true) {
+
+    $zuhair=[new Request(['count'=>0,
+
+    "payments"=>0,
+   
+])];
+    
+   }
+   if ($giass->isEmpty()==true) {
+
+    $giass=[new Request(['count'=>0,
+
+    "payments"=>0,
+   
+])];
+    
+   }
+   if ($zakria->isEmpty()==true) {
+
+    $zakria=[new Request(['count'=>0,
 
     "payments"=>0,
    
@@ -157,12 +196,13 @@ if ($paymentsthismonth->isEmpty()==true) {
         ->name('pieChartTest')
         ->type('pie')
         ->size(['width' => 300 , 'height' => 200])
-        ->labels(['مدفوعات', 'مقبوضات','مصاریف خارجیة'])
+        ->labels(['مدفوعات', 'مقبوضات','مصاریف خارجیة','السيد زكريا','السيد غياث','السيد زهير'])
         ->datasets([
             [
-                'backgroundColor' => ['#FF6384', '#36A2EB','#Fa672e'],
-                'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#Fa672e'],
-                'data' => [$paymentsthismonth[0]->payments, $erningthismonth[0]->payments,$parsonalpaymentthismonth[0]->payments]
+                'backgroundColor' => ['#FF6384', '#36A2EB','#Fa672e','#3eb05c', '#c9d16d','#52504e'],
+                'hoverBackgroundColor' => ['#FF6384', '#36A2EB','#Fa672e','#3eb05c', '#c9d16d','#52504e'],
+                'data' => [$paymentsthismonth[0]->payments, $erningthismonth[0]->payments,$parsonalpaymentthismonth[0]->payments
+                ,$zakria[0]->payments, $giass[0]->payments,$zuhair[0]->payments,]
             ]
         ])
         ->options([]);

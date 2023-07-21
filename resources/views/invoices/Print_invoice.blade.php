@@ -50,7 +50,7 @@
                         </div><!-- invoice-header -->
                         <div class="row mg-t-20">
                             <div class="col-md">
-                                @if($order->importer->role_id=2)
+                                @if($order->importer->role_id==2)
                                 <label class="tx-gray-600">Billed from</label>
                                 @else
                                 <label class="tx-gray-600">Billed To</label>
@@ -198,8 +198,18 @@
                                 </tbody>
                             </table>
                         </div>
+                        
+                         
                         <hr class="mg-b-40">
-
+   <div class="col-md">
+                                   @if($order->importer->role_id==10)
+                                <p class="invoice-info-row"><span></span>
+                                    <span>With a three-month warranty starting from the date of this invoice...... The warranty is in the form of a repair within the company</span></p>
+                              
+                               @endif
+                               
+                                
+                            </div>
 
 
                         <button class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" onclick="printDiv()"> <i
