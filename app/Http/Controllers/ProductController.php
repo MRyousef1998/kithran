@@ -253,12 +253,12 @@ $id=$request->productCatgory;
         $myCarancyMull=1;
         
         if($request->carency==2){
-            $myCarancyMull=4.55;
+            $myCarancyMull=4.7;
             
             
               }
               else if($request->carency==3){
-                $myCarancyMull=3.99;
+                $myCarancyMull=4.1;
                 
               }
 
