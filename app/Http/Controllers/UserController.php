@@ -245,15 +245,25 @@ else if($userDetail->role_id==3){
 
         $orders=[new Request(['category_id'=>0,
     
-    
+     
     ])];
         
        }
+       $payments = Payment::where('representative_id','=',$userDetail->id)->get(); 
+       if ($payments->isEmpty()==true) {
+
+        $payments=[new Request(['pay_date'=>0,
+
+    'amount'=>0,
+     
+    ])];
+        
+       } 
 $exporter = User::where('role_id','=',1)->get();
 $importer = User::where('role_id','=',2)->get();
 $representative = User::where('role_id','=',3)->get();
 
-return view('users.representative_profile',compact('userDetail','orders','exporter','importer','representative'));
+return view('users.representative_profile',compact('userDetail','payments','orders','exporter','importer','representative'));
 
 }
  
