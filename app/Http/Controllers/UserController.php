@@ -6,6 +6,8 @@ use App\Models\Invoice;
 use App\Models\InvoicesDetails;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Payment;
+
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
