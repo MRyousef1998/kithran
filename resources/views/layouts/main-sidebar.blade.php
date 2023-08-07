@@ -63,7 +63,10 @@
 							<li><a class="slide-item" href="{{ url('/' . $page='today_account_statment') }}">الحركة اليومية</a></li>
 						
 							<li><a class="slide-item" href="{{ url('/' . $page='account_stetment_report') }}">تقارير الصندوق</a></li>
+							<li><a class="slide-item" href="{{ url('/' . $page='today_bank_statment') }}">الحركة اليومية للحساب البنكي</a></li>
 						
+						<li><a class="slide-item" href="{{ url('/' . $page='account_stetment_report') }}">تقارير الحساب البنكي</a></li>
+					
 							@endcan
 							
 						</ul>

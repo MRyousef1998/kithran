@@ -69,8 +69,10 @@ Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
 Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name('addProducts');
 Route::get('broken_machine/{id}', 'App\Http\Controllers\ProductController@broken_machine_view');
+Route::resource('today_bank_statment', 'App\Http\Controllers\BankAccountStatementsController');
 
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
+
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
