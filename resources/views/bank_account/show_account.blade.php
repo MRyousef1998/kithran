@@ -280,7 +280,7 @@
                     <h6 class="modal-title">حذف الحدث</h6><button aria-label="Close" class="close"
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <form action="{{ route('today_account_statment.destroy', 'test') }}" method="post">
+                <form action="{{ route('today_bank_statment.destroy', 'test') }}" method="post">
                     {{ method_field('delete') }}
                     {{ csrf_field() }}
                     <div class="modal-body">
@@ -312,7 +312,7 @@
                         </button>
                     </div> 
                     
-                    <form action="{{ route('today_account_statment.store') }}" method="post" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('today_bank_statment.store') }}" method="post" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="modal-body">
                             <label for="inputName" class="control-label" >الغاية </label>
@@ -349,7 +349,7 @@
                         </button>
                     </div> 
                     
-                    <form action="today_account_statment/update" method="post" method="post" enctype="multipart/form-data">
+                    <form action="today_bank_statment/update" method="post" method="post" enctype="multipart/form-data">
                         {{ method_field('patch') }}
                         {{ csrf_field() }}
                         <div class="modal-body">

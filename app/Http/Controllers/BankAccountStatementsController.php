@@ -6,7 +6,7 @@ use App\Models\BankAccountStatements;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 class BankAccountStatementsController extends Controller
 {
     /**
@@ -28,7 +28,7 @@ class BankAccountStatementsController extends Controller
 
         return view('bank_account.show_account',compact('diposit','withdrow','exporter', 'importer','representative','externaldiposit'));
     
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +37,7 @@ class BankAccountStatementsController extends Controller
      */
     public function create()
     {
-        //
+      
     }
 
     /**
@@ -47,8 +47,23 @@ class BankAccountStatementsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+        BankAccountStatements::create([
+            'purpose' => $request->purpose,
+            'account_statement_types_id' => $request->type_id,
+            
+            'amount' => $request->amount,
+            'note' => $request->note,
+            'user_id' =>(Auth::user()->id),
+
+            //'palance_after_this' => $fileName,
+
+            'pay_date' =>  Carbon::today(),
+  
+        ]);
+        session()->flash('success', ' تم الاضافة بنجاح');
+
+        return redirect('/today_bank_statment');
     }
 
     /**
@@ -82,7 +97,18 @@ class BankAccountStatementsController extends Controller
      */
     public function update(Request $request, BankAccountStatements $bankAccountStatements)
     {
-        //
+        $accountStatement = BankAccountStatements::findOrFail($request->id);
+
+      
+
+        $accountStatement->update([
+            'purpose' => $request->purpose,
+            'amount' => $request->amount,
+            'note' => $request->note,
+        ]);
+        session()->flash('success', ' تم التعديل بنجاح');
+
+        return redirect('/today_bank_statment');
     }
 
     /**
@@ -91,8 +117,10 @@ class BankAccountStatementsController extends Controller
      * @param  \App\Models\BankAccountStatements  $bankAccountStatements
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BankAccountStatements $bankAccountStatements)
+    public function destroy(Request $request)
     {
-        //
+        BankAccountStatements::find($request->event_id)->delete();
+        return redirect()->route('today_bank_statment.index')->with('success','تم حذف المستخدم بنجاح');
+   
     }
 }

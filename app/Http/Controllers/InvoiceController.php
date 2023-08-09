@@ -10,6 +10,8 @@ use App\Models\InvoiceCategory;
 use App\Models\InvoicesDetails;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\BankAccountStatements;
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -285,6 +287,7 @@ $invoice=Invoice::where('orders_id',$order_id)->first();
         $order=Order::findOrFail($invoices->orders_id);
         $clint=User::findOrFail($order->exported_id);
 if($invoices->invoice_categories_id == 2){
+    if($request->paymentType==1){
         AccountStatement::create([
             'purpose' => 'دفعة مقبوضة من الذبون'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
             'account_statement_types_id' => 2,
@@ -298,7 +301,27 @@ if($invoices->invoice_categories_id == 2){
             'pay_date' =>  Carbon::today(),
   
         ]);}
+        else{
+            BankAccountStatements::create([
+                'purpose' => 'دفعة مقبوضة من الذبون'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
+                'account_statement_types_id' => 2,
+                
+                'amount' => $request->new_payment,
+                'note' => $request->note,
+                'user_id' =>(Auth::user()->id),
+    
+                //'palance_after_this' => $fileName,
+    
+                'pay_date' =>  Carbon::today(),
+      
+            ]);}
+    
+    
+    
+    }
         else {
+
+            if($request->paymentType==1){
         AccountStatement::create([
             'purpose' => 'دفعة للمورد'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
             'account_statement_types_id' => 1,
@@ -312,6 +335,23 @@ if($invoices->invoice_categories_id == 2){
             'pay_date' =>  Carbon::today(),
   
         ]);}
+        else  {
+            BankAccountStatements::create([
+                'purpose' => 'دفعة للمورد'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
+                'account_statement_types_id' => 1,
+                
+                'amount' => $request->new_payment,
+                'note' => $request->note,
+                'user_id' =>(Auth::user()->id),
+    
+                //'palance_after_this' => $fileName,
+    
+                'pay_date' =>  Carbon::today(),
+      
+            ]);}
+    
+    
+    }
         
         session()->flash('Status_Update');
         return redirect('/invoices');

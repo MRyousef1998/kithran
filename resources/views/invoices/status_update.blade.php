@@ -177,6 +177,21 @@
                                     type="text" required>
                             </div>
                             <div class="col">
+                                <label for="inputName" class="control-label">الدفع من خلال </label>
+                                <select name="paymentType" class="form-control SlectBox" 
+                                  >
+                                    <!--placeholder-->
+                                    <option value="1" selected>
+                                     كاش
+                                    </option>
+                                    <option value="2">
+                                     بنك
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <div class="col">
                             <label for="exampleTextarea">ملاحظات</label>
                             <textarea class="form-control" id="exampleTextarea" name="note" rows="1" >
                             {{ $invoices->note }}</textarea>

@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function() {
     });
     
     Route::resource('add_payment_representative', 'App\Http\Controllers\PaymentController'); 
-    Route::post('order_report/add_payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('add_payment_continer');
+     Route::post('order_report/add_payment_continer', 'App\Http\Controllers\PaymentController@payment_continer')->name('add_payment_continer');
 Route::resource('all_product', 'App\Http\Controllers\ProductDetailController');
 Route::get('all_machine/{id}', 'App\Http\Controllers\ProductController@index');
 Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductController');
@@ -75,6 +75,9 @@ Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatement
 
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
 Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@Search_Payment')->name('account_stetment_report_serch');
+
+Route::get('bank_stetment_report', 'App\Http\Controllers\AccountStatementReport@bank_index')->name('bank_stetment_report');
+Route::post('bank_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@bank_Search_Payment')->name('bank_stetment_report_serch');
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
 Route::post('machine_serch', 'App\Http\Controllers\ProductController@machine_serch')->name('machine_serch');
 Route::post('order_prodect_code_serch', 'App\Http\Controllers\OrderController@order_prodect_code_serch')->name('order_prodect_code_serch');
