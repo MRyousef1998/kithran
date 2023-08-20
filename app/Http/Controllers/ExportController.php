@@ -260,7 +260,10 @@ class ExportController extends Controller
      $totalPrice=0;
      $totalcom=0;
      if($request->typeproductOrder!=null){
-      if($request->typeproductStatus!=8||$request->typeproductStatus!=7){
+        //all
+      if(!($request->typeproductStatus==8||$request->typeproductStatus==7)){
+       
+
            $importOrder = $request->typeproductOrder;
   foreach($products as $product)
      
@@ -320,8 +323,12 @@ class ExportController extends Controller
  
        }
     
-    }else{
-        
+    }
+    // end all
+    //7or8
+    else{
+       
+
         
          $importOrder = $request->typeproductOrder;
   foreach($products as $product)
@@ -338,7 +345,7 @@ class ExportController extends Controller
  ->whereHas('order', function ($query) use ($importOrder) { 
  $query->where('orders_id',$importOrder);}
  )
- ->where("product_details_id", $product->id)->where("selling_date", null)->where("statuses_id", '!=',$request->typeproductStatus)->first();
+ ->where("product_details_id", $product->id)->where("selling_date", null)->where("statuses_id", '=',$request->typeproductStatus)->first();
         //  $Olderproduct=Product::with('order')->whereHas(["order" => function ($query)use ($importOrder){
         //     $query->where('orders_id', $importOrder);   
         // }])->where("product_details_id", $product->id)->where("selling_date", null)->first();
@@ -379,9 +386,14 @@ class ExportController extends Controller
 
      }
 }}
+
+
+// all
      else{
          
-          if($request->typeproductStatus!=8||$request->typeproductStatus!=7){
+          if(!($request->typeproductStatus==8||$request->typeproductStatus==7)){
+          
+
               
               foreach($products as $product)
      
@@ -433,6 +445,9 @@ class ExportController extends Controller
        
        }
           }
+          //end all
+
+          // 7or 8
         else{
             
             foreach($products as $product)
@@ -441,9 +456,9 @@ class ExportController extends Controller
             
             for($i=0 ;$i<$product->qty;$i++ ){
           
-            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',$request->typeproductStatus)->get();
+            $allProducts =Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '=',$request->typeproductStatus)->get();
             
-            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '!=',$request->typeproductStatus)->first();
+            $Olderproduct=Product::where("product_details_id", $product->id)->where("selling_date", null) ->where("statuses_id", '=',$request->typeproductStatus)->first();
       
             $importOrderOldProdect=$Olderproduct->order()->get();
          
@@ -486,7 +501,7 @@ class ExportController extends Controller
        }
         }
 
-
+//end 7or 8
      }
     
    
