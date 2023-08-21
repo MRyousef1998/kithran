@@ -153,10 +153,14 @@
                             <div class="col-lg-2 mg-t-20 mg-lg-t-0" id="type">
                                 <p class="mg-b-10">تحديد الحالة</p><select class="form-control select" name="productstatus"
                                     >
-                                    <option value="{{ null }}" selected>
-                                        {{  'الکل' }}
+                                    <option value="{{ $typeproductStatus->id ?? null }}" selected>
+                                        {{ $typeproductStatus->status_name ?? 'الكل' }}
                                     </option>
-                                  
+                                    @if($typeproductStatus != null)
+                                    <option value="{{ null }}" >
+                                        {{ 'الکل' }}
+                                    </option>
+                                    @endif
                                     @foreach ($status as $statu)
                                     <option value="{{ $statu->id }}"> {{ $statu->status_name }}</option>
                                 @endforeach
@@ -189,7 +193,12 @@
                                     <option value="{{ null }}" selected>
                                         {{  'الکل' }}
                                     </option>
-                                
+                                    <option value="{{ $typeOrder->id ?? null }}" selected>
+                                        {{ $typeOrder->order_date ?? 'الكل' }} {{ $typeOrder->importer->name ?? '' }}
+                                    </option>
+                                    @if($typeOrder != null)
+                                   
+                                @endif
                                     @foreach ($importOrder as $myImportOrder)
                                     <option value="{{ $myImportOrder->id }}"> {{ $myImportOrder->order_date }} {{$myImportOrder->importer->name}}</option>
                                 @endforeach

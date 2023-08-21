@@ -260,7 +260,7 @@ class ExportController extends Controller
      $totalPrice=0;
      $totalcom=0;
      if($request->typeproductOrder!=null){
-      if($request->typeproductStatus!=8||$$request->typeproductStatus!=7){
+      if($request->typeproductStatus!=8||$request->typeproductStatus!=7){
            $importOrder = $request->typeproductOrder;
   foreach($products as $product)
      
@@ -649,9 +649,9 @@ if($order->category_id==4){
         $importer = User::where('role_id','=',2)->get();
         $representative = User::where('role_id','=',3)->get();
 
-       
-
-        return view('order.export_order.add_product_to_order',compact('order_id','importOrder','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
+        $typeproductStatus=null;
+        $typeOrder=null;
+        return view('order.export_order.add_product_to_order',compact('order_id','typeOrder','typeproductStatus','importOrder','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
     }
 
     public function export_order_prodect_code($order_id)
