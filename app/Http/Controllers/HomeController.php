@@ -33,14 +33,14 @@ class HomeController extends Controller
         where("product_details.category_id", 1)->where("products.selling_date", '=',null)->where("products.statuses_id",'!=',4)->where("products.statuses_id",'!=',7)
          ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
         ->get(); 
-
+        
        
          
        $GrinderRemining =DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
        where("product_details.category_id", 2)->where("products.selling_date", '=',null)->where("products.statuses_id",'!=',4)->where("products.statuses_id",'!=',7)
+        ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
        ->get();
        
-       return $GrinderRemining;
        
         $partsReminig = DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
         where("product_details.category_id", 3)->where("products.selling_date", '=',null)
