@@ -132,7 +132,10 @@ $productCatgories=ProductCategory::all();
           ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
            }
               else{
-                 
+               return DB::table('products')-> leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                where("product_details.category_id", 1)->where("products.selling_date", '=',null)->where("products.statuses_id",'!=',4)->where("products.statuses_id",'!=',7)
+                 ->selectRaw('count(products.id) as number_remining ,sum(products.price_with_comm) as primery_price_with_com_product_remining')
+                ->get();
                   $machines =DB::table('products')->where("products.statuses_id",'!=',4)->where("products.statuses_id",'!=',7)->
                   leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
                   ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("products.selling_date", null)
