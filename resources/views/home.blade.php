@@ -34,19 +34,13 @@
 						
 						<div>
 							<label class="tx-13">اغلاق الصندوق</label>
-								<h5>{{number_format((\App\Models\AccountStatement::where('account_statement_types_id',2)->
+								<h5>{{number_format((\App\Models\BankAccountStatements::where('account_statement_types_id',2)->
 
-								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',1)->
+								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\BankAccountStatements::where('account_statement_types_id',1)->
 					
-								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',3)->
+								where('pay_date','>', '2023-6-22')->sum('amount'))+(\App\Models\BankAccountStatements::where('account_statement_types_id',3)->
 					
-								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',4)->
-					
-					where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',5)->
-					
-					where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\AccountStatement::where('account_statement_types_id',6)->
-					
-					where('pay_date','>', '2023-6-22')->sum('amount')),2)}}</h5>
+								where('pay_date','>', '2023-6-22')->sum('amount')),2)}}</h5>
 						</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
