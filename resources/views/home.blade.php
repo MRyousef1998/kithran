@@ -33,7 +33,7 @@
 						</div>
 						
 						<div>
-							<label class="tx-13">اغلاق الصندوق</label>
+							<label class="tx-13">اغلاق الحساب البنكي</label>
 								<h5>{{number_format((\App\Models\BankAccountStatements::where('account_statement_types_id',2)->
 
 								where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\BankAccountStatements::where('account_statement_types_id',1)->
