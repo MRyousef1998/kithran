@@ -11,7 +11,7 @@
 					<div class="left-content">
 						<div>
 						  <h2 class="main-content-title tx-24 mg-b-1 mg-b-lg-1">Hi, welcome back!</h2>
-						  <p class="mg-b-0">khaizran al thahabi11111111111</p>
+						  <p class="mg-b-0">khaizran al thahabi</p>
 						</div>
 					</div>
 					<div class="main-dashboard-header-right">
@@ -31,6 +31,17 @@
 					
 					where('pay_date','>', '2023-6-22')->sum('amount')),2)}}</h5>
 						</div>
+						<div class="main-dashboard-header-right">
+							<div>
+								<label class="tx-13">اغلاق الحساب البنكي</label>
+									<h5>{{number_format((\App\Models\BankAccountStatements::where('account_statement_types_id',2)->
+	
+									where('pay_date','>', '2023-6-22')->sum('amount'))-(\App\Models\BankAccountStatements::where('account_statement_types_id',1)->
+						
+									where('pay_date','>', '2023-6-22')->sum('amount'))+(\App\Models\BankAccountStatements::where('account_statement_types_id',3)->
+						
+									where('pay_date','>', '2023-6-22')->sum('amount')),2)}}</h5>
+							</div>
 						<div>
 							<label class="tx-13">صافي المتبقي اليومي</label>
 						@can('الصندوق')
