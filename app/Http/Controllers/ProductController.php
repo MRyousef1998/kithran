@@ -1053,6 +1053,10 @@ $myInvoice ->update([
           $product->update(['statuses_id' => 7,
         
         'note'=>$request->note]);
+        if($request->sybmit_from==2){
+            session()->flash('Add', ' تم تحديد المنتج كانقص في القطع الداخلية');
+            return redirect('prodect_code/');
+          }
           session()->flash('Add', ' تم تحديد المنتج كانقص في القطع الداخلية');
             return redirect('product_report/');
 
@@ -1060,12 +1064,17 @@ $myInvoice ->update([
     }
 
     public function product_remove_from_proken(Request $request){
-       
+      
         $product =Product::find($request->products_id);
      
         $product->update(['statuses_id' => 2,
       
       'note'=>$request->note]);
+
+      if($request->sybmit_from==2){
+        session()->flash('Add', ' تم استعادة المنتج');
+        return redirect('prodect_code/');
+      }
         session()->flash('Add', ' تم استعادة المنتج');
           return redirect('product_report/');
 
@@ -1268,7 +1277,10 @@ return view('order.export_order.add_product_to_order',compact('order_id','typeOr
         $product->update([
             'value_location' => $request->location_id,
         ]);
-
+        if($request->sybmit_from==2){
+            session()->flash('Add','تم نقل المنتج بجاح');
+            return redirect('prodect_code/');
+          }
 
         session()->flash('Add','تم نقل المنتج بجاح');
         return redirect('product_report');
@@ -1283,11 +1295,157 @@ public function update_status_product(Request $request)
     $product->update(['statuses_id' => $request->status_id,
   
   'note'=>$request->note]);
+
+  if($request->sybmit_from==2){
+    session()->flash('Add', 'تم تحديث الحالة');
+    return redirect('prodect_code/');
+  }
     session()->flash('Add', 'تم تحديث الحالة');
       return redirect('product_report/');
 
 
 }
+///////
+public function prodect_code()
+    {
+       
+        $productCategories = ProductCategory::all();
+        $statuses = Status::where('id','!=',5)->where('id','!=',6)->get();
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+
+        return view('my_product.product_code',compact('statuses',"productCategories",'exporter', 'importer','representative',));
+  
+    
+    }
+
+    public function prodect_code_serch(Request $request)
+    {
+    
+        $typelocationId=null;
+        $typelocationName=null;
+       
+    
+        $statuses = Status::where('id','!=',5)->where('id','!=',6)->get();
+
+        if($request->location==null&& $request->status==null){
+
+            // $machines =DB::table('products')->where("products.statuses_id",'!=',4)->
+            // leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            // ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id') ->Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)->where("products.selling_date", null)
+            // ->selectRaw('product_details.id,company_name,product_name,group_name,country_of_manufacture,count(products.product_details_id) as aggregate,product_details.image_name')
+            // ->groupBy('product_details.id','company_name','product_name','country_of_manufacture','group_name','product_details.image_name')->get();
+           
+
+
+            $machines =DB::table('products')->where("products.statuses_id",'!=',4)->where("products.selling_date", null)->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+            ->get();
+          
+            
+        }
+      else if($request->location!=null&& $request->status==null){
+        
+            $machines =DB::table('products')->where("products.statuses_id",'!=',4)->where("products.selling_date", null)->where("products.value_location",'=',$request->location)->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+            ->get();
+           
+         //   $typelocationId=$request->location;
+        
+       
+        
+    }
+    else if($request->location==null&& $request->status!=null){
+      
+        if( $request->status!=-1){
+            $machines =DB::table('products')->where("products.selling_date", null)->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->where("statuses.id", '=',$request->status)->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+            ->get();}
+            else{
+                
+                $machines =DB::table('products')->where("products.selling_date", null)->
+                leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+                leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+                ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->where("statuses.id",'!=',4)->where("statuses.id",'!=',7)->where("statuses.id",'!=',8)->
+              
+                Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+                ->get();
+            }
+           
+            
+        }  
+        else if($request->location!=null&& $request->status!=null){
+            if( $request->status!=-1){
+            $machines =DB::table('products')->where("products.selling_date", null)->where("products.value_location",'=',$request->location)->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+            ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+            ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->where("statuses.id", '=',$request->status)->
+          
+            Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+            ->get();}
+            else{
+                $machines =DB::table('products')->where("products.selling_date", null)->where("products.value_location",'=',$request->location)->
+                leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+                leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
+                ->leftJoin('statuses', 'products.statuses_id', '=', 'statuses.id')
+                ->leftJoin('boxes', 'products.box_id', '=','boxes.id') ->where("statuses.id", '!=',4)->where("statuses.id", '!=',7)->where("statuses.id", '!=',8)->
+              
+                Join('order_product', 'products.id', '=', 'order_product.products_id')->where("product_details.category_id",$request->productCatgory)
+                ->get();
+            }
+         //   $typelocationId=$request->location;
+                
+         
+        
+           
+            
+        }
+    
+        
+
+
+
+
+               $productCategories=ProductCategory::where("id",'!=',$request->productCatgory)->get();
+             
+               $typeproductCatgories=ProductCategory::find($request->productCatgory);
+               $typeStatus=Status::find($request->status);
+               $id=$request->productCatgory;
+                $exporter = User::where('role_id','=',1)->get();
+                $importer = User::where('role_id','=',2)->get();
+                $representative = User::where('role_id','=',3)->get();
+               
+               $order=Order::find($request->order_id);
+              
+                return view('my_product.product_code',compact('typelocationId','typelocationName','statuses','typeStatus','typeproductCatgories','order','machines','exporter', 'importer','representative','productCategories'));
+               
+
+    }
 }
 
 

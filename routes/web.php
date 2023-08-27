@@ -110,8 +110,12 @@ Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 Route::get('/OrderDetails/{id}', 'App\Http\Controllers\ProductController@getDetailsOrder');
 Route::get('/OrderDetails_not_recive_product/{id}', 'App\Http\Controllers\ProductController@OrderDetails_not_recive_product');
 Route::get('/order_prodect_code/{id}', 'App\Http\Controllers\OrderController@order_prodect_code');
-Route::get('/export_order_prodect_code/{id}', 'App\Http\Controllers\ExportController@export_order_prodect_code');
+Route::get('/order_prodect_code/{id}', 'App\Http\Controllers\ExportController@export_order_prodect_code');
+///
+Route::get('/prodect_code', 'App\Http\Controllers\ProductController@prodect_code');
 
+Route::post('prodect_code_serch', 'App\Http\Controllers\ProductController@prodect_code_serch')->name('prodect_code_serch');
+///
 Route::get('/ExportOrderDetails/{id}', 'App\Http\Controllers\ProductController@getExportDetailsOrder');
 
 Route::get('/productDetails/{id}', 'App\Http\Controllers\ProductController@getproductDetails')->name('productDetails');
