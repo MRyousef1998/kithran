@@ -114,7 +114,7 @@
                             <div class="col">
                                 @php
                                 
-                                $amount_payment_remining =  $invoices->Total-$invoices->Discount-$payment_pefor ;
+                                $amount_payment_remining =  $invoices->Total-$payment_pefor ;
                               
                                 @endphp
                                 <label for="inputName" class="control-label">المبلغ المتبقي </label>
