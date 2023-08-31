@@ -75,6 +75,15 @@
                > <i
                class="fas fa-plus"></i>&nbsp; اضافة جديد الى هذه الطلبية</a>
    </div>
+  <?php echo ' &nbsp; ';
+  ?>
+
+   <div class="d-flex justify-content-between">
+
+<a href="add_produ_to_order_bycode/{{$order->id}}" class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+            > <i
+            class="fas fa-plus"></i>&nbsp; من خلال الكود اضافة جديد الى هذه الطلبية</a>
+</div>
 </div>
                 <div class="card-body">
                     <div class="text-wrap">

@@ -87,7 +87,7 @@
                                 <label for="inputName" class="control-label">قيمة الفاتورة الاجمالية بدون دفعات</label>
                                 <input type="text" class="form-control form-control-lg" id="primery_total"
                                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    value="{{ $invoices->Total -$invoices->Discount }}" required readonly>
+                                    value="{{ $invoices->Total }}" required readonly>
                             </div>
                         </div>
 

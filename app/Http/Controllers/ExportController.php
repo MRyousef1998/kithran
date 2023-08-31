@@ -668,6 +668,31 @@ if($order->category_id==4){
         $typeOrder=null;
         return view('order.export_order.add_product_to_order',compact('order_id','typeOrder','typeproductStatus','importOrder','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
     }
+    public function add_produ_to_order_bycode($order_id)
+    {
+        
+        $importOrder =Order::where("category_id",'=',1)->get();
+
+       // return $importOrder;
+        $productGroupes=ProductGroup::all();
+        $productCompanies=ProductCompany::all();
+       $productCatgories=ProductCategory::all();
+       
+        
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+        $orders= Order::where('id','=',$order_id)->get();
+        $status=Status::where('id','>',6)->get();
+
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+        $typeproductStatus=null;
+        $typeOrder=null;
+        return view('order.export_order.add_product_to_order_bycode',compact('order_id','typeOrder','typeproductStatus','importOrder','productCatgories','productCompanies','productGroupes','status','exporter', 'importer','representative','orders'));
+    }
 
     public function export_order_prodect_code($order_id)
     {
@@ -816,6 +841,105 @@ if($order->category_id==4){
                 
     
     }
+
+    //
+
+    public function store_one_by_one_bycode(Request $request)
+    {
+    
+
+        $products=json_decode($request->my_hidden_input);
+       
+      
+      //return $request;
+
+        if($products == null){
+            session()->flash('Erorr', 'يرجى اختيار منتاجات');
+            //  return $request;
+              return redirect('ExportOrderDetails/add_produ_to_order/'.$request->order_id);
+        }
+       
+
+        
+         
+            
+        
+            
+     // move pic
+     $order_id = $request->order_id;
+     
+
+     ////
+     $totalPrice=0;
+     $totalcom=0;
+
+// all///////////////
+    
+          
+
+              
+              foreach($products as $product)
+     
+        {  
+          
+            
+            
+            $myProduct=Product::where('id',$product->id)->first();
+           
+            
+       
+     
+          // return $myProduct;
+           
+            $myProduct->update([
+               'selling_date' => Carbon::today(),
+               'selling_price' => $product->price,
+               'selling_price_with_comm' => $product->price+$product->commission_pice,
+   
+       
+       
+               ]);
+               $totalPrice=$totalPrice+$product->price;
+               $totalcom=$totalcom+$product->commission_pice;
+   
+            $myProduct->order()->attach($order_id);
+           
+   
+          
+    
+          
+       
+       }
+          
+          //end all
+
+    
+
+//end 7or 8
+   
+   
+  
+    $order = Order::find($order_id);
+    $order->Amount_Commission =  ($order->Amount_Commission)+( $totalcom);
+    $order->Total =  ($order->Total)+(( $totalcom))+(($totalPrice));
+
+    $order->save();
+if($order->category_id==4){
+    session()->flash('Add', ' تم اضافة المنتچ  بنجاح يرجى تحرير الفاتورة');
+    return redirect('insaid_order');
+
+}
+     
+    session()->flash('Add', ' تم اضافة المنتچ  بنجاح يرجى تحرير الفاتورة');
+    return redirect('ExportOrderDetails/'.$request->order_id);
+           
+        
+     
+
+        return json_decode($request->my_hidden_input);
+    }
+    //
+
 
 
 }

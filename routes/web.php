@@ -22,6 +22,8 @@ Auth::routes();
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
 Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
 Route::get('ExportOrderDetails/add_produ_to_order/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order');
+Route::get('ExportOrderDetails/add_produ_to_order_bycode/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order_bycode');
+
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 // Route::get('/InvoicesDetails/{id}', 'App\Http\Controllers\InvoicesDetailsController@edit');
@@ -85,6 +87,8 @@ Route::post('export_order_prodect_code_serch', 'App\Http\Controllers\ExportContr
 
 
 Route::post('machine_serch_to_export_order', 'App\Http\Controllers\ProductController@machine_serch_to_export_order')->name('machine_serch_to_export_order');
+Route::post('machine_serch_to_export_order_bycode', 'App\Http\Controllers\ProductController@machine_serch_to_export_order_bycode')->name('machine_serch_to_export_order_bycode');
+
 
 Route::post('broken_machine_serch', 'App\Http\Controllers\ProductController@broken_machine_serch')->name('broken_machine_serch');
 Route::post('all_product_serch', 'App\Http\Controllers\ProductDetailController@all_product_serch')->name('all_product_serch');
@@ -104,6 +108,8 @@ Route::post('product_remove_from_proken', 'App\Http\Controllers\ProductControlle
 Route::get('add_export_order', 'App\Http\Controllers\ExportController@create1');
 Route::post('add_export_order', 'App\Http\Controllers\ExportController@store');
 Route::post('add_export_order_one_by_one', 'App\Http\Controllers\ExportController@store_one_by_one');
+Route::post('add_export_order_one_by_one_bycode', 'App\Http\Controllers\ExportController@store_one_by_one_bycode');
+
 Route::get('add_shop_order', 'App\Http\Controllers\SmallShopController@create1');
 Route::post('add_shop_order', 'App\Http\Controllers\SmallShopController@store');
 //Route::get('/OrderDetails/{id}', 'App\Http\Controllers\OrderController@getDetailsOrder');
