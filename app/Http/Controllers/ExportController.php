@@ -1016,7 +1016,7 @@ if($order->category_id==4){
             ->where("product_details.category_id", '=',$request->productCategory)
             ->where("product_details.company_id", '=',$request->productCompanies)
              ->where("products.selling_date","!=",null)
-            ->where("orders.client_id", $request->exporter)
+            ->where("orders.exported_id", $request->exporter)
             ->get();
             
         }
@@ -1030,7 +1030,7 @@ if($order->category_id==4){
             leftJoin('users', 'orders.exported_id', '=', 'users.id') 
             ->where("product_details.id", '=',$request->productClass)
             ->where("products.selling_date","!=",null)
-            ->where("orders.client_id", $request->exporter)
+            ->where("orders.exported_id", $request->exporter)
             ->get();
           
                     }

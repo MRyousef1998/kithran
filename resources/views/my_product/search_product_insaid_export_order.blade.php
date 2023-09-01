@@ -159,15 +159,18 @@
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  " >کود المنتج</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">الشركة</th>
+                                    
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">تفاصيل المنتج</th>
                                   
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">اسم العميل</th>
+                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  "> رقم الطلبية</th>
                                   
                                  
 
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر الشراء</th>
                                     
                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">سعر المبيع</th>
-                                    <th class="border-bottom-0"  style="text-align: center;vertical-align: middle;  ">عمولة عميل التوزيع</th>
+                                 
                                   
 
                                 </tr>
@@ -186,9 +189,13 @@
                                       
                                         <td style="text-align: center;vertical-align: middle;">{{$x->company_name}} {{$x->product_name}} {{ $x->group_name }}</td>
                                         
+                                        <td>
+                                        <span class="label text-danger d-flex">
+                                                <div class="dot-label bg-danger ml-1"></div>{{$x->name}}
+                                            </span>
+                                    </td>
                                         
-                                        
-                                        
+                                        <td style="text-align: center;vertical-align: middle;">{{$x->order_date}} => {{$x->orders_id}}  </td>
                                      
 
 
@@ -196,7 +203,6 @@
                                          <td style="text-align: center;vertical-align: middle;">{{$x->price_with_comm}}</td>
                                          
                                          <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm}}</td>
-                                         <td style="text-align: center;vertical-align: middle;"> {{$x->selling_price_with_comm-$x->selling_price}}</td>
                                         
                                         
                                     </tr>
