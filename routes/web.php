@@ -21,6 +21,15 @@ Auth::routes();
 // Route::resource('products', 'App\Http\Controllers\ProductController');
 // Route::get('/section/{id}', 'App\Http\Controllers\InvoicesController@getproducts');
 Route::get('OrderDetails/add_produ_from_order/{id}', 'App\Http\Controllers\OrderController@add_produ_from_order');
+Route::get('search_product_insaid_export_order', 'App\Http\Controllers\ExportController@search_product_insaid_export_order');
+Route::post('search_product_insaid_export_order_get', 'App\Http\Controllers\ExportController@search_product_insaid_export_order_get')->name('search_product_insaid_export_order_get');
+
+
+
+//Route::post('search_product_insaid_export_order', 'App\Http\Controllers\ExportController@bank_Search_Payment')->name('bank_stetment_report_serch');
+
+
+////
 Route::get('ExportOrderDetails/add_produ_to_order/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order');
 Route::get('ExportOrderDetails/add_produ_to_order_bycode/{id}', 'App\Http\Controllers\ExportController@add_produ_to_order_bycode');
 

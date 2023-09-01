@@ -41,7 +41,9 @@
 							{{-- <li><a class="slide-item" href="{{ url('/' . $page='broken_machine/'.$id='2') }}">مطاحن كسر</a></li> --}}
 							<li><a class="slide-item" href="{{ url('/' . $page='prodect_code') }}">تفاصیل المنتجات مع اكواد</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='product_report') }}">بحث سریع</a></li>
+							
 					@endcan
+					<li><a class="slide-item" href="{{ url('/' . $page='search_product_insaid_export_order') }}">بحث ضمن المبيعات</a></li>
 						</ul>
 					</li>
 			

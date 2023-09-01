@@ -941,5 +941,113 @@ if($order->category_id==4){
     //
 
 
+    public function search_product_insaid_export_order()
+    { 
+        
+        $productDetail = ProductDetail::all();
+        $productCompanies = ProductCompany::all();
+        $productCatgories= ProductCategory::all();
+        $orders= Order::all();
+        $status=Status::all();
+
+        $exporter = User::where('role_id','=',1)->get();
+        $importer = User::where('role_id','=',2)->get();
+        $representative = User::where('role_id','=',3)->get();
+
+       
+
+        return view('my_product.search_product_insaid_export_order',compact('productCompanies','productCatgories','orders','status','exporter', 'importer','representative','orders'));
+    }
+
+    public function search_product_insaid_export_order_get(Request $request)
+    {
+        
+      
+        if($request->productCategory==null||$request->productCompanies==null){
+
+       // return view('my_product.search_product_insaid_export_order',compact('productCompanies','productCatgories','orders','status','exporter', 'importer','representative','orders'));
+        session()->flash('delete', 'يرجى تحديد المعطيات للفلترة');
+        return redirect('search_product_insaid_export_order/');
+        } 
+        if($request->exporter==null){
+                        if($request->product==null||$request->productClass==null){
+                            $machines =DB::table('products')->
+                            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+                            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+                            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id') ->
+                            Join('order_product', 'products.id', '=', 'order_product.products_id') ->
+                            leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+                            leftJoin('users', 'orders.exported_id', '=', 'users.id') 
+                            ->where("product_details.category_id", '=',$request->productCategory)
+                            ->where("product_details.company_id", '=',$request->productCompanies)
+                             ->where("products.selling_date","!=",null)
+                            
+                          //  ->where("orders.client_id", $request->exporter)
+                            ->get();
+                            
+                        }
+                        else{
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id') ->
+            Join('order_product', 'products.id', '=', 'order_product.products_id') ->
+            leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+            leftJoin('users', 'orders.exported_id', '=', 'users.id') 
+            ->where("product_details.id", '=',$request->productClass)
+           
+             ->where("products.selling_date","!=",null)
+            
+          //  ->where("orders.client_id", $request->exporter)
+            ->get();
+         
+                        }
+            
+        }
+       else{
+        if($request->product==null||$request->productClass==null){
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id') ->
+            Join('order_product', 'products.id', '=', 'order_product.products_id') ->
+            leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+            leftJoin('users', 'orders.exported_id', '=', 'users.id') 
+            ->where("product_details.category_id", '=',$request->productCategory)
+            ->where("product_details.company_id", '=',$request->productCompanies)
+             ->where("products.selling_date","!=",null)
+            ->where("orders.client_id", $request->exporter)
+            ->get();
+            
+        }
+        else{
+            $machines =DB::table('products')->
+            leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
+            leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
+            leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id') ->
+            Join('order_product', 'products.id', '=', 'order_product.products_id') ->
+            leftJoin('orders', 'order_product.orders_id', '=', 'orders.id') ->
+            leftJoin('users', 'orders.exported_id', '=', 'users.id') 
+            ->where("product_details.id", '=',$request->productClass)
+            ->where("products.selling_date","!=",null)
+            ->where("orders.client_id", $request->exporter)
+            ->get();
+          
+                    }
+       }
+    
+    
+                $exporter = User::where('role_id','=',1)->get();
+                $importer = User::where('role_id','=',2)->get();
+                $representative = User::where('role_id','=',3)->get();
+                $productCompanies = ProductCompany::all();
+                $productCatgories= ProductCategory::all();
+               //return $machines;
+        return view('my_product.search_product_insaid_export_order',compact('productCompanies','machines','productCatgories','exporter', 'importer','representative'));
+           
+                
+
+    }
+
 
 }
