@@ -133,10 +133,11 @@
 
      
                       
-                       
+                        <?php echo '&nbsp;';
+  ?>
 
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                            <button type="submit" class="btn btn-primary">بحث</button>
                         </div>
 
 

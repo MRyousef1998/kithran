@@ -8,8 +8,9 @@
     <link href="{{ URL::asset('assets/plugins/datatable/css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/plugins/prism/prism.css') }}" rel="stylesheet">
-    
+
 @endsection
+
 
 
 				<!-- row -->
@@ -63,10 +64,23 @@
 					<div class="col-lg-6">
 					 
 						<div class="card item-card" >
+						<div class="card-header pb-0">
+						@if($x->box_image_name!=null)
+										  <div  id="pic-1"><img src="https://khaizran.online/Attachments/Box/mybox{{$x->box_id}}/{{$x->box_image_name}}" width="400pix"  height="90pix" alt="image"/></div>
+										 
+										
+										@else
+										<div  id="pic-1"><img src="https://khaizran.online/assets/img/add_image.png" width="400pix"  height="90pix" alt="image"/></div>
+		
+										@endif
+</div>
 							<div class="card-body pb-0 h-100">
 								
 								<div class="card-body cardbody relative">
+
+								
 									<div class="cardtitle">
+										
 										<span>  رقم المنتج</span>
 										<span>اسم المنتج</span>
 										<span>حالة المنتج </span>

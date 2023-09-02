@@ -646,7 +646,7 @@ $representative = User::where('role_id','=',3)->get();
  return view('order.export_order.export_product_box_details',compact('detailProduct','product','boxes'));
 
 
-
+ 
  
     
 

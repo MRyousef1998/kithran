@@ -54,7 +54,7 @@ class BoxController extends Controller
      */
     public function store(Request $request)
     {   
-      
+
 
     //     $product_id =DB::table('products')-> where("product_details_id", $request->id)->
     //     Join('order_product', 'products.id', '=', 'order_product.products_id')->
@@ -65,16 +65,20 @@ class BoxController extends Controller
     $prouct=Product::find($request->id);
     $order=Order::find($request->order_id);
     
-       Box::create([
+     $box=  Box::create([
         'box_code' => $request->box_code,
     ]);
        $box_id = Box::latest()->first()->id;
     
         if($request->pic!=null){
+
             $imageName = $request->pic;
             $fileName = $imageName->getClientOriginalName();
-     $request->pic->move(public_path('Attachments/Box' . $box_id ), $fileName);
-           
+     $request->pic->move(public_path('Attachments/Box/mybox' . $box_id ), $fileName);
+            $box->update([
+        'box_image_name' => $fileName,
+
+        ]);
         
      }
 
