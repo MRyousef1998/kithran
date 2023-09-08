@@ -149,8 +149,8 @@ class BoxController extends Controller
      public function getBoxDetails(Request $request)
     {
          $detailBox =DB::table('products')->where("products.box_id", $request->box_id)->
+         leftJoin('boxes', 'boxes.id', '=', 'products.box_id')->
         leftJoin('product_details', 'product_details.id', '=', 'products.product_details_id')->
-        
         leftJoin('product_groups', 'product_details.group_id', '=', 'product_groups.id')->
         leftJoin('product_companies', 'product_details.company_id', '=', 'product_companies.id')
          ->get();
