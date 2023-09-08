@@ -91,7 +91,20 @@
 
                     <div class="row">
 
-                        <div class="col-lg-6 " id="start_at">
+                    <div class="col-lg-4">
+                          <label for="inputName" class="control-label">المورد</label>
+                          <select name="importer" class="form-control SlectBox"
+                              >
+                              <!--placeholder-->
+                              <option value="" selected >الكل</option>
+                              
+                              @foreach ($importer as $myimporter)
+                                        <option value="{{ $myexporter->id }}"> {{ $myexporter->name }}</option>
+                                    @endforeach
+                          </select>
+                      </div>
+
+                        <div class="col-lg-4" id="start_at">
                             <label for="exampleFormControlSelect1">من تاريخ</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
@@ -105,7 +118,7 @@
                             </div><!-- input-group -->
                         </div>
 
-                        <div class="col-lg-6" id="end_at">
+                        <div class="col-lg-4" id="end_at">
                             <label for="exampleFormControlSelect1">الي تاريخ</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">

@@ -47,16 +47,34 @@ class OrderController extends Controller
     {
         $start_at = date($request->start_at);
         $end_at = date($request->end_at);
-        if($start_at==null){
 
-            $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',1)->get();
-            
-        }
-        else
-        {
-        $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',1)->get();
+        if($request->importer!=null){
+            if($start_at==null){
 
+                $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',1)
+                ->where('exported_id','=',$request->importer)->get();
+                
+            }
+            else
+            {
+            $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',1)
+            ->where('exported_id','=',$request->importer)->get();
+    
+            }
         }
+        else{
+            if($start_at==null){
+
+                $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',1)->get();
+                
+            }
+            else
+            {
+            $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',1)->get();
+    
+            }
+        }
+       
         
         
       
