@@ -17,7 +17,12 @@
 					<div class="card item-card">
 						<div class="card-body pb-0 h-100">
 							<div  class="text-center">
-								<img src="http://127.0.0.1:8000/Attachments/{{ $x->product_details_id }}/{{ $x->image_name }}" alt="img" class="img-fluid">
+							@if($x->box_image_name!=null)
+								<img src="https://khaizran.online/Attachments/Box/mybox{{$x->box_id}}/{{$x->box_image_name}}" alt="img" class="img-fluid">
+								@else
+								<img src="https://khaizran.online/assets/img/add_image.png" class="img-fluid" alt="image"/></div>
+		
+										@endif
 							</div>
 							<div class="card-body cardbody relative">
 								<div class="cardtitle">

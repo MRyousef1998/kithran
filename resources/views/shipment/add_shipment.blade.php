@@ -390,7 +390,7 @@
 
 <script>
     $('#modaldemo9').on('show.bs.modal', function(event) {
-        alert(1111);
+        
        
 //         const zIndex = 1040 + 10 * $('.modal:visible').length;
 // $(this).css('z-index', zIndex);
@@ -398,7 +398,7 @@
         var button = $(event.relatedTarget)
         var id = button.data('id')
         
-        alert(id);
+      
         
         $.ajax({
         type : 'GET',

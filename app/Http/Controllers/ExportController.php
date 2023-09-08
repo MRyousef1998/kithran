@@ -46,21 +46,43 @@ class ExportController extends Controller
 
     public function export_order_serch(Request $request)
     {
+        //return $request;
         $start_at = date($request->start_at);
         $end_at = date($request->end_at);
         $Statuses  = Status::whereBetween('id',[5,6])->get();
 
-        if($start_at==null){
+        if($request->exporter!=null){
+            if($start_at==null){
 
-            $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',2)->get();
+                $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',2)
+                ->where('exported_id','=',$request->exporter)->get();
+    
+            }
+            else
+            {
+            $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',2)
+            ->where('exported_id','=',$request->exporter)->get();
+    
+            }
 
         }
-        else
-        {
-        $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',2)->get();
+        else{
 
+            if($start_at==null){
+
+                $orders = Order::where('order_date','<=',[$end_at])->where('category_id','=',2)->get();
+    
+            }
+            else
+            {
+            $orders = Order::whereBetween('order_date',[$start_at,$end_at])->where('category_id','=',2)->get();
+    
+            }
         }
+
+       
         
+
         
       
         $exporter = User::where('role_id','=',1)->get();
