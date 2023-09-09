@@ -99,7 +99,7 @@
                               <option value="" selected >الكل</option>
                               
                               @foreach ($importer as $myimporter)
-                                        <option value="{{ $myexporter->id }}"> {{ $myexporter->name }}</option>
+                                        <option value="{{ $myexporter->id }}"> {{ $myimporter->name }}</option>
                                     @endforeach
                           </select>
                       </div>
