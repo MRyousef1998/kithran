@@ -55,7 +55,7 @@
 
             <div class="card-header pb-0">
 
-                <form action="/bank_stetment_report_serch" method="POST" role="search" autocomplete="off">
+                <form action="/home_statment_report_serch" method="POST" role="search" autocomplete="off">
                     {{ csrf_field() }}
 
 
@@ -156,7 +156,7 @@
                                         <td>
                                            
                                             <span class="label text-danger d-flex">
-                                                <div class="dot-label bg-danger ml-1"></div>{{$type->type_name }}
+                                                <div class="dot-label bg-danger ml-1"></div>{{ $type->type_name }}
                                             </span>
                                       
                         

@@ -81,7 +81,7 @@ Route::resource('all_machine/add_machine', 'App\Http\Controllers\ProductControll
 Route::post('addProducts', 'App\Http\Controllers\ProductController@store')->name('addProducts');
 Route::get('broken_machine/{id}', 'App\Http\Controllers\ProductController@broken_machine_view');
 Route::resource('today_bank_statment', 'App\Http\Controllers\BankAccountStatementsController');
-
+Route::resource('today_home_statment', 'App\Http\Controllers\HomeStatmentsController');
 Route::resource('today_account_statment', 'App\Http\Controllers\AccountStatementController');
 
 Route::get('account_stetment_report', 'App\Http\Controllers\AccountStatementReport@index')->name('account_stetment_report');
@@ -89,6 +89,9 @@ Route::post('account_stetment_report_serch', 'App\Http\Controllers\AccountStatem
 
 Route::get('bank_stetment_report', 'App\Http\Controllers\AccountStatementReport@bank_index')->name('bank_stetment_report');
 Route::post('bank_stetment_report_serch', 'App\Http\Controllers\AccountStatementReport@bank_Search_Payment')->name('bank_stetment_report_serch');
+
+Route::get('home_statment_report', 'App\Http\Controllers\AccountStatementReport@home_index')->name('home_statment_report');
+Route::post('home_statment_report_serch', 'App\Http\Controllers\AccountStatementReport@home_Search_Payment')->name('home_statment_report_serch');
 Route::post('import_order_serch', 'App\Http\Controllers\OrderController@import_order_serch')->name('import_order_serch');
 Route::post('machine_serch', 'App\Http\Controllers\ProductController@machine_serch')->name('machine_serch');
 Route::post('order_prodect_code_serch', 'App\Http\Controllers\OrderController@order_prodect_code_serch')->name('order_prodect_code_serch');

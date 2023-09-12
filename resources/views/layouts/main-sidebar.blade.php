@@ -69,6 +69,11 @@
 							<li><a class="slide-item" href="{{ url('/' . $page='today_bank_statment') }}">الحركة اليومية للحساب البنكي</a></li>
 						
 						<li><a class="slide-item" href="{{ url('/' . $page='bank_stetment_report') }}">تقارير الحساب البنكي</a></li>
+
+
+						<li><a class="slide-item" href="{{ url('/' . $page='today_home_statment') }}">الحركة اليومية لحساب المنزل</a></li>
+						
+						<li><a class="slide-item" href="{{ url('/' . $page='home_statment_report') }}">تقارير الحساب المنزلي</a></li>
 					
 							@endcan
 							
