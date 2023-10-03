@@ -115,10 +115,17 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label">العدد</label>
-                                <input type="text" class="form-control form-control-lg" id="qountity" name="qountity"
-                                    title="يرجي العدد "
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                     required>
+                                <div  style="text-align: center;vertical-align: middle;">
+                                                                <div class="input-group quantity" style=" ">
+                                                                    <div class="input-group-prepend decrement-btn" style="cursor: pointer">
+                                                                        <span class="input-group-text" >-</span>
+                                                                    </div>
+                                                                    <input type="text" class="qty-input form-control  "  id= "qountity" name ="qountity"style="text-align: center;vertical-align: middle;" maxlength="3" max="10" value="0">
+                                                                    <div class="input-group-append increment-btn" style="cursor: pointer">
+                                                                        <span class="input-group-text"  >+</span>
+                                                                    </div>
+                                                                </div>
+</div>
                             </div>
                         </div>
 
@@ -356,6 +363,46 @@
 
     </script>
 
+<script>
 
+    
+$(document).ready(function () {
+
+$('.increment-btn').click(function (e) {
+    e.preventDefault();
+    var incre_value = $(this).parents('.quantity').find('.qty-input').val();
+
+    var value = parseInt(incre_value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value<100){
+        value++;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+  
+    }
+   
+
+});
+
+$('.decrement-btn').click(function (e) {
+
+    e.preventDefault();
+    var decre_value = $(this).parents('.quantity').find('.qty-input').val();
+  
+    var value = parseInt(decre_value, 10);
+   
+    value = isNaN(value) ? 0 : value;
+    
+    if(value>0){
+        value--;
+        $(this).parents('.quantity').find('.qty-input').val(value);
+       
+    
+     
+    }
+   
+});
+
+});
+</script>
 
 @endsection

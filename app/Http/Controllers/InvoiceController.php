@@ -286,7 +286,7 @@ $invoice=Invoice::where('orders_id',$order_id)->first();
         }
         $order=Order::findOrFail($invoices->orders_id);
         $clint=User::findOrFail($order->exported_id);
-if($invoices->invoice_categories_id == 2){
+if($invoices->invoice_categories_id != 1){
     if($request->paymentType==1){
         AccountStatement::create([
             'purpose' => 'دفعة مقبوضة من الذبون'.$clint->name.' عن طلبية رقم :'.'ORNO'.$order->id,
