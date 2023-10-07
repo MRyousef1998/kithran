@@ -422,7 +422,7 @@
         modal.find('.modal-body #type_id').val(payment_type_id);
         modal.find('.modal-body #purpose').val(purpose);
         modal.find('.modal-body #amount').val(amount);
-        alert(id);
+      
         modal.find('.modal-body #note').val(note);
         modal.find('.modal-body #id').val(event_id);
 

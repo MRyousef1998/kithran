@@ -422,7 +422,7 @@
         modal.find('.modal-body #type_id').val(payment_type_id);
         modal.find('.modal-body #purpose').val(purpose);
         modal.find('.modal-body #amount').val(amount);
-        alert(id);
+      
         modal.find('.modal-body #note').val(note);
         modal.find('.modal-body #id').val(event_id);
 
@@ -434,7 +434,7 @@
     $('#modaldemo8').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget)
         var event_id= button.data('event_id')
-        alert(event_id);
+       
         var modal = $(this)
         modal.find('.modal-body #event_id').val(event_id);
        

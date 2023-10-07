@@ -297,7 +297,7 @@
 			const zIndex = 1040 + 10 * $('.modal:visible').length;
 		  $(this).css('z-index', zIndex);
 		  setTimeout(() => $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack'));
-			alert(2222);
+			
 				var button = $(event.relatedTarget)
 				var id = button.data('id')
 				var product_id = button.data('product_id')

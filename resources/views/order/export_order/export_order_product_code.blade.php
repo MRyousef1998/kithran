@@ -614,7 +614,7 @@
 
 <script>
         $('#sharcapsalation').on('show.bs.modal', function(event) {
-            alert(122);
+            
         var button = $(event.relatedTarget)
         var id = button.data('id')
         var order_id = button.data('order_id')

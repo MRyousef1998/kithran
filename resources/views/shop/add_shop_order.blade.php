@@ -439,7 +439,7 @@ $('.decrement-btn').click(function (e) {
     if(String(clint)!=""){
         
         if(!document.getElementById("com_all").checked){
-          alert("11");
+         
            $(this).parent().parent().parent().find('.commission_pice').removeAttr("readonly");
            total=parseFloat(price_elem.val()*value )+parseFloat(commission_pice.val()*value);}
            else{
@@ -472,7 +472,7 @@ $('.decrement-btn').click(function (e) {
 
 <script>
         function sandData() {
-           alert (0);
+       
             var order = new Array();
             
             
@@ -504,7 +504,7 @@ $('.decrement-btn').click(function (e) {
     <script>
 
         function oneByone_check(){
-            alert(document.getElementById("Amount_Commission").value);
+           
 document.getElementById("Amount_Commission").removeAttribute('readonly');
             
         }
@@ -580,7 +580,7 @@ else{
 
             $("#example1 input[type=checkbox]:checked").each(function() {
                
-                alert(this.find('.qty-input').val());
+               
 
                 selected.push(this.value);
             });

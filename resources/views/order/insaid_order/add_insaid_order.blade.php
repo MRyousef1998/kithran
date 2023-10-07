@@ -1357,7 +1357,7 @@ $('.decrement-btn').click(function (e) {
     <script>
 
         function oneByone_check(){
-            alert(document.getElementById("Amount_Commission").value);
+          
 document.getElementById("Amount_Commission").removeAttribute('readonly');
             
         }
@@ -1429,7 +1429,7 @@ else{
 
             $("#example1 input[type=checkbox]:checked").each(function() {
                 
-                alert(this.find('.qty-input').val());
+               
 
                 selected.push(this.value);
             });

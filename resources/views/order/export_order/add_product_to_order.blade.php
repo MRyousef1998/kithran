@@ -766,8 +766,7 @@ else{
             var selected = new Array();
 
             $("#example1 input[type=checkbox]:checked").each(function() {
-                alert(this.value);
-                alert(this.find('.qty-input').val());
+               
 
                 selected.push(this.value);
             });

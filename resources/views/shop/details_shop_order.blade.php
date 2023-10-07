@@ -454,14 +454,14 @@ aria-hidden="true">
             var id = button.data('id')
             
             var order_id = button.data('order_id')
-            alert(id);
+           
             $.ajax({
             type : 'GET',
           
             url :"{{URL::to('import_order_productDetails1/')}}?product_id="+id+"&order_id="+order_id,
             
             success: function(result) {
-                alert(111);
+              
                 $('#modaldemo9 div.modal-body').html(result);
             }
         });

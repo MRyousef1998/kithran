@@ -536,7 +536,7 @@ $('.decrement-btn').click(function (e) {
             
 
             $("#example1 input[type=checkbox]:checked").each(function() {
-                alert(0);
+              
                 var item = { id:this.value,qty: $(this).parent().parent().find('.qty-input').val(),
                                price:$(this).parent().parent().find('.price').val(),
                                 commission_pice: $(this).parent().parent().find('.commission_pice').val(),
@@ -706,8 +706,7 @@ else{
             var selected = new Array();
 
             $("#datatable input[type=checkbox]:checked").each(function() {
-                alert(this.value);
-                alert(this.find('.qty-input').val());
+              
 
                 selected.push(this.value);
             });

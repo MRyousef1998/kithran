@@ -406,7 +406,7 @@
         url :"{{URL::to('box_insaid_detailes/')}}?box_id="+id,
         
         success: function(result) {
-            alert(result);
+           
             $('#modaldemo9 div.modal-body').html(result);
         }
     });
