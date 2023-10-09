@@ -224,11 +224,11 @@
                                 <div class="card-body">
                                    
                                     <div class="table-responsive">
-                                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length=''>
                                             <thead>
                                                 <tr>
                                                      <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" hidden/></th>
-                                                    <th class="border-bottom-0" style="text-align: center;vertical-align: middle; " >رقم </th>
+                                            
                                                     <th class="border-bottom-0"  style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">كود الصندوق</th>
                                                     <th class="border-bottom-0" style="text-align: center;vertical-align: middle; background-color:rgb(97, 134, 255);">عدد المحتوى</th>
                                                                              
@@ -244,7 +244,7 @@
                                                     <tr>
                                                         
                                                         <td style="text-align: center;vertical-align: middle; width:5"><input type="checkbox"  value="{{ $x->boxId }}" class="box1" id="box_id" name="box_id"  ></td>
-                                                        <td  style="text-align: center;vertical-align: middle; background-color:rgb(11, 107, 16);width:5" >{{ $i }}</td>
+                                                    
                                                         <td style="text-align: center;vertical-align: middle;">{{ $x->box_code }}</td>
                 
                                                         <td class="cart-product-quantity" width="130px" style="text-align: center;vertical-align: middle;">
