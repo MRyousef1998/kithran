@@ -224,7 +224,7 @@
                                 <div class="card-body">
                                    
                                     <div class="table-responsive">
-                                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length=''>
+                                        <table id="example" class="table key-buttons text-md-nowrap" data-page-length='500'>
                                             <thead>
                                                 <tr>
                                                      <th><input name="select_all" id="example-select-all" type="checkbox" onclick="CheckAll('box1', this)" hidden/></th>
