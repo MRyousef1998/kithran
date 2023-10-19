@@ -168,7 +168,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="tab-pane" id="tab5" active>
+                                        <div class="tab-pane active" id="tab5" >
                                             <div class="table-responsive ">
                                               
                         <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
