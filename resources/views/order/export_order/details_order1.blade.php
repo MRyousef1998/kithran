@@ -111,7 +111,7 @@
                                     <div class="tab-content">
 
 
-                                        <div class="tab-pane active" id="tab4">
+                                        <div class="tab-pane " id="tab4">
                                             <div class="table-responsive mt-15">
 
                                                 <table class="table table-striped" style="text-align:center">
